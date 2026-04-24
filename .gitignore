@@ -1,0 +1,17 @@
+# 忽略编译生成的二进制文件
+phase1_epoll_echo
+bench_limit
+bench_client
+
+# 忽略构建目录
+build/
+.cache/
+
+# 忽略性能采样数据
+perf.data
+perf.data.old
+*.perf
+*.folded
+
+# 忽略临时日志
+*.log
