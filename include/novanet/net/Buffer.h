@@ -15,33 +15,36 @@
 namespace novanet::net{
 
 class Buffer{
+
 public:
     static constexpr size_t kCheapPrepend = 8;
+    
     static constexpr size_t kInitialSize = 1024;
 
     static_assert(kCheapPrepend >= 8 ,"NovaNet protocol header needs at least 8 bytes prepend space!");
-    explicit Buffer(size_t initialSize = kInitialSize) 
-                    :buffer_(kCheapPrepend + initialSize),
-                    readerIndex_(kCheapPrepend),
-                    writerIndex_(kCheapPrepend){}   
+
+    explicit Buffer(size_t initialiSize = kInitialSize) 
+            :buffer_(kCheapPrepend + initialiSize),
+            readerIndex_(kCheapPrepend),
+            writerIndex_(kCheapPrepend){}
+
     size_t readableBytes() const{
         return writerIndex_ - readerIndex_;
-    }               
-    
+    }
+
     size_t writeableBytes() const{
         return buffer_.size() - writerIndex_;
     }
-    
+
     size_t prependableBytes() const{
         return readerIndex_;
     }
 
-    //返回可读数据的首地址
-    const char* peek() const{
+
+    const char* peek()const{
         return begin() + readerIndex_;
     }
 
-    // 消费/读取指定长度的数据，将 readerIndex_ 向后推进
     void retrieve(size_t len){
         assert(len <= readableBytes());
         if(len < readableBytes()){
@@ -50,46 +53,39 @@ public:
             retrieveAll();
         }
     }
-    
+
     void retrieveAll(){
         readerIndex_ = kCheapPrepend;
         writerIndex_ = kCheapPrepend;
     }
 
-    // 把数据作为 std::string 提取出来，并自动消费这部分数据
     std::string retrieveAsString(size_t len){
-        assert(len <= readableBytes());
-        std::string res (peek(),len);
-        //数据被成功提取后，必须在底层数据结构中将其标记为“已读取”。
+        assert(len <= readableBytes);
+        std::string res(peek(),len);
         retrieve(len);
         return res;
     }
 
-    // 提取所有剩余的可读数据
     std::string retrieveAllAsString(){
         return retrieveAsString(readableBytes());
     }
-    
-    // 获取当前可写区域的起始指针
-    char* beginWrite(){
-        return begin() + writerIndex_;
-    }
-    const char* beginWrite () const{
-        return begin() + writerIndex_;
-    }
+
+    char* beginWrite() {return begin() + writerIndex_;}
+
+    const char* beginWrite() const{return begin() + writerIndex_ ;}
 
     void append(const char* data,size_t len){
-        ensureWritableBytes(len); // 确保空间足够，不够会自动扩容或整理碎片
-        std::copy(data,data+len,beginWrite());// 填入数据
-        hasWritten(len);// 推进 writerIndex_
+        ensureWritableBytes(len);
+        std::copy(data,data+len,beginWrite());
+        hasWritten(len);
     }
 
-
-    void append(const std::string& str){
+    void append(std::string& str){
         append(str.data(),str.size());
     }
 
-    // 检查容量，不够则触发 makeSpace()
+
+
     void ensureWritableBytes(size_t len){
         if(writeableBytes() < len){
             makeSpace(len);
@@ -97,40 +93,35 @@ public:
         assert(writeableBytes >= len);
     }
 
-    // 手动推进写入游标
     void hasWritten(size_t len){
         assert(len <= writeableBytes());
         writerIndex_ += len;
     }
 
     ssize_t readFd(int fd,int* savedErrno){
-
-        char extraBuf[1024];
+        char extraBuf[65536];
         struct iovec vec[2];
-
-        const size_t wirtable = writeableBytes();
+        const size_t writeable = writeableBytes();
         vec[0].iov_base = beginWrite();
-        vec[0].iov_len = wirtable;
+        vec[0].iov_len = writeable;
 
         vec[1].iov_base = extraBuf;
         vec[1].iov_len = sizeof(extraBuf);
 
-        const int iovcnt = wirtable < sizeof(extraBuf) ? 2 : 1;
+        const int iov_cnt = writeable < sizeof(extraBuf) ? 2 : 1;
 
-        const ssize_t n = ::readv(fd,vec,iovcnt);
+        const ssize_t n = ::readv(fd,vec,iov_cnt);
 
         if(n < 0){
             *savedErrno = errno;
-        }else if(static_cast<size_t>(n) <= wirtable){
+        }else if(static_cast<size_t>(n) <= writeable){
             writerIndex_ += static_cast<size_t>(n);
         }else{
             writerIndex_ = buffer_.size();
-            append(extraBuf,static_cast<size_t>(n) - wirtable);
+            append(extraBuf,static_cast<size_t>(n) - writeable);
         }
         return n;
     }
-
-
     ssize_t writeFd(int fd,int* savedErrno){
         const size_t nreadable = readableBytes();
 
@@ -139,29 +130,35 @@ public:
             *savedErrno = errno;
             return n;
         }
-        retrieve(n);
+        retrieve(static_cast<size_t>(n));
         return n;
     }
-
+private:
+    char* begin(){return buffer_.data();}
+    const char* begin() const {return buffer_.data();}
+    
     void makeSpace(size_t len){
-        if(writeableBytes() + prependableBytes() < len + kCheapPrepend){
+        if(writeableBytes() + prependableBytes() < len + kCheapPrepend ){
             buffer_.resize(writerIndex_ + len);
+        }else{
+            const size_t readable = readableBytes();
+            /*
+                平移后状态（碎片被消除，拼凑出了一大块连续的尾部空间）：
+                [ kCheapPrepend ] [  有效可读数据  ] [          合并后的超大可写空间           ]
+                0                 8                新writerIndex                          capacity
+
+            */
+            std::copy(begin() + readerIndex_,begin() + writerIndex_,begin() + kCheapPrepend);
+            readerIndex_ = kCheapPrepend;
+            writerIndex_ = readerIndex_ + readable;
+            assert(readable == readableBytes());
         }
     }
 
 private:
-    //获取底层 vector的首地址
-    char* begin(){return buffer_.data();}
-    const char* begin() const {return buffer_.data();}
-
-private:
-    /*
-        | prependable | readable data | writable space |
-        0       readerIndex_       writerIndex_      buffer_.size()
-    */
     std::vector<char> buffer_;
-    size_t readerIndex_;//读游标 : 前面有多少空间已被废弃，或预留
-    size_t writerIndex_; //写游标 : 数据写到了哪里，其后为可用空间
+    size_t readerIndex_; //读游标
+    size_t writerIndex_; //写游标
 };
 
 
