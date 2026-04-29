@@ -3,6 +3,7 @@
 #include <cassert>
 #include <sys/epoll.h>
 #include "novanet/base/Logger.h"
+
 using namespace novanet::net;
 
 const int Channel::kNoneEvent = 0;
@@ -30,8 +31,8 @@ void Channel::update(){
 }
 
 void Channel::remove(){
-    assert(isNoneEvent);
-    loop->removeChanne(this);
+    assert(isNoneEvent());
+    loop_->removeChannel(this);
 }
 
 void Channel::handleEvent(){

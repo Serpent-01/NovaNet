@@ -6,8 +6,11 @@
 
 namespace novanet::net{
 
-class Channel;
+
 class EventLoop;
+    
+class Channel;
+
 
 class Poller{
 public:
