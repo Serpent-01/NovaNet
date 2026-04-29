@@ -38,7 +38,7 @@ private:
     EventLoop* ownerLoop_;
     int epollfd_;
     EventList events_;
-    ChannelMap channels;
+    ChannelMap channels_;
 };
 
 }

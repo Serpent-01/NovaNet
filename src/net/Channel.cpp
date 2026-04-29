@@ -2,7 +2,7 @@
 #include "novanet/net/EventLoop.h"
 #include <cassert>
 #include <sys/epoll.h>
-
+#include "novanet/base/Logger.h"
 using namespace novanet::net;
 
 const int Channel::kNoneEvent = 0;
@@ -36,7 +36,13 @@ void Channel::remove(){
 
 void Channel::handleEvent(){
     eventHandling_ = true;
+
+    
+
     if((revents_ & EPOLLHUP) && !(revents_ & EPOLLIN)){
+
+        LOG_WARN << "fd = " << fd_ << " Channel::handleEvent() EPOLLHUP";
+
         if(closeCallback_){
             closeCallback_();
         }
@@ -46,6 +52,7 @@ void Channel::handleEvent(){
     }
 
     if(revents_ & EPOLLERR){
+        LOG_ERROR << "fd = " << fd_ << " Channel::handleEvent() EPOLLERR";
         if(errorCallback_){
             errorCallback_();
         }
