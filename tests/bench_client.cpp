@@ -22,7 +22,7 @@ const int THREAD_COUNT = 8;         // 压测线程数
 const int CONN_PER_THREAD = 500;    // 每个线程连接数（总并发 4000）
 const int PIPELINE_SIZE = 10;       // 初始发送包量（管道深度）
 const int BATCH_SEND = 3;           // 每次收到回包后再补发的包量
-const int TEST_SECONDS = 700;
+const int TEST_SECONDS = 60;
 const char* PAYLOAD = "Ping";
 
 std::atomic<long long> g_total_requests(0);

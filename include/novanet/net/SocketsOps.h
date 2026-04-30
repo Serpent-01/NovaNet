@@ -19,7 +19,7 @@ int accept(int sockfd, struct sockaddr_storage* addr);
 
 ssize_t read(int sockfd,void* buf,size_t count);
 
-ssize_t write(int sockfd,void* buf,size_t count);
+ssize_t write(int sockfd,const void* buf,size_t count);
 
 void close(int sockfd);
 
