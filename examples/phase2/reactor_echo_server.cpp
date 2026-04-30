@@ -193,8 +193,8 @@ private:
 
 int main() {
     // 强制设定日志级别，测试阶段可设为 Info 查看全链路轨迹
-    //novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Info);
-    novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Warn);
+    novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Info);
+    //novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Warn);
     LOG_INFO << "Starting NovaNet Phase 2 Reactor Echo Server...";
 
     // 1. 初始化 Reactor 的核心：EventLoop
