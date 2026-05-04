@@ -14,7 +14,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # # 1. 设置构建类型为 RelWithDebInfo (带调试符号的 Release，配合 ASAN 绝佳)
-# set(CMAKE_BUILD_TYPE RelWithDebInfo)
+
+# 【核心修改点 1】：为了 Soak Test 找 Bug，必须切回 RelWithDebInfo
+#set(CMAKE_BUILD_TYPE RelWithDebInfo)
+
 
 # 把 RelWithDebInfo 改为 Release，榨干性能
 set(CMAKE_BUILD_TYPE Release)
@@ -22,9 +25,10 @@ set(CMAKE_BUILD_TYPE Release)
 # 打开更多警告
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-# # 开启 ASAN 内存泄漏/越界检查神器
-# add_compile_options(-fsanitize=address)
-# link_libraries(asan)
+# 【核心修改点 2】：开启 ASAN 内存泄漏/越界检查神器
+#add_compile_options(-fsanitize=address)
+#add_link_options(-fsanitize=address) # 使用更现代的 add_link_options 代替 link_libraries(asan)
+
 
 # 引入系统的多线程库 (EventLoop 中用到了 std::mutex 和 std::thread::id)
 find_package(Threads REQUIRED)

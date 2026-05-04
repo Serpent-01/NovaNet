@@ -61,7 +61,6 @@ void listenOrDie(int sockfd) {
  * @brief 接收新连接
  * @return 成功返回新连接的 fd，失败返回负数（并已按致命/非致命做了精准的 errno 分类）
  */
-// 替换成这段新的实现
 int accept(int sockfd, struct sockaddr_storage* addr) {
     socklen_t addrlen = static_cast<socklen_t>(sizeof(struct sockaddr_storage));
     
@@ -77,15 +76,19 @@ int accept(int sockfd, struct sockaddr_storage* addr) {
 
     if (connfd < 0) {
         int savedErrno = errno;
-        LOG_SYSERR << "SocketsOps::accept";
+        
+        // 【核心修改】：删掉了原来的 LOG_SYSERR 大喇叭！
+        // 让下面的 switch 来做精准的哑巴和报警器
+        
         switch (savedErrno) {
             case EAGAIN:
             case ECONNABORTED:
             case EINTR:
-            case EPROTO: // ???
+            case EPROTO: 
             case EPERM:
             case EMFILE: // 我们之前写的防雷机制就是靠捕获这个
-                // 这些是网络底层的暂态错误，不影响整个服务端运行
+                // 【消音区】：这些是网络底层的暂态错误，完全正常！
+                // 什么都不用打印，默默恢复 errno 即可
                 errno = savedErrno;
                 break;
             case EBADF:
@@ -96,7 +99,7 @@ int accept(int sockfd, struct sockaddr_storage* addr) {
             case ENOMEM:
             case ENOTSOCK:
             case EOPNOTSUPP:
-                // 这些是致命错误，说明 fd 坏了或者内存爆了
+                // 这些是致命错误，说明 fd 坏了或者内存爆了，直接 FATAL 终结进程
                 LOG_SYSFATAL << "unexpected error of ::accept " << savedErrno;
                 break;
             default:

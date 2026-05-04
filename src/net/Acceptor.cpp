@@ -44,43 +44,48 @@ void Acceptor::listen(){
     LOG_INFO << "Acceptor is listening";
 }
 
-void Acceptor::handleRead(){
+void Acceptor::handleRead() {
     loop_->assertInLoopThread();
     InetAddress peerAddr;
-    while(true){
-        int connfd = acceptSocket_.accept(&peerAddr);
-        if(connfd >=0){
-            if(newConnectionCallback_){
-                newConnectionCallback_(connfd,peerAddr);
-            }else{
-                sockets::close(connfd);
-            }
-        }else{
-            int savedErrno = errno;
 
-            if(savedErrno == EAGAIN || savedErrno == EWOULDBLOCK){
-                break;
-            }
+    // 【终极重构】：彻底删掉 while(true)！
+    // LT 模式下，每次事件只处理一个 accept。如果队列里还有，epoll 下次会叫我。
+    int connfd = acceptSocket_.accept(&peerAddr);
+    
+    if (connfd >= 0) {
+        if (newConnectionCallback_) {
+            newConnectionCallback_(connfd, peerAddr);
+        } else {
+            sockets::close(connfd);
+        }
+    } else {
+        int savedErrno = errno;
 
-            else if(savedErrno == EMFILE || savedErrno == ENFILE){
-                LOG_ERROR << "Acceptor::handleRead EMFILE reached limit! No more fds.";
+        if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK) {
+            // 单次 accept 没拿到，直接忽略退出
+            return;
+        }
+        else if (savedErrno == EMFILE || savedErrno == ENFILE) {
+            LOG_ERROR << "Acceptor::handleRead EMFILE reached limit! No more fds.";
 
-                ::close(idleFd_);
-                int dropFd = acceptSocket_.accept(nullptr);
-
-                if(dropFd >=0){
-                    sockets::close(dropFd);
-                } 
-                idleFd_ = ::open("/dev/null",O_RDONLY | O_CLOEXEC);
-                break;
-
-            }else if(savedErrno == ECONNABORTED || savedErrno == EINTR || savedErrno == EPROTO || savedErrno == EPERM){
-                LOG_WARN << "Acceptor::handleRead encountered transient error: " << savedErrno;
-                continue;
-            }else {
-                LOG_SYSERR << "Acceptor::handleRead unknown transient error";
-                break;
-            }
+            // 逃生舱操作：腾出坑位 -> 把占着茅坑的连接掏出来 -> 关掉 -> 占回坑位
+            ::close(idleFd_);
+            int dropFd = acceptSocket_.accept(nullptr);
+            if (dropFd >= 0) {
+                sockets::close(dropFd);
+            } 
+            idleFd_ = ::open("/dev/null", O_RDONLY | O_CLOEXEC);
+            
+            // 【核心法则】：处理完一个雷，立刻退出函数，回到 epoll！
+            // 绝不继续循环，防止饿死其他正常的网络连接。
+            return;
+        }
+        else if (savedErrno == ECONNABORTED || savedErrno == EINTR || savedErrno == EPROTO || savedErrno == EPERM) {
+            LOG_WARN << "Acceptor::handleRead encountered transient error: " << savedErrno;
+            return;
+        } else {
+            LOG_SYSERR << "Acceptor::handleRead unknown transient error";
+            return;
         }
     }
 }

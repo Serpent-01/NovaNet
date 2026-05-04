@@ -59,7 +59,7 @@ public:
     }
 
     std::string retrieveAsString(size_t len){
-        assert(len <= readableBytes);
+        assert(len <= readableBytes());
         std::string res(peek(),len);
         retrieve(len);
         return res;
@@ -89,7 +89,7 @@ public:
         if(writeableBytes() < len){
             makeSpace(len);
         }
-        assert(writeableBytes >= len);
+        assert(writeableBytes() >= len);
     }
 
     void hasWritten(size_t len){

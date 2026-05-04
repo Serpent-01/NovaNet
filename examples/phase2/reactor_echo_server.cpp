@@ -83,95 +83,207 @@ private:
     //     }
     // }
 
-    //卸下沙袋：
+    // void onMessage(int sockfd) {
+    //     auto it = sessions_.find(sockfd);
+    //     if (it == sessions_.end()) return;
+    //     Session* session = it->second.get();
+
+    //     int savedErrno = 0;
+        
+    //     // 【修改点】：直接去掉 while(true)，读一次就行了！
+    //     ssize_t n = session->inputBuffer.readFd(sockfd, &savedErrno);
+
+    //     if (n > 0) {
+    //         size_t readable = session->inputBuffer.readableBytes();
+    //         session->outputBuffer.append(session->inputBuffer.peek(), readable);
+    //         session->inputBuffer.retrieve(readable);
+    //     } 
+    //     else if (n == 0) {
+    //         onClose(sockfd);
+    //         return; 
+    //     } 
+    //     else {
+    //         // 在 LT 模式下，单次 read 偶尔也会报 EAGAIN，直接忽略，不当作错误
+    //         if (savedErrno != EAGAIN && savedErrno != EWOULDBLOCK) {
+    //             LOG_SYSERR << "EchoServer::onMessage read error on fd=" << sockfd;
+    //             onClose(sockfd);
+    //         }
+    //         return;
+    //     }
+        
+    //     sendData(session);
+    // }
+    // void onMessage(int sockfd) {
+    //     auto it = sessions_.find(sockfd);
+    //     if (it == sessions_.end()) return;
+    //     Session* session = it->second.get();
+
+    //     int savedErrno = 0;
+        
+    //     // 【王者归来】：恢复激进读取 (Aggressive Read)，榨干单次 epoll 唤醒的价值！
+    //     while (true) {
+    //         ssize_t n = session->inputBuffer.readFd(sockfd, &savedErrno);
+
+    //         if (n > 0) {
+    //             size_t readable = session->inputBuffer.readableBytes();
+    //             session->outputBuffer.append(session->inputBuffer.peek(), readable);
+    //             session->inputBuffer.retrieve(readable);
+                
+    //             // 优化：如果你一次性读到了极其巨大的数据（比如大于 64KB）
+    //             // 为了防止饿死其他连接，你可以选择 break，把剩下的交给 LT 模式下次处理。
+    //             // 但对于 Ping-Pong 小包，它会一直读到 EAGAIN。
+    //         } 
+    //         else if (n == 0) {
+    //             onClose(sockfd);
+    //             return; 
+    //         } 
+    //         else {
+    //             if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK) {
+    //                 // 读干净了！完美退出循环。
+    //                 break; 
+    //             }
+    //             LOG_SYSERR << "EchoServer::onMessage read error on fd=" << sockfd;
+    //             onClose(sockfd);
+    //             return;
+    //         }
+    //     }
+        
+    //     // 集中发送刚才掏出来的所有数据
+    //     sendData(session);
+    // }
+
+
     void onMessage(int sockfd) {
         auto it = sessions_.find(sockfd);
         if (it == sessions_.end()) return;
         Session* session = it->second.get();
 
         int savedErrno = 0;
+        
+        // 【纯正 LT 模式标准写法】：去掉 while(true)，读一次就行了！
         ssize_t n = session->inputBuffer.readFd(sockfd, &savedErrno);
 
         if (n > 0) {
-            // 【极限优化】：不要转成 std::string！直接把输入 Buffer 的数据移交进输出 Buffer
             size_t readable = session->inputBuffer.readableBytes();
-            
-            // 直接读取底层的 const char* 进行 append，不产生任何临时对象
             session->outputBuffer.append(session->inputBuffer.peek(), readable);
-            
-            // 消费掉输入缓冲区的游标
             session->inputBuffer.retrieve(readable);
-            
-            // 发送数据
-            sendData(session);
         } 
         else if (n == 0) {
             onClose(sockfd);
+            return; 
         } 
         else {
-            onClose(sockfd);
+            if (savedErrno != EAGAIN && savedErrno != EWOULDBLOCK) {
+                LOG_SYSERR << "EchoServer::onMessage read error on fd=" << sockfd;
+                onClose(sockfd);
+            }
+            return;
         }
+        
+        sendData(session);
     }
 
-
-    // 满足需求 6.3: 发送数据的流 (重点：写不完时保留剩余数据，打开 EPOLLOUT)
-    void sendData(Session* session){
+    void sendData(Session* session) {
         size_t readable = session->outputBuffer.readableBytes();
-        if(readable == 0) return;
+        if (readable == 0) return;
 
         ssize_t nwrote = 0;
-        if(!session->channel->isWriting()){
+        
+        // 【核心法则】：如果当前没有在排队等发送（没有开启 EPOLLOUT）
+        // 我们才尝试直接抢发。如果已经开启了，说明内核满了，直接跳过 write！
+        if (!session->channel->isWriting()) {
             nwrote = sockets::write(session->sockfd, session->outputBuffer.peek(), readable);
-            if(nwrote >=0){
+            
+            if (nwrote >= 0) {
                 session->outputBuffer.retrieve(nwrote);
-                // 如果一次性全写完了，完美！
                 if (session->outputBuffer.readableBytes() == 0) {
+                    // 全发完了，太棒了，啥都不用做
                     LOG_INFO << "Send all data directly on fd=" << session->sockfd;
+                    return; 
                 }
-            }else{
+            } else {
                 nwrote = 0;
                 if (errno != EAGAIN && errno != EWOULDBLOCK) {
                     LOG_SYSERR << "EchoServer::sendData write error";
+                    return;
                 }
             }
         }
-        // 核心精髓：如果没写完 (nwrote < readable)，或者因为 EAGAIN 没写，
-        // 必须开启 EPOLLOUT，让 epoll 下次可写时通知我们！
+
+        // 如果走到了这里，说明有两种情况：
+        // 1. 刚才抢发了，但没发完（被 EAGAIN 挡住了）
+        // 2. 压根没抢发（因为早就 isWriting() 了，直接把数据堆在 Buffer 里了）
+        // 
+        // 无论哪种情况，只要 Buffer 里还有剩余数据，且还没监听 EPOLLOUT，就必须监听！
         if (session->outputBuffer.readableBytes() > 0 && !session->channel->isWriting()) {
             LOG_INFO << "Cannot send all data, enable EPOLLOUT for fd=" << session->sockfd;
             session->channel->enableWriting();
         }
     }
 
-    void onWrite(int sockfd){
+    void onWrite(int sockfd) {
         auto it = sessions_.find(sockfd);
         if (it == sessions_.end()) return;
         Session* session = it->second.get();
-        if(session->channel->isWriting()){
-            ssize_t n = sockets::write(sockfd, 
-                session->outputBuffer.peek(),
-                 session->outputBuffer.readableBytes());
+
+        if (session->channel->isWriting()) {
+            size_t readable = session->outputBuffer.readableBytes();
+            ssize_t n = sockets::write(sockfd, session->outputBuffer.peek(), readable);
             
-            if(n > 0){
+            if (n > 0) {
                 session->outputBuffer.retrieve(n);
-                // 如果这次终于把数据全写完了，必须立刻关闭 EPOLLOUT 事件，
-                // 否则 epoll 的 LT 模式会疯狂唤醒你，导致 CPU 100% 飙升！
+                
+                // 如果这次把欠下的债全还清了
                 if (session->outputBuffer.readableBytes() == 0) {
+                    // 立刻关闭 EPOLLOUT
                     session->channel->disableWriting();
                     LOG_INFO << "Finished sending remaining data, disabled EPOLLOUT for fd=" << sockfd;
                 } 
-            } else {
-                LOG_SYSERR << "EchoServer::onWrite error";
+                // 如果 n > 0 但还没发完，说明内核又满了。
+                // 此时什么都不用做！因为 EPOLLOUT 还没关，下次内核有空还会唤醒我们！
+            } else if (n < 0) {
+                if (errno != EAGAIN && errno != EWOULDBLOCK) {
+                    LOG_SYSERR << "EchoServer::onWrite error";
+                    onClose(sockfd);
+                }
             }
         }
     }
-    void onClose(int sockfd) {
-        LOG_INFO << "Connection closed, preparing to remove fd=" << sockfd;
+    // void onClose(int sockfd) {
+    //     LOG_INFO << "Connection closed, preparing to remove fd=" << sockfd;
         
-        // 【核心架构修复：延迟销毁 (Delayed Destruction)】
-        // 绝对不能在这里直接 sessions_.erase(sockfd)！
-        // 因为当前的调用栈还在 Channel::handleEvent() 内部。
-        // 我们利用 EventLoop 的异步任务队列，把销毁动作推迟到本轮 epoll 分发结束之后执行。
+    //     // 【核心架构修复：延迟销毁 (Delayed Destruction)】
+    //     // 绝对不能在这里直接 sessions_.erase(sockfd)！
+    //     // 因为当前的调用栈还在 Channel::handleEvent() 内部。
+    //     // 我们利用 EventLoop 的异步任务队列，把销毁动作推迟到本轮 epoll 分发结束之后执行。
+    //     loop_->queueInLoop([this, sockfd]() {
+    //         sessions_.erase(sockfd);
+    //         LOG_INFO << "Deferred destruction completed for fd=" << sockfd;
+    //     });
+    // }
+    void onClose(int sockfd) {
+        // 1. 第一层防御：哈希表级别防重删
+        auto it = sessions_.find(sockfd);
+        if (it == sessions_.end()) {
+            return; // 已经被彻底清理了，直接忽略
+        }
+
+        Session* session = it->second.get();
+
+        // 2. 第二层防御（核心护盾）：状态机级别防 Double Close
+        // 如果这个 Channel 已经注销了所有事件，说明它已经在“等死”队列里了
+        // 即使同一个 handleEvent 周期里又报了错，也会在这里被完美挡下！
+        if (session->channel->isNoneEvent()) {
+            return;
+        }
+
+        LOG_INFO << "Connection closed, preparing to remove fd=" << sockfd;
+
+        // 3. 拔掉呼吸机：立刻把它从 epoll 监听树上彻底摘除！
+        // 这一步极其关键，确保它在真正销毁前，绝不会再产生任何新事件
+        session->channel->disableAll();
+
+        // 4. 推入太平间：交给 EventLoop 的异步队列，在本次 epoll 循环结束后安全回收内存
         loop_->queueInLoop([this, sockfd]() {
             sessions_.erase(sockfd);
             LOG_INFO << "Deferred destruction completed for fd=" << sockfd;
@@ -193,8 +305,8 @@ private:
 
 int main() {
     // 强制设定日志级别，测试阶段可设为 Info 查看全链路轨迹
-    novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Info);
-    //novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Warn);
+    //novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Info);
+    novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Error);
     LOG_INFO << "Starting NovaNet Phase 2 Reactor Echo Server...";
 
     // 1. 初始化 Reactor 的核心：EventLoop
