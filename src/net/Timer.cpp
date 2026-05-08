@@ -1,6 +1,6 @@
-#include "novanet/base/Timer.h"
+#include "novanet/net/Timer.h"
 
-using namespace novanet;
+using namespace novanet::net;
 
 std::atomic<int64_t> Timer::s_numCreated_{0};
 

@@ -112,7 +112,7 @@ void TimerQueue::cancel(TimerId timerId){
 
 void TimerQueue::cancelInLoop(TimerId timerId){
     loop_->assertInLoopThread();
-    assert(timers_.size() == activeChannels_.size());
+    assert(timers_.size() == activeTimers_.size());
 
     ActiveTimer timer(timerId.timer_,timerId.sequence_);
 
