@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 #include <utility>
 
 namespace novanet::net{
@@ -12,6 +13,9 @@ class EventLoop;
  * - Channel 是具体文件描述符(fd)的“保姆”或“通讯员”。
  * - 它不拥有 fd 的生命周期（不负责 close(fd)），只负责封装 fd 的【事件语义】。
  * - 它是底层 epoll 机制与上层业务回调之间的桥梁。
+ * Phase3
+ * - 引入tie机制
+ * - 防止多线程模型下，Channel 在执行回调时，其宿主对象 (如 TcpConnection) 被意外析构。
  */
 class Channel{
 public:
@@ -25,6 +29,12 @@ public:
     // 此函数再根据底层实际发生的事件 (revents_)，分发到具体的业务回调中。
     void handleEvent();
     
+    // ==========================================
+    // Phase 3 核心新增：绑定生命周期
+    // ==========================================
+    // 传入 std::shared_ptr<void> 实现类型擦除，Channel 不用知道上层具体是什么类
+    void tie(const std::shared_ptr<void>& obj);
+
     // 绑定业务层注入的回调逻辑
     void setReadCallback(EventCallback cb) {readCallback_ = std::move(cb);}
     void setWriteCallback(EventCallback cb){writeCallback_ = std::move(cb);}
@@ -35,7 +45,6 @@ public:
     int fd() const{
         return fd_;
     }
-
     int events()const{
         return events_;
     }
@@ -50,6 +59,9 @@ public:
         return events_ == kNoneEvent;
     }
     
+    
+
+    //事件注册与注销
     void enableReading(){
         events_ |= kReadEvent;
         update();
@@ -58,6 +70,7 @@ public:
         events_ &= ~kReadEvent;
         update();
     }
+
 
     void enableWriting(){
         events_ |= kWriteEvent;
@@ -68,15 +81,17 @@ public:
         update();
     }
 
+
     void disableAll(){
         events_ = kNoneEvent;
         update();
     }
     
+
+
     bool isWriting() const{
         return (events_ & kWriteEvent) != 0;
     }
-
     bool isReading() const{
         return (events_ & kReadEvent) != 0;
     }
@@ -89,7 +104,6 @@ public:
     int index () const{
         return index_;
     }
-
     void set_index(int idx){
         index_ = idx;
     }
@@ -102,6 +116,10 @@ public:
     void remove();
 
 private:    
+
+    //抽离出的实际事件处理逻辑，被 handleEvent 在确认安全后调用
+    void handleEventWithGuard();
+    
     // 将自己对事件的最新诉求，委托给 EventLoop 传递给底层的 Poller 进行 epoll_ctl
     void update();
 
@@ -113,11 +131,14 @@ private:
     EventLoop* loop_; // 所属的大管家 (单线程 Reactor 核心)
     const int fd_;  // 被监听的文件描述符
 
-    int events_;
-    int revents_;
-    int index_;     // 在 Poller 中的状态机索引
+    int events_{0};     // 初始无事件
+    int revents_{0};    // 初始无返回事件
+    int index_{-1};     // 在 Poller 中的状态机索引
 
-    bool eventHandling_; // 防御性标志：当前是否正在执行回调函数
+    bool eventHandling_{false}; // 防御性标志：当前是否正在执行回调函数
+
+    std::weak_ptr<void> tie_;//弱引用，指向生命周期宿主 (如 TcpConnection)
+    bool tied_{false};  // 是否开启了生命周期绑定
 
     EventCallback readCallback_;
     EventCallback writeCallback_;
