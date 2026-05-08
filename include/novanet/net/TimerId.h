@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace novanet{
+namespace novanet::net{
 
 class Timer;
 

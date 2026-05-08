@@ -1,17 +1,20 @@
 #pragma once
 
 #include "novanet/base/Timestamp.h"
-#include "novanet/base/TimerId.h"
+#include "novanet/net/TimerId.h"
 #include "novanet/net/Channel.h"
 #include <set>
 #include <vector>
 #include <functional>
-namespace novanet{
+using namespace novanet::base;
 
-namespace net{
+namespace novanet::net{
+
+
 class EventLoop;
 class Timer;
-}
+
+
 
 /// @brief 定时器管理器
 /// @brief 依托于 Linux timerfd 实现，通过 std::set 管理定时器集合.

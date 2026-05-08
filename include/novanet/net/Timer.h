@@ -3,7 +3,8 @@
 #include "novanet/base/Timestamp.h"
 #include <atomic>
 #include <functional>
-namespace novanet{
+using namespace novanet::base;
+namespace novanet::net{
 
 /// @brief 定时器实体类
 /// @note 封装了回调函数、到期时间、重复间隔和全局唯一序列号。

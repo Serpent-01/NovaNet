@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <string>
 
-namespace novanet{
+namespace novanet::base{
 
 /// @brief 时间戳，精确到微秒 (10^-6 秒)。
 /// @note 内部封装为 64 位整数，8 字节大小。推荐按值传递 (Pass-by-value)。

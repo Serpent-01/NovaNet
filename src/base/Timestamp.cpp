@@ -5,7 +5,7 @@
 #include <cinttypes>
 
 using namespace novanet;
-
+using namespace novanet::base;
 Timestamp Timestamp::now(){
 
     auto now = std::chrono::system_clock::now();
