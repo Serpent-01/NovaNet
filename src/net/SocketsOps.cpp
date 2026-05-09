@@ -57,6 +57,22 @@ void listenOrDie(int sockfd) {
     }
 }
 
+
+int getSocketError(int sockfd){
+    int optval;
+    socklen_t optlen = static_cast<socklen_t>(sizeof optval);
+    
+    // 调用底层 POSIX API 获取 SO_ERROR
+    if (::getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &optval, &optlen) < 0) {
+        // 如果 getsockopt 函数本身调用失败了，返回当前的系统系统错误码
+        return errno;
+    } else {
+        // 返回套接字层面积累的具体错误码（例如 ECONNREFUSED, ETIMEDOUT 等）
+        return optval;
+    }
+}
+
+
 /**
  * @brief 接收新连接
  * @return 成功返回新连接的 fd，失败返回负数（并已按致命/非致命做了精准的 errno 分类）

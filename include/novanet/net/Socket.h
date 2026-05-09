@@ -20,10 +20,11 @@ public:
     [[nodiscard]] int fd() const { return sockfd_; }
 
     void bindAddress(const InetAddress& address);
-
     void listen();
+    int accept(InetAddress* peeraddr);
 
-    [[nodiscard]] int accept(InetAddress* peeraddr);
+    //TCP 半关闭 (关闭写端)
+    void shutdownWrite();
 
     void setTcpNoDelay(bool on);
     void setReuseAddr(bool on);

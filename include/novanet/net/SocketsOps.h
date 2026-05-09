@@ -12,6 +12,9 @@ void bindOrDie(int sokcfd,const struct sockaddr* addr);
 
 void listenOrDie(int sockfd);
 
+//获取套接字的具体错误码
+int getSocketError(int sockfd);
+
 // --- 核心 I/O 操作 ---
 // accept 失败会返回负数,对 EAGAIN/EMFILE 做了错误分类
 

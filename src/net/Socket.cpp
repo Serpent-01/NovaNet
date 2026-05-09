@@ -89,3 +89,13 @@ void Socket::setKeepAlive(bool on) {
         LOG_SYSERR << "Socket::setKeepAlive failed on fd=" << sockfd_;
     }
 }
+
+//执行半关闭操作
+void Socket::shutdownWrite() {
+    // SHUT_WR: 关闭写方向的连接。
+    // 这将向对端发送一个 FIN 分节，告诉对方我们不会再发送数据了，
+    // 但是我们的接收缓冲区仍然可以接收对端发来的剩余数据。
+    if (::shutdown(sockfd_, SHUT_WR) < 0) {
+        LOG_SYSERR << "Socket::shutdownWrite error for fd=" << sockfd_;
+    }
+}
