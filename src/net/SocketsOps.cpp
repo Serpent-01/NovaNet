@@ -237,4 +237,27 @@ void fromIpPort(const char *ip, uint16_t port, struct sockaddr_in6 *addr) {
     }
 }
 
+struct sockaddr_in6 getLocalAddr(int sockfd) {
+    struct sockaddr_in6 localaddr;
+    ::memset(&localaddr, 0, sizeof localaddr);
+    socklen_t addrlen = static_cast<socklen_t>(sizeof localaddr);
+    
+    // 使用你定义的 sockaddr_cast 进行转换
+    if (::getsockname(sockfd, sockaddr_cast(&localaddr), &addrlen) < 0) {
+        LOG_SYSERR << "sockets::getLocalAddr failed";
+    }
+    return localaddr;
+}
+
+struct sockaddr_in6 getPeerAddr(int sockfd) {
+    struct sockaddr_in6 peeraddr;
+    ::memset(&peeraddr, 0, sizeof peeraddr);
+    socklen_t addrlen = static_cast<socklen_t>(sizeof peeraddr);
+    
+    if (::getpeername(sockfd, sockaddr_cast(&peeraddr), &addrlen) < 0) {
+        LOG_SYSERR << "sockets::getPeerAddr failed";
+    }
+    return peeraddr;
+}
+
 } // namespace novanet::net::sockets

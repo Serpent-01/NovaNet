@@ -36,6 +36,13 @@ void toIp(char* buf,size_t size,const struct sockaddr* addr);
 void fromIpPort(const char* ip, uint16_t port,struct sockaddr_in* addr);
 void fromIpPort(const char* ip, uint16_t port,struct sockaddr_in6* addr);
 
+
+// 获取本地地址（核心补充）
+struct sockaddr_in6 getLocalAddr(int sockfd);
+
+// 获取对端地址（核心补充）
+struct sockaddr_in6 getPeerAddr(int sockfd);
+
 inline const struct sockaddr* sockaddr_cast(const struct sockaddr_in6* addr){
     return reinterpret_cast<const struct sockaddr*>(addr);
 }

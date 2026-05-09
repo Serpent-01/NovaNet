@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include <string>
-
+#include <functional>
 namespace novanet::net{
 class EventLoop;
 class EventLoopThread;
@@ -13,7 +13,10 @@ class EventLoopThread;
 ///       并为新接入的 TcpConnection 轮询分配独立的 EventLoop。
 class EventLoopThreadPool{
 public:
-    explicit EventLoopThreadPool(EventLoop* baseLoop,std::string nameAge = "EventLoopThreadPool");
+    using ThreadInitCallback = std::function<void(EventLoop*)>;
+
+    // 在头文件中声明时提供默认值
+    explicit EventLoopThreadPool(EventLoop* baseLoop, std::string nameArg = "EventLoopThreadPool");
     ~EventLoopThreadPool();
 
     EventLoopThreadPool(const EventLoopThreadPool&) = delete;
@@ -23,7 +26,8 @@ public:
         numThreads_ = numThreads;
     }
 
-    void start();
+    // 核心修复：接收上层传来的线程初始化回调
+    void start(const ThreadInitCallback& cb = ThreadInitCallback());
 
     /// @brief 轮询 (Round-Robin) 获取下一个可用的 Sub Loop
     [[nodiscard]] EventLoop* getNextLoop();

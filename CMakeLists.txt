@@ -47,6 +47,14 @@ add_library(novanet
     src/net/Poller.cpp
     src/net/EventLoop.cpp
     src/net/Acceptor.cpp
+
+    src/base/Timestamp.cpp
+    src/net/TimerQueue.cpp
+    src/net/Timer.cpp
+    src/net/EventLoopThread.cpp
+    src/net/EventLoopThreadPool.cpp
+    src/net/TcpConnection.cpp
+    src/net/TcpServer.cpp
 )
 
 # 让编译器知道头文件在 include/ 下面 (现代 CMake 标准写法)
@@ -69,3 +77,16 @@ add_executable(phase2_reactor_echo examples/phase2/reactor_echo_server.cpp)
 target_compile_options(phase2_reactor_echo PRIVATE -fno-omit-frame-pointer)
 # 链接网络库和系统线程库
 target_link_libraries(phase2_reactor_echo novanet Threads::Threads)
+
+
+add_executable(multireactor_echo_server examples/phase3/multireactor_echo_server.cpp)
+# 同样加上栈帧指针参数，保证 ASAN 报错时能看到完整的函数调用栈
+target_compile_options(multireactor_echo_server PRIVATE -fno-omit-frame-pointer)
+# 链接网络库和系统线程库
+target_link_libraries(multireactor_echo_server novanet Threads::Threads)
+
+# ==========================================================
+# 核心机制测试：runInLoop 语义
+# ==========================================================
+add_executable(test9_lifecycle_tie tests/phase_3/test9_lifecycle_tie.cpp) # 注意修改为你实际保存的路径
+target_link_libraries(test9_lifecycle_tie novanet Threads::Threads)

@@ -23,6 +23,8 @@ class Socket;
  */
 class TcpConnection : public std::enable_shared_from_this<TcpConnection>{
 public:
+
+
     enum class State{
         kConnecting,
         kConnected,

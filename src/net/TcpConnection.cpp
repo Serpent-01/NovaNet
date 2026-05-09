@@ -122,6 +122,13 @@ void TcpConnection::sendInLoop(const void* data,size_t len){
     // 处理积压
     assert(remaining <= len);
     if(!faultError && remaining > 0){
+        
+        //必测 7：output buffer 正确
+        // 【新增探针 1】：记录背压（Backpressure）发生，内核发送窗口塞满
+        LOG_INFO << "[Backpressure] 发送窗口已满！尝试发送 " << len 
+                 << " 字节，实际只发了 " << nwrote 
+                 << " 字节。剩余 " << remaining << " 字节追加到 OutputBuffer，并注册 EPOLLOUT！";
+
         size_t oldLen = outputBuffer_.readableBytes();
 
         // 高水位回调触发保护机制
@@ -176,6 +183,7 @@ void TcpConnection::forceCloseInLoop(){
 //事件回调 (由 Channel 触发)
 void TcpConnection::handleRead(){
     loop_->assertInLoopThread();
+
     int savedErrno = 0;
 
     // 使用 muduo 标准的 readFd 解决分散读问题
@@ -194,12 +202,27 @@ void TcpConnection::handleRead(){
 
 void TcpConnection::handleWrite(){
     loop_->assertInLoopThread();
+
+    // LOG_INFO << "[TEST-1] Sub Loop (Thread ID: " << std::this_thread::get_id() 
+    //          << ") handling WRITE for " << name_;
+
+
     if(channel_->isWriting()){
         ssize_t n = sockets::write(channel_->fd(), outputBuffer_.peek(), outputBuffer_.readableBytes());
         if(n > 0){
             outputBuffer_.retrieve(n);
+
+            //必测 7：output buffer 正确
+            // 【新增探针 2】：记录 EPOLLOUT 的局部消耗
+            LOG_INFO << "[handleWrite] EPOLLOUT 触发，成功消耗 OutputBuffer 里的 " << n << " 字节。";
+
             if(outputBuffer_.readableBytes() == 0){
                 channel_->disableWriting();
+
+                //必测 7：output buffer 正确
+                // 【新增探针 3】：记录彻底清空，防止 Busy Loop
+                LOG_INFO << "[handleWrite] OutputBuffer 已全部清空，注销 EPOLLOUT 关注，防止 Busy Loop！";
+
                 if(writeCompleteCallback_){
                     loop_->queueInLoop([conn = shared_from_this()](){
                         conn->writeCompleteCallback_(conn);
@@ -263,6 +286,13 @@ void TcpConnection::connectEstablished(){
 
 void TcpConnection::connectDestroyed(){
     loop_->assertInLoopThread();
+
+
+    // 【就是这句确切的日志代码】： test8
+    LOG_INFO << "TcpConnection::connectDestroyed [" << name_ 
+             << "] fd=" << channel_->fd() 
+             << " state=" << static_cast<int>(state_);
+
     if(state_ == State::kConnected){
         setState(State::kDisconnecting);
         channel_->disableAll(); // 停止向 epoll 订阅任何事件
