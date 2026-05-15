@@ -2,9 +2,9 @@
 #include <cstdint>
 #include <string>
 
-namespace novanet::rpc{
+namespace novanet::rpc {
 
-class RpcHeader{
+class RpcHeader {
 public:
     /*
      * 固定头格式，共 20 字节：
@@ -17,8 +17,7 @@ public:
      *
      * 也就是说，totalLen 表示整帧长度，包含固定头，也包含 payload。
      */
-    
-    
+
     //字段定义 (共20字节)
     uint32_t totalLen{0};
     uint16_t type{0};
@@ -32,17 +31,12 @@ public:
     //单个frame 最大不超过 16MB
     static constexpr uint32_t kMaxFrameSize = 16 * 1024 * 1024;
 
-
-    
     [[nodiscard]] bool isValid() const noexcept;
 
     [[nodiscard]] uint32_t payloadLen() const noexcept;
 
-
     // 将固定头编码为网络字节序，并追加到 out。
     void encodeTo(std::string& out) const;
-
-
 
     // 从 data 中解析固定头。
     //
@@ -54,8 +48,8 @@ public:
     //
     // RpcCodec 需要先判断 readableBytes() 是否够 20 字节，
     // 再调用 decodeFrom，这样才能区分半包和非法头。
-    static bool decodeFrom(const char* data,size_t len,RpcHeader& out) noexcept;
+    static bool decodeFrom(const char* data, size_t len,
+                           RpcHeader& out) noexcept;
 };
 
-
-}//namespace novanet::rpc
+}  // namespace novanet::rpc

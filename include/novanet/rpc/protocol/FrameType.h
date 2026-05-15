@@ -3,9 +3,9 @@
 #include <cstdint>
 #include <string_view>
 
-namespace novanet::rpc{
+namespace novanet::rpc {
 
-enum class FrameType : uint16_t{
+enum class FrameType : uint16_t {
     UNKNOWN = 0,
 
     // Unary RPC：一次请求，一次响应
@@ -13,7 +13,7 @@ enum class FrameType : uint16_t{
     UNARY_RESPONSE = 2,
 
     // Streaming RPC：一个 TCP 连接上承载多个逻辑流
-    STREAM_OPEN  = 3,
+    STREAM_OPEN = 3,
     STREAM_DATA = 4,
     STREAM_END = 5,
     STREAM_CANCEL = 6,
@@ -37,8 +37,7 @@ enum class FrameType : uint16_t{
 [[nodiscard]] bool isStreamFrameType(FrameType type) noexcept;
 [[nodiscard]] bool isHeartbeatFrameType(FrameType type) noexcept;
 
-
 //用于日志打印：将数字转化为人类可读的字符串
 [[nodiscard]] std::string_view frameTypeToString(FrameType type) noexcept;
 
-}//namespace novanet::rpc
+}  // namespace novanet::rpc
