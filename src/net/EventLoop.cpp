@@ -4,7 +4,7 @@
 #include "novanet/net/Channel.h"
 #include "novanet/base/Logger.h"
 #include "novanet/net/TimerQueue.h"
-
+#include "novanet/net/SocketsOps.h"
 #include <memory>
 #include <sys/eventfd.h>
 #include <unistd.h>
@@ -15,7 +15,6 @@
 using namespace novanet;
 using namespace novanet::net;
 namespace{
-
 
 thread_local EventLoop* t_loopInThisThread = nullptr;
 const int kPollTimeMs = 10000;
@@ -29,8 +28,22 @@ int createEventfd(){
     }
     return evtfd;
 }
+}// namespace 匿名空间
 
-}
+
+
+namespace {
+class IgnoreSigPipeInit {
+public:
+    IgnoreSigPipeInit() {
+        // 调用你之前在 SocketsOps 中写好的严谨版忽略函数
+        sockets::ignoreSigPipe();
+    }
+};
+// 伴随 EventLoop.cpp 的加载而自动执行
+IgnoreSigPipeInit g_ignoreSigPipeInit; 
+} // namespace 忽略信号SIGPIPE
+
 
 EventLoop::EventLoop()
     :poller_(std::make_unique<Poller> (this)),

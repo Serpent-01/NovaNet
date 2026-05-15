@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
     InetAddress listenAddr(8080, false, false);
 
     // 3. 实例化 EchoServer，设置启用 4 个 I/O 子线程
-    int threadNum = 4;
+    int threadNum = 6;
     EchoServer server(&loop, listenAddr, threadNum);
 
     // 4. 启动服务器 (内部会 listen，并启动 4 个 EventLoopThread)

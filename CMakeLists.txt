@@ -85,8 +85,3 @@ target_compile_options(multireactor_echo_server PRIVATE -fno-omit-frame-pointer)
 # 链接网络库和系统线程库
 target_link_libraries(multireactor_echo_server novanet Threads::Threads)
 
-# ==========================================================
-# 核心机制测试：runInLoop 语义
-# ==========================================================
-add_executable(test9_lifecycle_tie tests/phase_3/test9_lifecycle_tie.cpp) # 注意修改为你实际保存的路径
-target_link_libraries(test9_lifecycle_tie novanet Threads::Threads)
