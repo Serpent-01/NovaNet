@@ -1,0 +1,163 @@
+syntax = "proto3";
+
+package novanet.rpc;
+
+option cc_enable_arenas = true;
+option optimize_for = SPEED;
+
+// RPC 层通用错误码。
+// 注意：这是 RPC 协议层错误，不是业务错误码。
+// 业务错误可以放在具体业务 response protobuf 里。
+enum RpcErrorCode {
+    RPC_OK = 0;
+
+    RPC_UNKNOWN_ERROR = 1;
+
+    // 协议层错误
+    RPC_BAD_REQUEST = 2;
+    RPC_INVALID_FRAME = 3;
+    RPC_UNSUPPORTED_FRAME_TYPE = 4;
+
+    // 路由错误
+    RPC_SERVICE_NOT_FOUND = 10;
+    RPC_METHOD_NOT_FOUND = 11;
+
+    // Protobuf 编解码错误
+    RPC_PARSE_REQUEST_FAILED = 20;
+    RPC_SERIALIZE_RESPONSE_FAILED = 21;
+
+    // 调用错误
+    RPC_INVOKE_FAILED = 30;
+    RPC_TIMEOUT = 31;
+    RPC_CANCELLED = 32;
+
+    // Streaming 相关错误
+    RPC_STREAM_NOT_FOUND = 40;
+    RPC_STREAM_CLOSED = 41;
+    RPC_STREAM_CANCELLED = 42;
+
+    // 背压 / 资源限制
+    RPC_BACKPRESSURE = 50;
+    RPC_RESOURCE_EXHAUSTED = 51;
+}
+// Unary 请求元信息。
+// 对应 FrameType::UNARY_REQUEST。
+message UnaryRequestMeta {
+    // Protobuf service 名。
+    // 例如："CalculatorService" 或 "novanet.example.CalculatorService"
+    string service_name = 1;
+
+    // Protobuf method 名。
+    // 例如："Add"
+    string method_name = 2;
+
+    // 真正业务请求消息的序列化结果。
+    //
+    // 例如：
+    //   calculator.AddRequest.SerializeToString(&request_payload)
+    bytes request_payload = 3;
+
+    // 扩展元信息。
+    //
+    // 第一版可以用于：
+    // - trace_id
+    // - deadline_ms
+    // - auth token
+    // - client name
+    // - content type
+    map<string, string> metadata = 10;
+}
+
+// Unary 响应元信息。
+// 对应 FrameType::UNARY_RESPONSE。
+message UnaryResponseMeta {
+    RpcErrorCode error_code = 1;
+
+    // error_code != RPC_OK 时缩写
+    string error_text = 2;
+
+    // 真正业务响应消息的序列化结果。
+    //
+    // 例如：
+    //   calculator.AddResponse.SerializeToString(&response_payload)
+    bytes response_payload = 3;
+
+    map<string, string> metadata = 10;
+}
+
+// 打开一个逻辑 stream。
+// 对应 FrameType::STREAM_OPEN。
+
+message StreamOpenMeta {
+    string service_name = 1;
+    string method_name = 2;
+
+    // 例如 GenerateRequest / ChatRequest 的序列化结果。
+    bytes request_payload = 3;
+
+    // 第一版可选字段：客户端期望的初始窗口大小。
+    //
+    // 用于未来 backpressure。
+    // 如果为 0，表示使用服务端默认值。
+    uint32 initial_window_bytes = 4;
+
+    map<string, string> metadata = 10;
+}
+
+// 流数据帧。
+// 对应 FrameType::STREAM_DATA。
+message StreamDataMeta {
+    // 数据序号，方便调试、测试和未来乱序检测。
+    //
+    // 第一版 TCP 本身有序，所以不是严格必需，
+    // 但对 streaming demo 和日志非常有帮助。
+    uint64 sequence = 1;
+
+    // chunk 数据。
+    //
+    // LLM streaming 场景里可以是：
+    // - token text
+    // - json delta
+    // - 二进制片段
+    bytes data = 2;
+
+    map<string, string> metadata = 10;
+}
+
+// 正常结束一个 stream。
+// 对应 FrameType::STREAM_END。
+message StreamEndMeta {
+    // 正常结束时为 RPC_OK。
+    // 异常结束时可以填写其他错误码。
+    RpcErrorCode error_code = 1;
+
+    string error_text = 2;
+
+    // 可选：总共发送了多少个 chunk。
+    uint64 total_sequences = 3;
+
+    map<string, string> metadata = 10;
+}
+
+// 协议级错误。
+// 对应 FrameType::ERROR_FRAME。
+message ErrorFrameMeta {
+    RpcErrorCode error_code = 1;
+    string error_text = 2;
+
+    // 调试信息。
+    // 第一版可以只在本地 demo / debug 模式使用。
+    string debug_info = 3;
+
+    map<string, string> metadata = 10;
+}
+
+// 心跳 payload。
+// 对应 FrameType::HEARTBEAT_PING / HEARTBEAT_PONG。
+//
+// 第一版 heartbeat 也可以没有 payload。
+// 如果你想记录时间戳、节点名，可以用这个 message。
+message HeartbeatMeta {
+    int64 unix_millis = 1;
+    string node_id = 2;
+}

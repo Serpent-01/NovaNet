@@ -1,87 +1,211 @@
 cmake_minimum_required(VERSION 3.16)
 
-# 项目名字 NovaNet 语言c++
 project(NovaNet LANGUAGES CXX)
 
-# 用 C++17
+# ==========================================================
+# C++ 标准
+# ==========================================================
+
 set(CMAKE_CXX_STANDARD 17)
-# 不允许偷偷降级
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# 不用 GNU 那些乱七八糟的扩展，尽量标准一点
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# 导出 compile_commands.json 给 clangd 补全用
+# 给 clangd 使用
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# # 1. 设置构建类型为 RelWithDebInfo (带调试符号的 Release，配合 ASAN 绝佳)
+# 如果用户没有手动指定构建类型，默认使用 Debug
+# 不要强行写死 Release，否则调试 / ASAN 很难用
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
 
-# 【核心修改点 1】：为了 Soak Test 找 Bug，必须切回 RelWithDebInfo
-#set(CMAKE_BUILD_TYPE RelWithDebInfo)
+# ==========================================================
+# 编译选项
+# ==========================================================
 
-
-# 把 RelWithDebInfo 改为 Release，榨干性能
-set(CMAKE_BUILD_TYPE Release)
-
-# 打开更多警告
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-# 【核心修改点 2】：开启 ASAN 内存泄漏/越界检查神器
-#add_compile_options(-fsanitize=address)
-#add_link_options(-fsanitize=address) # 使用更现代的 add_link_options 代替 link_libraries(asan)
+option(NOVANET_ENABLE_ASAN "Enable AddressSanitizer" OFF)
 
+if (NOVANET_ENABLE_ASAN)
+    add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
+    add_link_options(-fsanitize=address)
+endif()
 
-# 引入系统的多线程库 (EventLoop 中用到了 std::mutex 和 std::thread::id)
+# ==========================================================
+# 依赖
+# ==========================================================
+
 find_package(Threads REQUIRED)
+find_package(Protobuf REQUIRED)
 
 # ==========================================================
-# 核心网络库: libnovanet.a
+# 核心库：libnovanet.a
 # ==========================================================
-add_library(novanet 
-    # --- Phase 1 底层组件 ---
+
+add_library(novanet STATIC
+    # ======================================================
+    # generated protobuf
+    # ======================================================
+    generated/proto/rpc_meta.pb.cc
+    generated/proto/calculator.pb.cc
+    # ======================================================
+    # base
+    # ======================================================
+    src/base/Timestamp.cpp
+
+    # 如果你已经实现了这些文件，再打开
+    # src/base/Logger.cpp
+    # src/base/ErrorCode.cpp
+
+    # ======================================================
+    # net
+    # ======================================================
     src/net/InetAddress.cpp
     src/net/Socket.cpp
     src/net/SocketsOps.cpp
-    
-    # --- Phase 2 Reactor 核心组件 (在这里新增) ---
+
     src/net/Channel.cpp
     src/net/Poller.cpp
     src/net/EventLoop.cpp
     src/net/Acceptor.cpp
 
-    src/base/Timestamp.cpp
-    src/net/TimerQueue.cpp
     src/net/Timer.cpp
+    src/net/TimerQueue.cpp
+
     src/net/EventLoopThread.cpp
     src/net/EventLoopThreadPool.cpp
     src/net/TcpConnection.cpp
     src/net/TcpServer.cpp
+
+    # ======================================================
+    # rpc/protocol
+    # ======================================================
+    src/rpc/protocol/FrameType.cpp
+    src/rpc/protocol/RpcHeader.cpp
+    src/rpc/protocol/RpcMessage.cpp
+    src/rpc/protocol/RpcCodec.cpp
+
+    # ======================================================
+    # rpc/core
+    # 后面写到这些类时再打开
+    # ======================================================
+    # src/rpc/core/RpcController.cpp
+    src/rpc/core/ServiceRegistry.cpp
+    # src/rpc/core/MethodInvoker.cpp
+    # src/rpc/core/RpcDispatcher.cpp
+    # src/rpc/core/PendingCall.cpp
+    # src/rpc/core/PendingCallManager.cpp
+    # src/rpc/core/RpcServer.cpp
+    # src/rpc/core/RpcChannel.cpp
+
+    # ======================================================
+    # rpc/stream
+    # 后面写到这些类时再打开
+    # ======================================================
+    # src/rpc/stream/StreamFrame.cpp
+    # src/rpc/stream/StreamSession.cpp
+    # src/rpc/stream/StreamManager.cpp
 )
 
-# 让编译器知道头文件在 include/ 下面 (现代 CMake 标准写法)
 target_include_directories(novanet
-    PUBLIC ${PROJECT_SOURCE_DIR}/include
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/generated/proto
+)
+
+target_link_libraries(novanet
+    PUBLIC
+        Threads::Threads
+        protobuf::libprotobuf
 )
 
 # ==========================================================
-# 可执行文件 1：Phase 1 的老 Demo
+# Phase 1 demo
 # ==========================================================
-add_executable(phase1_epoll_echo examples/phase1/epoll_echo_server.cpp)
-target_compile_options(phase1_epoll_echo PRIVATE -fno-omit-frame-pointer)
-target_link_libraries(phase1_epoll_echo novanet Threads::Threads)
+
+add_executable(phase1_epoll_echo
+    examples/phase1/epoll_echo_server.cpp
+)
+
+target_link_libraries(phase1_epoll_echo
+    PRIVATE
+        novanet
+)
 
 # ==========================================================
-# 可执行文件 2：Phase 2 的单线程 Reactor Echo Server
+# Phase 2 demo
 # ==========================================================
-add_executable(phase2_reactor_echo examples/phase2/reactor_echo_server.cpp)
-# 同样加上栈帧指针参数，保证 ASAN 报错时能看到完整的函数调用栈
-target_compile_options(phase2_reactor_echo PRIVATE -fno-omit-frame-pointer)
-# 链接网络库和系统线程库
-target_link_libraries(phase2_reactor_echo novanet Threads::Threads)
+
+add_executable(phase2_reactor_echo
+    examples/phase2/reactor_echo_server.cpp
+)
+
+target_link_libraries(phase2_reactor_echo
+    PRIVATE
+        novanet
+)
+
+# ==========================================================
+# Phase 3 demo
+# ==========================================================
+
+add_executable(multireactor_echo_server
+    examples/phase3/multireactor_echo_server.cpp
+)
+
+target_link_libraries(multireactor_echo_server
+    PRIVATE
+        novanet
+)
 
 
-add_executable(multireactor_echo_server examples/phase3/multireactor_echo_server.cpp)
-# 同样加上栈帧指针参数，保证 ASAN 报错时能看到完整的函数调用栈
-target_compile_options(multireactor_echo_server PRIVATE -fno-omit-frame-pointer)
-# 链接网络库和系统线程库
-target_link_libraries(multireactor_echo_server novanet Threads::Threads)
+# ==========================================================
+# Tests
+# ==========================================================
 
+enable_testing()
+
+add_executable(rpc_meta_smoke_test
+    tests/rpc/RpcMetaSmokeTest.cpp
+)
+
+target_link_libraries(rpc_meta_smoke_test
+    PRIVATE
+        novanet
+        protobuf::libprotobuf
+)
+
+add_test(
+    NAME rpc_meta_smoke_test
+    COMMAND rpc_meta_smoke_test
+)
+
+add_executable(rpc_codec_meta_test
+    tests/rpc/RpcCodecMetaTest.cpp
+)
+
+target_link_libraries(rpc_codec_meta_test
+    PRIVATE
+        novanet
+)
+
+add_test(
+    NAME rpc_codec_meta_test
+    COMMAND rpc_codec_meta_test
+)
+
+
+add_executable(calculator_proto_smoke_test
+    tests/rpc/CalculatorProtoSmokeTest.cpp
+)
+
+target_link_libraries(calculator_proto_smoke_test
+    PRIVATE
+        novanet
+)
+
+add_test(
+    NAME calculator_proto_smoke_test
+    COMMAND calculator_proto_smoke_test
+)
