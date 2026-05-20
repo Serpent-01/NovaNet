@@ -36,7 +36,7 @@ public:
         // 不拥有 service 生命周期。
         // 第一版约定：service 对象由 RpcServer 或用户代码持有，
         // ServiceRegistry 只保存裸指针索引用于分发。
-        const google::protobuf::Service* service{nullptr};
+        google::protobuf::Service* service{nullptr};
 
         // 不拥有 descriptor 生命周期。
         const google::protobuf::ServiceDescriptor* descriptor{nullptr};
