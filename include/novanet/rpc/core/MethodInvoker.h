@@ -3,6 +3,7 @@
 #include <string>
 
 #include "novanet/rpc/core/ServiceRegistry.h"
+#include "rpc_meta.pb.h"
 namespace novanet::rpc {
 /*
  * MethodInvoker 负责真正执行一次 unary protobuf service 调用。
@@ -32,6 +33,30 @@ namespace novanet::rpc {
  */
 
 class MethodInvoker final {
+public:
+    struct InvokeResult final {
+        bool ok = {false};
+        RpcErrorCode errorCode{RPC_UNKNOWN_ERROR};
+        std::string responseBytes;
+        std::string errorText;
+
+        static InvokeResult success(std::string responseBytes) {
+            InvokeResult result;
+            result.ok = true;
+            result.errorCode = RPC_OK;
+            result.responseBytes = std::move(responseBytes);
+            return result;
+        }
+
+        static InvokeResult failure(RpcErrorCode code, std::string errorText) {
+            InvokeResult result;
+            result.ok = false;
+            result.errorCode = code;
+            result.errorText = std::move(errorText);
+            return result;
+        }
+    };
+
 public:
     MethodInvoker() = default;
 
@@ -71,10 +96,9 @@ public:
      * - false:
      *      调用失败，errorText 有效。
      */
-    [[nodiscard]] bool invokeUnary(
+    [[nodiscard]] InvokeResult invokeUnary(
         const ServiceRegistry::ServiceMeta& serviceMeta,
         const ServiceRegistry::MethodMeta& methodMeta,
-        const std::string& requestBytes, std::string& responseBytes,
-        std::string& errorText) const;
+        const std::string& requestBytes) const;
 };
 }  // namespace novanet::rpc
