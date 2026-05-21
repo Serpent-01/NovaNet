@@ -7,8 +7,29 @@
 #include "novanet/rpc/core/ServiceRegistry.h"
 #include "novanet/rpc/protocol/RpcMessage.h"
 #include "rpc_meta.pb.h"
+
 namespace novanet::rpc {
 
+/*
+ * RpcDispatcher 是 RPC 语义分发入口。
+ *
+ * 第一版只实现 unary：
+ *
+ *     UNARY_REQUEST
+ *         ↓
+ *     ServiceRegistry
+ *         ↓
+ *     MethodInvoker
+ *         ↓
+ *     UNARY_RESPONSE
+ *
+ * 不负责：
+ * - 不读写 socket
+ * - 不处理 Buffer
+ * - 不处理半包/粘包
+ * - 不管理 TcpConnection
+ * - 不管理 PendingCall
+ */
 class RpcDispatcher final {
 public:
     RpcDispatcher(ServiceRegistry& registry, MethodInvoker& invoker);
