@@ -90,9 +90,9 @@ add_library(novanet STATIC
     # rpc/core
     # 后面写到这些类时再打开
     # ======================================================
-    # src/rpc/core/RpcController.cpp
+    src/rpc/core/RpcController.cpp
     src/rpc/core/ServiceRegistry.cpp
-    # src/rpc/core/MethodInvoker.cpp
+    src/rpc/core/MethodInvoker.cpp
     # src/rpc/core/RpcDispatcher.cpp
     # src/rpc/core/PendingCall.cpp
     # src/rpc/core/PendingCallManager.cpp
@@ -208,4 +208,18 @@ target_link_libraries(calculator_proto_smoke_test
 add_test(
     NAME calculator_proto_smoke_test
     COMMAND calculator_proto_smoke_test
+)
+
+add_executable(method_invoker_test
+    tests/rpc/MethodInvokerTest.cpp
+)
+
+target_link_libraries(method_invoker_test
+    PRIVATE
+        novanet
+)
+
+add_test(
+    NAME method_invoker_test
+    COMMAND method_invoker_test
 )

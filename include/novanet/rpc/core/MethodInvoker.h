@@ -29,7 +29,6 @@ namespace novanet::rpc {
  * - 不管理 request_id
  * - 不生成 RpcMessage
  *
- * 第一版采用同步调用，不引入异步 Closure。
  */
 
 class MethodInvoker final {
