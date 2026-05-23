@@ -93,7 +93,7 @@ add_library(novanet STATIC
     src/rpc/core/RpcController.cpp
     src/rpc/core/ServiceRegistry.cpp
     src/rpc/core/MethodInvoker.cpp
-    # src/rpc/core/RpcDispatcher.cpp
+    src/rpc/core/RpcDispatcher.cpp
     # src/rpc/core/PendingCall.cpp
     # src/rpc/core/PendingCallManager.cpp
     # src/rpc/core/RpcServer.cpp
@@ -222,4 +222,34 @@ target_link_libraries(method_invoker_test
 add_test(
     NAME method_invoker_test
     COMMAND method_invoker_test
+)
+
+
+add_executable(rpc_dispatcher_test
+    tests/rpc/RpcDispatcherTest.cpp
+)
+
+target_link_libraries(rpc_dispatcher_test
+    PRIVATE
+        novanet
+)
+
+add_test(
+    NAME rpc_dispatcher_test
+    COMMAND rpc_dispatcher_test
+)
+
+
+add_executable(rpc_dispatcher_unary_path_test
+    tests/rpc/RpcDispatcherUnaryPathTest.cpp
+)
+
+target_link_libraries(rpc_dispatcher_unary_path_test
+    PRIVATE
+        novanet
+)
+
+add_test(
+    NAME rpc_dispatcher_unary_path_test
+    COMMAND rpc_dispatcher_unary_path_test
 )

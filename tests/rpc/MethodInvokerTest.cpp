@@ -5,6 +5,7 @@
 #include "calculator.pb.h"
 #include "novanet/rpc/core/MethodInvoker.h"
 #include "novanet/rpc/core/ServiceRegistry.h"
+#include "rpc_meta.pb.h"
 
 namespace {
 
@@ -58,10 +59,6 @@ int main() {
     using novanet::rpc::ServiceRegistry;
 
     {
-        /*
-         * 测试 1：
-         * 正常 Add(1,2) -> 3。
-         */
         CalculatorServiceImpl calculator;
 
         ServiceRegistry registry;
@@ -82,30 +79,23 @@ int main() {
 
         std::string requestBytes;
         assert(request.SerializeToString(&requestBytes));
-        assert(!requestBytes.empty());
 
         MethodInvoker invoker;
 
-        std::string responseBytes;
-        errorText.clear();
+        const auto result =
+            invoker.invokeUnary(*serviceMeta, *methodMeta, requestBytes);
 
-        const bool ok = invoker.invokeUnary(
-            *serviceMeta, *methodMeta, requestBytes, responseBytes, errorText);
-
-        assert(ok);
-        assert(errorText.empty());
-        assert(!responseBytes.empty());
+        assert(result.ok());
+        assert(result.errorCode() == novanet::rpc::RPC_OK);
+        assert(result.errorText().empty());
+        assert(!result.responseBytes().empty());
 
         novanet::example::AddResponse response;
-        assert(response.ParseFromString(responseBytes));
+        assert(response.ParseFromString(result.responseBytes()));
         assert(response.result() == 3);
     }
 
     {
-        /*
-         * 测试 2：
-         * requestBytes 是非法 protobuf，应该失败。
-         */
         CalculatorServiceImpl calculator;
 
         ServiceRegistry registry;
@@ -121,26 +111,20 @@ int main() {
 
         MethodInvoker invoker;
 
-        std::string responseBytes;
-        errorText.clear();
+        std::string badRequestBytes;
+        badRequestBytes.push_back(static_cast<char>(0x0A));
+        badRequestBytes.push_back(static_cast<char>(0xFF));
 
-        const std::string badRequestBytes =
-            "this is not a valid AddRequest protobuf";
+        const auto result =
+            invoker.invokeUnary(*serviceMeta, *methodMeta, badRequestBytes);
 
-        const bool ok =
-            invoker.invokeUnary(*serviceMeta, *methodMeta, badRequestBytes,
-                                responseBytes, errorText);
-
-        assert(!ok);
-        assert(responseBytes.empty());
-        assert(!errorText.empty());
+        assert(result.failed());
+        assert(result.errorCode() == novanet::rpc::RPC_PARSE_REQUEST_FAILED);
+        assert(result.responseBytes().empty());
+        assert(!result.errorText().empty());
     }
 
     {
-        /*
-         * 测试 3：
-         * 业务方法通过 controller->SetFailed() 主动标记失败。
-         */
         FailingCalculatorServiceImpl calculator;
 
         ServiceRegistry registry;
@@ -163,15 +147,14 @@ int main() {
 
         MethodInvoker invoker;
 
-        std::string responseBytes;
-        errorText.clear();
+        const auto result =
+            invoker.invokeUnary(*serviceMeta, *methodMeta, requestBytes);
 
-        const bool ok = invoker.invokeUnary(
-            *serviceMeta, *methodMeta, requestBytes, responseBytes, errorText);
-
-        assert(!ok);
-        assert(responseBytes.empty());
-        assert(errorText.find("intentional failure") != std::string::npos);
+        assert(result.failed());
+        assert(result.errorCode() == novanet::rpc::RPC_INVOKE_FAILED);
+        assert(result.responseBytes().empty());
+        assert(result.errorText().find("intentional failure") !=
+               std::string::npos);
     }
 
     std::cout << "[PASS] MethodInvokerTest passed.\n";
