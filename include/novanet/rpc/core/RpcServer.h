@@ -53,7 +53,7 @@ public:
 private:
     void installCallbacks();
     void handleMessage(const std::shared_ptr<novanet::net::TcpConnection>& conn,
-                       novanet::net::Buffer& buffer);
+                       novanet::net::Buffer* buffer);
     bool sendRpcMessage(
         const std::shared_ptr<novanet::net::TcpConnection>& conn,
         const RpcMessage& msg) const;
