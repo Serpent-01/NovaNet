@@ -96,7 +96,7 @@ add_library(novanet STATIC
     src/rpc/core/RpcDispatcher.cpp
     # src/rpc/core/PendingCall.cpp
     # src/rpc/core/PendingCallManager.cpp
-    # src/rpc/core/RpcServer.cpp
+    src/rpc/core/RpcServer.cpp
     # src/rpc/core/RpcChannel.cpp
 
     # ======================================================
@@ -252,4 +252,20 @@ target_link_libraries(rpc_dispatcher_unary_path_test
 add_test(
     NAME rpc_dispatcher_unary_path_test
     COMMAND rpc_dispatcher_unary_path_test
+)
+
+
+add_executable(rpc_server_integration_test
+    tests/rpc/RpcServerIntegrationTest.cpp
+)
+
+target_link_libraries(rpc_server_integration_test
+    PRIVATE
+        novanet
+        Threads::Threads
+)
+
+add_test(
+    NAME rpc_server_integration_test
+    COMMAND rpc_server_integration_test
 )

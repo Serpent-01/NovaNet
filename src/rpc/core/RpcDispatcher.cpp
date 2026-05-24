@@ -2,7 +2,9 @@
 
 #include <string>
 #include <utility>
+#include <vector>
 
+#include "novanet/base/Logger.h"
 #include "novanet/rpc/protocol/FrameType.h"
 
 namespace novanet::rpc {
@@ -16,6 +18,8 @@ bool RpcDispatcher::dispatch(const RpcMessage& msg,
     outResponses.clear();
 
     if (!msg.valid()) {
+        LOG_WARN << "RpcDispatcher got invalid RpcMessage";
+
         return appendErrorFrame(msg, RPC_INVALID_FRAME, "invalid rpc message",
                                 outResponses);
     }
@@ -45,19 +49,36 @@ bool RpcDispatcher::dispatch(const RpcMessage& msg,
 bool RpcDispatcher::dispatchUnaryRequest(
     const RpcMessage& msg, std::vector<RpcMessage>& outResponses) const {
     UnaryRequestMeta requestMeta;
+
     if (!requestMeta.ParseFromString(msg.payload())) {
+        LOG_WARN << "RpcDispatcher failed to parse UnaryRequestMeta, requestId="
+                 << msg.requestId();
+
         return appendUnaryErrorResponse(msg, RPC_PARSE_REQUEST_FAILED,
                                         "failed to parse UnaryRequestMeta",
                                         outResponses);
     }
 
+    LOG_INFO << "RpcDispatcher unary request: service="
+             << requestMeta.service_name()
+             << ", method=" << requestMeta.method_name()
+             << ", requestId=" << msg.requestId()
+             << ", streamId=" << msg.streamId()
+             << ", requestPayloadSize=" << requestMeta.request_payload().size();
+
     if (requestMeta.service_name().empty()) {
+        LOG_WARN << "RpcDispatcher bad request: empty service_name, requestId="
+                 << msg.requestId();
+
         return appendUnaryErrorResponse(
             msg, RPC_BAD_REQUEST, "UnaryRequestMeta.service_name is empty",
             outResponses);
     }
 
     if (requestMeta.method_name().empty()) {
+        LOG_WARN << "RpcDispatcher bad request: empty method_name, requestId="
+                 << msg.requestId();
+
         return appendUnaryErrorResponse(msg, RPC_BAD_REQUEST,
                                         "UnaryRequestMeta.method_name is empty",
                                         outResponses);
@@ -65,6 +86,10 @@ bool RpcDispatcher::dispatchUnaryRequest(
 
     const auto* serviceMeta = registry_.findService(requestMeta.service_name());
     if (serviceMeta == nullptr) {
+        LOG_WARN << "RpcDispatcher service not found: "
+                 << requestMeta.service_name()
+                 << ", requestId=" << msg.requestId();
+
         return appendUnaryErrorResponse(
             msg, RPC_SERVICE_NOT_FOUND,
             "service not found: " + requestMeta.service_name(), outResponses);
@@ -74,6 +99,11 @@ bool RpcDispatcher::dispatchUnaryRequest(
         registry_.findMethod(*serviceMeta, requestMeta.method_name());
 
     if (methodMeta == nullptr) {
+        LOG_WARN << "RpcDispatcher method not found: "
+                 << requestMeta.service_name() << "."
+                 << requestMeta.method_name()
+                 << ", requestId=" << msg.requestId();
+
         return appendUnaryErrorResponse(
             msg, RPC_METHOD_NOT_FOUND,
             "method not found: " + requestMeta.service_name() + "." +
@@ -85,9 +115,17 @@ bool RpcDispatcher::dispatchUnaryRequest(
                                              requestMeta.request_payload());
 
     if (invokeResult.failed()) {
+        LOG_WARN << "RpcDispatcher invoke failed: code="
+                 << static_cast<int>(invokeResult.errorCode())
+                 << ", error=" << invokeResult.errorText()
+                 << ", requestId=" << msg.requestId();
+
         return appendUnaryErrorResponse(msg, invokeResult.errorCode(),
                                         invokeResult.errorText(), outResponses);
     }
+
+    LOG_INFO << "RpcDispatcher invoke success, requestId=" << msg.requestId()
+             << ", responseBytes=" << invokeResult.responseBytes().size();
 
     return appendUnaryOkResponse(msg, invokeResult.releaseResponseBytes(),
                                  outResponses);
@@ -102,13 +140,26 @@ bool RpcDispatcher::appendUnaryOkResponse(
 
     std::string payload;
     if (!responseMeta.SerializeToString(&payload)) {
+        LOG_ERROR << "RpcDispatcher failed to serialize UnaryResponseMeta ok, "
+                  << "requestId=" << requestMsg.requestId();
         return false;
     }
 
-    outResponses.emplace_back(FrameType::UNARY_RESPONSE, requestMsg.streamId(),
-                              requestMsg.requestId(), std::move(payload));
+    RpcMessage response(FrameType::UNARY_RESPONSE, requestMsg.streamId(),
+                        requestMsg.requestId(), std::move(payload));
 
-    return outResponses.back().valid();
+    if (!response.valid()) {
+        LOG_ERROR << "RpcDispatcher generated invalid UNARY_RESPONSE, "
+                  << "requestId=" << response.requestId()
+                  << ", streamId=" << response.streamId()
+                  << ", type=" << response.type()
+                  << ", totalLen=" << response.totalLen()
+                  << ", payloadSize=" << response.payloadSize();
+        return false;
+    }
+
+    outResponses.emplace_back(std::move(response));
+    return true;
 }
 
 bool RpcDispatcher::appendUnaryErrorResponse(
@@ -120,13 +171,29 @@ bool RpcDispatcher::appendUnaryErrorResponse(
 
     std::string payload;
     if (!responseMeta.SerializeToString(&payload)) {
+        LOG_ERROR
+            << "RpcDispatcher failed to serialize UnaryResponseMeta error, "
+            << "requestId=" << requestMsg.requestId()
+            << ", errorCode=" << static_cast<int>(errorCode);
         return false;
     }
 
-    outResponses.emplace_back(FrameType::UNARY_RESPONSE, requestMsg.streamId(),
-                              requestMsg.requestId(), std::move(payload));
+    RpcMessage response(FrameType::UNARY_RESPONSE, requestMsg.streamId(),
+                        requestMsg.requestId(), std::move(payload));
 
-    return outResponses.back().valid();
+    if (!response.valid()) {
+        LOG_ERROR << "RpcDispatcher generated invalid unary error response, "
+                  << "requestId=" << response.requestId()
+                  << ", streamId=" << response.streamId()
+                  << ", type=" << response.type()
+                  << ", totalLen=" << response.totalLen()
+                  << ", payloadSize=" << response.payloadSize()
+                  << ", errorCode=" << static_cast<int>(errorCode);
+        return false;
+    }
+
+    outResponses.emplace_back(std::move(response));
+    return true;
 }
 
 bool RpcDispatcher::appendErrorFrame(
@@ -138,13 +205,28 @@ bool RpcDispatcher::appendErrorFrame(
 
     std::string payload;
     if (!errorMeta.SerializeToString(&payload)) {
+        LOG_ERROR << "RpcDispatcher failed to serialize ErrorFrameMeta, "
+                  << "requestId=" << requestMsg.requestId()
+                  << ", errorCode=" << static_cast<int>(errorCode);
         return false;
     }
 
-    outResponses.emplace_back(FrameType::ERROR_FRAME, requestMsg.streamId(),
-                              requestMsg.requestId(), std::move(payload));
+    RpcMessage response(FrameType::ERROR_FRAME, requestMsg.streamId(),
+                        requestMsg.requestId(), std::move(payload));
 
-    return outResponses.back().valid();
+    if (!response.valid()) {
+        LOG_ERROR << "RpcDispatcher generated invalid ERROR_FRAME, "
+                  << "requestId=" << response.requestId()
+                  << ", streamId=" << response.streamId()
+                  << ", type=" << response.type()
+                  << ", totalLen=" << response.totalLen()
+                  << ", payloadSize=" << response.payloadSize()
+                  << ", errorCode=" << static_cast<int>(errorCode);
+        return false;
+    }
+
+    outResponses.emplace_back(std::move(response));
+    return true;
 }
 
 }  // namespace novanet::rpc

@@ -57,7 +57,8 @@ bool RpcServer::registerService(google::protobuf::Service* service,
     } else {
         LOG_INFO << "RpcServer registered service";
     }
-    return service;
+
+    return true;
 }
 
 void RpcServer::start() {
@@ -135,8 +136,17 @@ void RpcServer::handleMessage(
                  << ", streamId=" << request.streamId()
                  << ", payloadSize=" << request.payloadSize();
         std::vector<RpcMessage> responses;
+
+        LOG_WARN << "RpcServer before dispatch, requestId="
+                 << request.requestId()
+                 << ", frameType=" << frameTypeToString(request.frameType())
+                 << ", payloadSize=" << request.payloadSize()
+                 << ", requestValid=" << request.valid()
+                 << ", serviceCount=" << registry_.serviceCount();
+
         const bool dispatched = dispatcher_.dispatch(request, responses);
-        if (dispatched) {
+
+        if (!dispatched) {
             LOG_WARN << "RpcServer dispatch failed, closing connection. "
                      << "requestId=" << request.requestId() << ", frameType="
                      << frameTypeToString(request.frameType());
@@ -161,7 +171,7 @@ void RpcServer::handleMessage(
 bool RpcServer::sendRpcMessage(
     const std::shared_ptr<novanet::net::TcpConnection>& conn,
     const RpcMessage& msg) const {
-    if (conn != nullptr) {
+    if (conn == nullptr) {
         LOG_WARN << "RpcServer sendRpcMessage failed: null connection";
         return false;
     }
@@ -182,10 +192,6 @@ bool RpcServer::sendRpcMessage(
     }
 
     conn->send(bytes);
-    LOG_INFO << "RpcServer sent frame type="
-             << frameTypeToString(msg.frameType())
-             << ", requestId=" << msg.requestId()
-             << ", streamId=" << msg.streamId() << ", bytes=" << bytes.size();
     return true;
 }
 
