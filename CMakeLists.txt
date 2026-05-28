@@ -95,7 +95,7 @@ add_library(novanet STATIC
     src/rpc/core/MethodInvoker.cpp
     src/rpc/core/RpcDispatcher.cpp
     src/rpc/core/PendingCall.cpp
-    # src/rpc/core/PendingCallManager.cpp
+    src/rpc/core/PendingCallManager.cpp
     src/rpc/core/RpcServer.cpp
     # src/rpc/core/RpcChannel.cpp
 
@@ -284,4 +284,20 @@ target_link_libraries(pending_calltest
 add_test(
     NAME pending_calltest
     COMMAND pending_calltest
+)
+
+
+add_executable(pending_call_managertest
+    tests/rpc/PendingCallManagerTest.cpp
+)
+
+target_link_libraries(pending_call_managertest
+    PRIVATE
+        novanet
+        Threads::Threads
+)
+
+add_test(
+    NAME pending_call_managertest
+    COMMAND pending_call_managertest
 )
