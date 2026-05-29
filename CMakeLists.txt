@@ -44,23 +44,14 @@ find_package(Protobuf REQUIRED)
 # ==========================================================
 
 add_library(novanet STATIC
-    # ======================================================
-    # generated protobuf
-    # ======================================================
+   
     generated/proto/rpc_meta.pb.cc
     generated/proto/calculator.pb.cc
-    # ======================================================
-    # base
-    # ======================================================
+    
+
     src/base/Timestamp.cpp
 
-    # 如果你已经实现了这些文件，再打开
-    # src/base/Logger.cpp
-    # src/base/ErrorCode.cpp
-
-    # ======================================================
-    # net
-    # ======================================================
+   
     src/net/InetAddress.cpp
     src/net/Socket.cpp
     src/net/SocketsOps.cpp
@@ -78,18 +69,13 @@ add_library(novanet STATIC
     src/net/TcpConnection.cpp
     src/net/TcpServer.cpp
 
-    # ======================================================
-    # rpc/protocol
-    # ======================================================
+    
     src/rpc/protocol/FrameType.cpp
     src/rpc/protocol/RpcHeader.cpp
     src/rpc/protocol/RpcMessage.cpp
     src/rpc/protocol/RpcCodec.cpp
 
-    # ======================================================
-    # rpc/core
-    # 后面写到这些类时再打开
-    # ======================================================
+
     src/rpc/core/RpcController.cpp
     src/rpc/core/ServiceRegistry.cpp
     src/rpc/core/MethodInvoker.cpp
@@ -97,13 +83,13 @@ add_library(novanet STATIC
     src/rpc/core/PendingCall.cpp
     src/rpc/core/PendingCallManager.cpp
     src/rpc/core/RpcServer.cpp
-    # src/rpc/core/RpcChannel.cpp
+    src/rpc/core/RpcChannel.cpp
 
     # ======================================================
     # rpc/stream
     # 后面写到这些类时再打开
     # ======================================================
-    # src/rpc/stream/StreamFrame.cpp
+    src/rpc/stream/StreamFrame.cpp
     # src/rpc/stream/StreamSession.cpp
     # src/rpc/stream/StreamManager.cpp
 )
@@ -301,3 +287,14 @@ add_test(
     NAME pending_call_managertest
     COMMAND pending_call_managertest
 )
+
+add_executable(StreamFrameTest
+    tests/rpc/stream/StreamFrameTest.cpp
+)
+
+target_link_libraries(StreamFrameTest
+    PRIVATE
+        novanet
+)
+
+add_test(NAME StreamFrameTest COMMAND StreamFrameTest)
