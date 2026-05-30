@@ -90,7 +90,7 @@ add_library(novanet STATIC
     # 后面写到这些类时再打开
     # ======================================================
     src/rpc/stream/StreamFrame.cpp
-    # src/rpc/stream/StreamSession.cpp
+    src/rpc/stream/StreamSession.cpp
     # src/rpc/stream/StreamManager.cpp
 )
 
@@ -276,25 +276,38 @@ add_test(
 add_executable(pending_call_managertest
     tests/rpc/PendingCallManagerTest.cpp
 )
-
 target_link_libraries(pending_call_managertest
     PRIVATE
         novanet
         Threads::Threads
 )
-
 add_test(
     NAME pending_call_managertest
     COMMAND pending_call_managertest
 )
 
+
+
 add_executable(StreamFrameTest
     tests/rpc/stream/StreamFrameTest.cpp
 )
-
 target_link_libraries(StreamFrameTest
     PRIVATE
         novanet
 )
-
 add_test(NAME StreamFrameTest COMMAND StreamFrameTest)
+
+
+add_executable(StreamSessionTest
+    tests/rpc/stream/StreamSessionTest.cpp
+)
+
+target_link_libraries(StreamSessionTest
+    PRIVATE
+        novanet
+)
+
+add_test(
+    NAME StreamSessionTest
+    COMMAND StreamSessionTest
+)
