@@ -4,64 +4,17 @@ package novanet.example;
 
 option cc_enable_arenas = true;
 option optimize_for = SPEED;
-
-/*
- * 关键选项：
- *
- * NovaNet 第一版的 ServiceRegistry / MethodInvoker
- * 计划基于 google::protobuf::Service / MethodDescriptor 做通用 RPC 调用。
- *
- * 如果不打开 cc_generic_services，
- * C++ 生成代码通常不会生成 CalculatorService 这个 service 基类，
- * 后面的 ServiceRegistry 就没法注册：
- *
- *     google::protobuf::Service*
- *
- * 所以 Phase 4 第一版建议打开它。
- */
 option cc_generic_services = true;
 
-/*
- * AddRequest 是 CalculatorService.Add 的业务请求。
- *
- * 注意：
- * - request_id 不放这里，因为 request_id 属于 RpcHeader。
- * - service_name / method_name 不放这里，因为它们属于 UnaryRequestMeta。
- * - error_code 不放这里，因为 RPC 层错误属于 UnaryResponseMeta。
- */
 message AddRequest {
-    // 使用 sint64 而不是 int64：
-    // sint64 对负数使用 zigzag 编码，负数场景更紧凑。
     sint64 lhs = 1;
     sint64 rhs = 2;
 }
 
-/*
- * AddResponse 是 CalculatorService.Add 的业务响应。
- *
- * RPC 成功时：
- *   UnaryResponseMeta.error_code = RPC_OK
- *   UnaryResponseMeta.response_payload = AddResponse bytes
- *
- * RPC 失败时：
- *   UnaryResponseMeta.error_code != RPC_OK
- *   通常不需要解析 AddResponse。
- */
 message AddResponse {
     sint64 result = 1;
 }
 
-/*
- * 第一版只定义一个 Add 方法。
- *
- * 目的不是做复杂计算器，
- * 而是验证 unary RPC 的完整链路：
- *
- * client -> UNARY_REQUEST
- * server -> dispatch -> method invoke
- * server -> UNARY_RESPONSE
- * client -> PendingCall 完成
- */
 service CalculatorService {
     rpc Add(AddRequest) returns (AddResponse);
 }

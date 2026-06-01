@@ -59,13 +59,11 @@ public:
      * - serviceName / methodName 为空；
      * - streamId 已存在。
      */
-    [[nodiscard]] SessionPtr createStream(std::uint32_t streamId,
-                                          std::uint64_t requestId,
-                                          std::string serviceName,
-                                          std::string methodName,
-                                          DataCallback onData = nullptr,
-                                          EndCallback onEnd = nullptr,
-                                          ErrorCallback onError = nullptr);
+    [[nodiscard]] SessionPtr
+    createStream(std::uint32_t streamId, std::uint64_t requestId,
+                 std::string serviceName, std::string methodName,
+                 DataCallback onData = nullptr, EndCallback onEnd = nullptr,
+                 ErrorCallback onError = nullptr);
     /*
      * 注册外部创建好的 StreamSession。
      *
@@ -134,8 +132,8 @@ public:
      *
      * 会移除所有 stream，并在不持有 manager 锁的情况下逐个 markCancelled。
      */
-    [[nodiscard]] std::size_t cancelAll(
-        std::string reason = "connection closed");
+    [[nodiscard]] std::size_t
+    cancelAll(std::string reason = "connection closed");
 
     /*
      * 扫描超时 stream。
@@ -146,17 +144,17 @@ public:
      *
      * 返回被 timeout 清理的 stream_id 列表。
      */
-    [[nodiscard]] std::vector<std::uint32_t> timeoutStreams(
-        novanet::base::Timestamp now, double timeoutSeconds,
-        std::string reason = "stream idle timeout");
+    [[nodiscard]] std::vector<std::uint32_t>
+    timeoutStreams(novanet::base::Timestamp now, double timeoutSeconds,
+                   std::string reason = "stream idle timeout");
 
     [[nodiscard]] std::size_t size() const;
     [[nodiscard]] bool empty() const;
 
     [[nodiscard]] std::vector<std::uint32_t> activeStreamIds() const;
 
-    [[nodiscard]] static std::string_view resultToString(
-        Result result) noexcept;
+    [[nodiscard]] static std::string_view
+    resultToString(Result result) noexcept;
 
 private:
     [[nodiscard]] static bool validStreamId(std::uint32_t streamId) noexcept;
@@ -173,4 +171,4 @@ private:
     std::unordered_map<std::uint32_t, SessionPtr> streams_;
 };
 
-}  // namespace novanet::rpc
+} // namespace novanet::rpc

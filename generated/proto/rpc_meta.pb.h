@@ -51,7 +51,7 @@ struct TableStruct_rpc_5fmeta_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[16]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -69,6 +69,15 @@ extern ErrorFrameMeta_MetadataEntry_DoNotUseDefaultTypeInternal _ErrorFrameMeta_
 class HeartbeatMeta;
 class HeartbeatMetaDefaultTypeInternal;
 extern HeartbeatMetaDefaultTypeInternal _HeartbeatMeta_default_instance_;
+class HeartbeatMeta_MetadataEntry_DoNotUse;
+class HeartbeatMeta_MetadataEntry_DoNotUseDefaultTypeInternal;
+extern HeartbeatMeta_MetadataEntry_DoNotUseDefaultTypeInternal _HeartbeatMeta_MetadataEntry_DoNotUse_default_instance_;
+class StreamCancelMeta;
+class StreamCancelMetaDefaultTypeInternal;
+extern StreamCancelMetaDefaultTypeInternal _StreamCancelMeta_default_instance_;
+class StreamCancelMeta_MetadataEntry_DoNotUse;
+class StreamCancelMeta_MetadataEntry_DoNotUseDefaultTypeInternal;
+extern StreamCancelMeta_MetadataEntry_DoNotUseDefaultTypeInternal _StreamCancelMeta_MetadataEntry_DoNotUse_default_instance_;
 class StreamDataMeta;
 class StreamDataMetaDefaultTypeInternal;
 extern StreamDataMetaDefaultTypeInternal _StreamDataMeta_default_instance_;
@@ -105,6 +114,9 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::novanet::rpc::ErrorFrameMeta* Arena::CreateMaybeMessage<::novanet::rpc::ErrorFrameMeta>(Arena*);
 template<> ::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse>(Arena*);
 template<> ::novanet::rpc::HeartbeatMeta* Arena::CreateMaybeMessage<::novanet::rpc::HeartbeatMeta>(Arena*);
+template<> ::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::StreamCancelMeta* Arena::CreateMaybeMessage<::novanet::rpc::StreamCancelMeta>(Arena*);
+template<> ::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse>(Arena*);
 template<> ::novanet::rpc::StreamDataMeta* Arena::CreateMaybeMessage<::novanet::rpc::StreamDataMeta>(Arena*);
 template<> ::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse>(Arena*);
 template<> ::novanet::rpc::StreamEndMeta* Arena::CreateMaybeMessage<::novanet::rpc::StreamEndMeta>(Arena*);
@@ -125,24 +137,32 @@ enum RpcErrorCode : int {
   RPC_BAD_REQUEST = 2,
   RPC_INVALID_FRAME = 3,
   RPC_UNSUPPORTED_FRAME_TYPE = 4,
+  RPC_INTERNAL_ERROR = 5,
   RPC_SERVICE_NOT_FOUND = 10,
   RPC_METHOD_NOT_FOUND = 11,
   RPC_PARSE_REQUEST_FAILED = 20,
-  RPC_SERIALIZE_RESPONSE_FAILED = 21,
+  RPC_PARSE_RESPONSE_FAILED = 21,
+  RPC_SERIALIZE_REQUEST_FAILED = 22,
+  RPC_SERIALIZE_RESPONSE_FAILED = 23,
   RPC_INVOKE_FAILED = 30,
   RPC_TIMEOUT = 31,
   RPC_CANCELLED = 32,
+  RPC_CONNECTION_CLOSED = 33,
   RPC_STREAM_NOT_FOUND = 40,
   RPC_STREAM_CLOSED = 41,
   RPC_STREAM_CANCELLED = 42,
+  RPC_STREAM_PROTOCOL_ERROR = 43,
   RPC_BACKPRESSURE = 50,
   RPC_RESOURCE_EXHAUSTED = 51,
+  RPC_NO_AVAILABLE_INSTANCE = 100,
+  RPC_LOAD_BALANCE_FAILED = 101,
+  RPC_RETRY_EXHAUSTED = 102,
   RpcErrorCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   RpcErrorCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool RpcErrorCode_IsValid(int value);
 constexpr RpcErrorCode RpcErrorCode_MIN = RPC_OK;
-constexpr RpcErrorCode RpcErrorCode_MAX = RPC_RESOURCE_EXHAUSTED;
+constexpr RpcErrorCode RpcErrorCode_MAX = RPC_RETRY_EXHAUSTED;
 constexpr int RpcErrorCode_ARRAYSIZE = RpcErrorCode_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RpcErrorCode_descriptor();
@@ -1411,6 +1431,218 @@ class StreamEndMeta PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class StreamCancelMeta_MetadataEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<StreamCancelMeta_MetadataEntry_DoNotUse, 
+    std::string, std::string,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    0 > {
+public:
+  typedef ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<StreamCancelMeta_MetadataEntry_DoNotUse, 
+    std::string, std::string,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    0 > SuperType;
+  StreamCancelMeta_MetadataEntry_DoNotUse();
+  StreamCancelMeta_MetadataEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void MergeFrom(const StreamCancelMeta_MetadataEntry_DoNotUse& other);
+  static const StreamCancelMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const StreamCancelMeta_MetadataEntry_DoNotUse*>(&_StreamCancelMeta_MetadataEntry_DoNotUse_default_instance_); }
+  static bool ValidateKey(std::string* s) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamCancelMeta.MetadataEntry.key");
+ }
+  static bool ValidateValue(std::string* s) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamCancelMeta.MetadataEntry.value");
+ }
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_rpc_5fmeta_2eproto);
+    return ::descriptor_table_rpc_5fmeta_2eproto.file_level_metadata[10];
+  }
+
+  public:
+};
+
+// -------------------------------------------------------------------
+
+class StreamCancelMeta PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.StreamCancelMeta) */ {
+ public:
+  inline StreamCancelMeta() : StreamCancelMeta(nullptr) {};
+  virtual ~StreamCancelMeta();
+
+  StreamCancelMeta(const StreamCancelMeta& from);
+  StreamCancelMeta(StreamCancelMeta&& from) noexcept
+    : StreamCancelMeta() {
+    *this = ::std::move(from);
+  }
+
+  inline StreamCancelMeta& operator=(const StreamCancelMeta& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline StreamCancelMeta& operator=(StreamCancelMeta&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const StreamCancelMeta& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const StreamCancelMeta* internal_default_instance() {
+    return reinterpret_cast<const StreamCancelMeta*>(
+               &_StreamCancelMeta_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(StreamCancelMeta& a, StreamCancelMeta& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(StreamCancelMeta* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(StreamCancelMeta* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline StreamCancelMeta* New() const final {
+    return CreateMaybeMessage<StreamCancelMeta>(nullptr);
+  }
+
+  StreamCancelMeta* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<StreamCancelMeta>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const StreamCancelMeta& from);
+  void MergeFrom(const StreamCancelMeta& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(StreamCancelMeta* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "novanet.rpc.StreamCancelMeta";
+  }
+  protected:
+  explicit StreamCancelMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_rpc_5fmeta_2eproto);
+    return ::descriptor_table_rpc_5fmeta_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMetadataFieldNumber = 10,
+    kReasonFieldNumber = 1,
+  };
+  // map<string, string> metadata = 10;
+  int metadata_size() const;
+  private:
+  int _internal_metadata_size() const;
+  public:
+  void clear_metadata();
+  private:
+  const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+      _internal_metadata() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+      _internal_mutable_metadata();
+  public:
+  const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+      metadata() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+      mutable_metadata();
+
+  // string reason = 1;
+  void clear_reason();
+  const std::string& reason() const;
+  void set_reason(const std::string& value);
+  void set_reason(std::string&& value);
+  void set_reason(const char* value);
+  void set_reason(const char* value, size_t size);
+  std::string* mutable_reason();
+  std::string* release_reason();
+  void set_allocated_reason(std::string* reason);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_reason();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_reason(
+      std::string* reason);
+  private:
+  const std::string& _internal_reason() const;
+  void _internal_set_reason(const std::string& value);
+  std::string* _internal_mutable_reason();
+  public:
+
+  // @@protoc_insertion_point(class_scope:novanet.rpc.StreamCancelMeta)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::MapField<
+      StreamCancelMeta_MetadataEntry_DoNotUse,
+      std::string, std::string,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+      0 > metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr reason_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_rpc_5fmeta_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ErrorFrameMeta_MetadataEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<ErrorFrameMeta_MetadataEntry_DoNotUse, 
     std::string, std::string,
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
@@ -1437,7 +1669,7 @@ public:
   private:
   static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
     ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_rpc_5fmeta_2eproto);
-    return ::descriptor_table_rpc_5fmeta_2eproto.file_level_metadata[10];
+    return ::descriptor_table_rpc_5fmeta_2eproto.file_level_metadata[12];
   }
 
   public:
@@ -1487,7 +1719,7 @@ class ErrorFrameMeta PROTOBUF_FINAL :
                &_ErrorFrameMeta_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    13;
 
   friend void swap(ErrorFrameMeta& a, ErrorFrameMeta& b) {
     a.Swap(&b);
@@ -1661,6 +1893,40 @@ class ErrorFrameMeta PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class HeartbeatMeta_MetadataEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<HeartbeatMeta_MetadataEntry_DoNotUse, 
+    std::string, std::string,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    0 > {
+public:
+  typedef ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<HeartbeatMeta_MetadataEntry_DoNotUse, 
+    std::string, std::string,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+    0 > SuperType;
+  HeartbeatMeta_MetadataEntry_DoNotUse();
+  HeartbeatMeta_MetadataEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void MergeFrom(const HeartbeatMeta_MetadataEntry_DoNotUse& other);
+  static const HeartbeatMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const HeartbeatMeta_MetadataEntry_DoNotUse*>(&_HeartbeatMeta_MetadataEntry_DoNotUse_default_instance_); }
+  static bool ValidateKey(std::string* s) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.HeartbeatMeta.MetadataEntry.key");
+ }
+  static bool ValidateValue(std::string* s) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.HeartbeatMeta.MetadataEntry.value");
+ }
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_rpc_5fmeta_2eproto);
+    return ::descriptor_table_rpc_5fmeta_2eproto.file_level_metadata[14];
+  }
+
+  public:
+};
+
+// -------------------------------------------------------------------
+
 class HeartbeatMeta PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.HeartbeatMeta) */ {
  public:
@@ -1703,7 +1969,7 @@ class HeartbeatMeta PROTOBUF_FINAL :
                &_HeartbeatMeta_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    15;
 
   friend void swap(HeartbeatMeta& a, HeartbeatMeta& b) {
     a.Swap(&b);
@@ -1771,12 +2037,31 @@ class HeartbeatMeta PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
+
   // accessors -------------------------------------------------------
 
   enum : int {
+    kMetadataFieldNumber = 10,
     kNodeIdFieldNumber = 2,
     kUnixMillisFieldNumber = 1,
   };
+  // map<string, string> metadata = 10;
+  int metadata_size() const;
+  private:
+  int _internal_metadata_size() const;
+  public:
+  void clear_metadata();
+  private:
+  const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+      _internal_metadata() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+      _internal_mutable_metadata();
+  public:
+  const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+      metadata() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+      mutable_metadata();
+
   // string node_id = 2;
   void clear_node_id();
   const std::string& node_id() const;
@@ -1818,6 +2103,12 @@ class HeartbeatMeta PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::MapField<
+      HeartbeatMeta_MetadataEntry_DoNotUse,
+      std::string, std::string,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
+      0 > metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr node_id_;
   ::PROTOBUF_NAMESPACE_ID::int64 unix_millis_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -2919,6 +3210,122 @@ StreamEndMeta::mutable_metadata() {
 
 // -------------------------------------------------------------------
 
+// StreamCancelMeta
+
+// string reason = 1;
+inline void StreamCancelMeta::clear_reason() {
+  reason_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& StreamCancelMeta::reason() const {
+  // @@protoc_insertion_point(field_get:novanet.rpc.StreamCancelMeta.reason)
+  return _internal_reason();
+}
+inline void StreamCancelMeta::set_reason(const std::string& value) {
+  _internal_set_reason(value);
+  // @@protoc_insertion_point(field_set:novanet.rpc.StreamCancelMeta.reason)
+}
+inline std::string* StreamCancelMeta::mutable_reason() {
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.StreamCancelMeta.reason)
+  return _internal_mutable_reason();
+}
+inline const std::string& StreamCancelMeta::_internal_reason() const {
+  return reason_.Get();
+}
+inline void StreamCancelMeta::_internal_set_reason(const std::string& value) {
+  
+  reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void StreamCancelMeta::set_reason(std::string&& value) {
+  
+  reason_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.StreamCancelMeta.reason)
+}
+inline void StreamCancelMeta::set_reason(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.StreamCancelMeta.reason)
+}
+inline void StreamCancelMeta::set_reason(const char* value,
+    size_t size) {
+  
+  reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.StreamCancelMeta.reason)
+}
+inline std::string* StreamCancelMeta::_internal_mutable_reason() {
+  
+  return reason_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* StreamCancelMeta::release_reason() {
+  // @@protoc_insertion_point(field_release:novanet.rpc.StreamCancelMeta.reason)
+  return reason_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void StreamCancelMeta::set_allocated_reason(std::string* reason) {
+  if (reason != nullptr) {
+    
+  } else {
+    
+  }
+  reason_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), reason,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.StreamCancelMeta.reason)
+}
+inline std::string* StreamCancelMeta::unsafe_arena_release_reason() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.StreamCancelMeta.reason)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  
+  return reason_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void StreamCancelMeta::unsafe_arena_set_allocated_reason(
+    std::string* reason) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (reason != nullptr) {
+    
+  } else {
+    
+  }
+  reason_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      reason, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.StreamCancelMeta.reason)
+}
+
+// map<string, string> metadata = 10;
+inline int StreamCancelMeta::_internal_metadata_size() const {
+  return metadata_.size();
+}
+inline int StreamCancelMeta::metadata_size() const {
+  return _internal_metadata_size();
+}
+inline void StreamCancelMeta::clear_metadata() {
+  metadata_.Clear();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+StreamCancelMeta::_internal_metadata() const {
+  return metadata_.GetMap();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+StreamCancelMeta::metadata() const {
+  // @@protoc_insertion_point(field_map:novanet.rpc.StreamCancelMeta.metadata)
+  return _internal_metadata();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+StreamCancelMeta::_internal_mutable_metadata() {
+  return metadata_.MutableMap();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+StreamCancelMeta::mutable_metadata() {
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.StreamCancelMeta.metadata)
+  return _internal_mutable_metadata();
+}
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // ErrorFrameMeta
 
 // .novanet.rpc.RpcErrorCode error_code = 1;
@@ -3134,6 +3541,8 @@ ErrorFrameMeta::mutable_metadata() {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 // HeartbeatMeta
 
 // int64 unix_millis = 1;
@@ -3237,9 +3646,44 @@ inline void HeartbeatMeta::unsafe_arena_set_allocated_node_id(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.HeartbeatMeta.node_id)
 }
 
+// map<string, string> metadata = 10;
+inline int HeartbeatMeta::_internal_metadata_size() const {
+  return metadata_.size();
+}
+inline int HeartbeatMeta::metadata_size() const {
+  return _internal_metadata_size();
+}
+inline void HeartbeatMeta::clear_metadata() {
+  metadata_.Clear();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+HeartbeatMeta::_internal_metadata() const {
+  return metadata_.GetMap();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
+HeartbeatMeta::metadata() const {
+  // @@protoc_insertion_point(field_map:novanet.rpc.HeartbeatMeta.metadata)
+  return _internal_metadata();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+HeartbeatMeta::_internal_mutable_metadata() {
+  return metadata_.MutableMap();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
+HeartbeatMeta::mutable_metadata() {
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.HeartbeatMeta.metadata)
+  return _internal_mutable_metadata();
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
