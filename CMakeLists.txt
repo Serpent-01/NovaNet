@@ -39,14 +39,62 @@ endif()
 find_package(Threads REQUIRED)
 find_package(Protobuf REQUIRED)
 
+
+# ==========================================================
+# Protobuf 自动生成
+# ==========================================================
+
+set(PROTO_SRC_DIR ${PROJECT_SOURCE_DIR}/proto)
+set(PROTO_GEN_DIR ${PROJECT_SOURCE_DIR}/generated/proto)
+
+file(MAKE_DIRECTORY ${PROTO_GEN_DIR})
+
+set(PROTO_FILES
+    ${PROTO_SRC_DIR}/rpc_meta.proto
+    ${PROTO_SRC_DIR}/calculator.proto
+    ${PROTO_SRC_DIR}/chat.proto
+)
+
+set(PROTO_SRCS "")
+set(PROTO_HDRS "")
+
+foreach(PROTO_FILE ${PROTO_FILES})
+    get_filename_component(PROTO_NAME ${PROTO_FILE} NAME_WE)
+
+    set(PROTO_SRC ${PROTO_GEN_DIR}/${PROTO_NAME}.pb.cc)
+    set(PROTO_HDR ${PROTO_GEN_DIR}/${PROTO_NAME}.pb.h)
+
+    add_custom_command(
+        OUTPUT
+            ${PROTO_SRC}
+            ${PROTO_HDR}
+        COMMAND
+            ${Protobuf_PROTOC_EXECUTABLE}
+        ARGS
+            --proto_path=${PROTO_SRC_DIR}
+            --cpp_out=${PROTO_GEN_DIR}
+            ${PROTO_FILE}
+        DEPENDS
+            ${PROTO_FILE}
+        COMMENT
+            "Generating ${PROTO_NAME}.pb.cc/.pb.h"
+        VERBATIM
+    )
+
+    list(APPEND PROTO_SRCS ${PROTO_SRC})
+    list(APPEND PROTO_HDRS ${PROTO_HDR})
+endforeach()
+
+
+
 # ==========================================================
 # 核心库：libnovanet.a
 # ==========================================================
 
 add_library(novanet STATIC
    
-    generated/proto/rpc_meta.pb.cc
-    generated/proto/calculator.pb.cc
+    ${PROTO_SRCS}
+    ${PROTO_HDRS}
     
 
     src/base/Timestamp.cpp
