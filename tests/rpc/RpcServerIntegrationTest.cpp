@@ -27,11 +27,12 @@ namespace {
 
 constexpr uint16_t kTestPort = 19091;
 
-class CalculatorServiceImpl final : public novanet::example::CalculatorService {
+class CalculatorServiceImpl final
+    : public novanet::example::calculator::CalculatorService {
 public:
     void Add(::google::protobuf::RpcController* controller,
-             const ::novanet::example::AddRequest* request,
-             ::novanet::example::AddResponse* response,
+             const ::novanet::example::calculator::AddRequest* request,
+             ::novanet::example::calculator::AddResponse* response,
              ::google::protobuf::Closure* done) override {
         if (controller == nullptr || request == nullptr ||
             response == nullptr) {
@@ -165,7 +166,7 @@ UniqueFd connectWithRetry(uint16_t port) {
 }
 
 std::string makeUnaryAddRequestBytes(uint64_t requestId, int lhs, int rhs) {
-    novanet::example::AddRequest addRequest;
+    ::novanet::example::calculator::AddRequest addRequest;
     addRequest.set_lhs(lhs);
     addRequest.set_rhs(rhs);
 
@@ -225,7 +226,7 @@ novanet::rpc::RpcMessage readOneRpcMessageFromSocket(int fd) {
     return responseMsg;
 }
 
-}  // namespace
+} // namespace
 
 int main() {
     using novanet::rpc::FrameType;
@@ -305,7 +306,7 @@ int main() {
     assert(responseMeta.error_text().empty());
     assert(!responseMeta.response_payload().empty());
 
-    novanet::example::AddResponse addResponse;
+    ::novanet::example::calculator::AddResponse addResponse;
     assert(addResponse.ParseFromString(responseMeta.response_payload()));
     assert(addResponse.result() == 3);
 

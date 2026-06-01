@@ -14,11 +14,12 @@
 
 namespace {
 
-class CalculatorServiceImpl final : public novanet::example::CalculatorService {
+class CalculatorServiceImpl final
+    : public ::novanet::example::calculator::CalculatorService {
 public:
     void Add(::google::protobuf::RpcController* controller,
-             const ::novanet::example::AddRequest* request,
-             ::novanet::example::AddResponse* response,
+             const ::novanet::example::calculator::AddRequest* request,
+             ::novanet::example::calculator::AddResponse* response,
              ::google::protobuf::Closure* done) override {
         if (controller == nullptr || request == nullptr ||
             response == nullptr) {
@@ -38,7 +39,7 @@ public:
 };
 
 std::string serializeAddRequest(int lhs, int rhs) {
-    novanet::example::AddRequest addRequest;
+    ::novanet::example::calculator::AddRequest addRequest;
     addRequest.set_lhs(lhs);
     addRequest.set_rhs(rhs);
 
@@ -65,8 +66,8 @@ std::string makeAddUnaryRequestPayload(int lhs, int rhs) {
                                    serializeAddRequest(lhs, rhs));
 }
 
-novanet::rpc::UnaryResponseMeta parseUnaryResponse(
-    const novanet::rpc::RpcMessage& responseMsg) {
+novanet::rpc::UnaryResponseMeta
+parseUnaryResponse(const novanet::rpc::RpcMessage& responseMsg) {
     assert(responseMsg.valid());
     assert(responseMsg.frameType() == novanet::rpc::FrameType::UNARY_RESPONSE);
 
@@ -76,8 +77,8 @@ novanet::rpc::UnaryResponseMeta parseUnaryResponse(
     return responseMeta;
 }
 
-novanet::rpc::ErrorFrameMeta parseErrorFrame(
-    const novanet::rpc::RpcMessage& responseMsg) {
+novanet::rpc::ErrorFrameMeta
+parseErrorFrame(const novanet::rpc::RpcMessage& responseMsg) {
     assert(responseMsg.valid());
     assert(responseMsg.frameType() == novanet::rpc::FrameType::ERROR_FRAME);
 
@@ -87,7 +88,7 @@ novanet::rpc::ErrorFrameMeta parseErrorFrame(
     return errorMeta;
 }
 
-}  // namespace
+} // namespace
 
 int main() {
     using novanet::rpc::FrameType;
@@ -140,7 +141,7 @@ int main() {
         assert(responseMeta.error_text().empty());
         assert(!responseMeta.response_payload().empty());
 
-        novanet::example::AddResponse addResponse;
+        ::novanet::example::calculator::AddResponse addResponse;
         assert(addResponse.ParseFromString(responseMeta.response_payload()));
         assert(addResponse.result() == 3);
     }

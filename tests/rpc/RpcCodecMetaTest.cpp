@@ -10,7 +10,7 @@
 
 int main() {
     using namespace novanet::rpc;
-
+    using namespace novanet::rpc::meta;
     // 1. 构造 UnaryRequestMeta
     UnaryRequestMeta meta;
     meta.set_service_name("CalculatorService");
@@ -23,8 +23,8 @@ int main() {
 
     // 2. 把 protobuf payload 放进 RpcMessage
     RpcMessage request(FrameType::UNARY_REQUEST,
-                       0,     // unary 第一版 streamId 可以为 0
-                       1001,  // requestId 必须非 0
+                       0,    // unary 第一版 streamId 可以为 0
+                       1001, // requestId 必须非 0
                        metaBytes);
 
     assert(request.valid());

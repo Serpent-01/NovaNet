@@ -6,7 +6,7 @@
 
 int main() {
     using namespace novanet::rpc;
-
+    using namespace novanet::rpc::meta;
     // ================================
     // 1. 测试 UnaryRequestMeta
     // ================================

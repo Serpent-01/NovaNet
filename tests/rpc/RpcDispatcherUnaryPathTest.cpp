@@ -15,11 +15,12 @@
 #include "rpc_meta.pb.h"
 
 namespace {
-class CalculatorServiceImpl final : public novanet::example::CalculatorService {
+class CalculatorServiceImpl final
+    : public ::novanet::example::calculator::CalculatorService {
 public:
     void Add(::google::protobuf::RpcController* controller,
-             const ::novanet::example::AddRequest* request,
-             ::novanet::example::AddResponse* response,
+             const ::novanet::example::calculator::AddRequest* request,
+             ::novanet::example::calculator::AddResponse* response,
              ::google::protobuf::Closure* done) override {
         if (controller == nullptr || request == nullptr ||
             response == nullptr) {
@@ -34,7 +35,7 @@ public:
         }
     }
 };
-}  // namespace
+} // namespace
 
 int main() {
     using novanet::rpc::FrameType;
@@ -55,7 +56,7 @@ int main() {
     MethodInvoker invoker;
     RpcDispatcher dispatcher(registry, invoker);
 
-    novanet::example::AddRequest addRequest;
+    ::novanet::example::calculator::AddRequest addRequest;
     addRequest.set_lhs(1);
     addRequest.set_rhs(2);
     std::string addRequestBytes;
@@ -71,8 +72,8 @@ int main() {
     assert(!rpcPayload.empty());
 
     RpcMessage requestMsg(FrameType::UNARY_REQUEST,
-                          0,     // unary 第一版 streamId 可以为 0
-                          1001,  // requestId 必须非 0
+                          0,    // unary 第一版 streamId 可以为 0
+                          1001, // requestId 必须非 0
                           std::move(rpcPayload));
     assert(requestMsg.valid());
     assert(requestMsg.frameType() == FrameType::UNARY_REQUEST);
@@ -97,7 +98,7 @@ int main() {
     assert(responseMeta.error_text().empty());
     assert(!responseMeta.response_payload().empty());
 
-    novanet::example::AddResponse addResponse;
+    ::novanet::example::calculator::AddResponse addResponse;
     assert(addResponse.ParseFromString(responseMeta.response_payload()));
 
     assert(addResponse.result() == 3);

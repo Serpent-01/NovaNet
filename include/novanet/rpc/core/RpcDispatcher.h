@@ -46,24 +46,28 @@ public:
                                 std::vector<RpcMessage>& outResponses) const;
 
 private:
-    [[nodiscard]] bool dispatchUnaryRequest(
-        const RpcMessage& msg, std::vector<RpcMessage>& outResponses) const;
+    [[nodiscard]] bool
+    dispatchUnaryRequest(const RpcMessage& msg,
+                         std::vector<RpcMessage>& outResponses) const;
 
-    [[nodiscard]] bool appendUnaryOkResponse(
-        const RpcMessage& requestMsg, std::string responsePayload,
-        std::vector<RpcMessage>& outResponses) const;
+    [[nodiscard]] bool
+    appendUnaryOkResponse(const RpcMessage& requestMsg,
+                          std::string responsePayload,
+                          std::vector<RpcMessage>& outResponses) const;
 
-    [[nodiscard]] bool appendUnaryErrorResponse(
-        const RpcMessage& requestMsg, RpcErrorCode errorCode,
-        std::string errorText, std::vector<RpcMessage>& outResponses) const;
+    [[nodiscard]] bool
+    appendUnaryErrorResponse(const RpcMessage& requestMsg,
+                             RpcErrorCode errorCode, std::string errorText,
+                             std::vector<RpcMessage>& outResponses) const;
 
-    [[nodiscard]] bool appendErrorFrame(
-        const RpcMessage& requestMsg, RpcErrorCode errorCode,
-        std::string errorText, std::vector<RpcMessage>& outResponses) const;
+    [[nodiscard]] bool
+    appendErrorFrame(const RpcMessage& requestMsg, RpcErrorCode errorCode,
+                     std::string errorText,
+                     std::vector<RpcMessage>& outResponses) const;
 
 private:
     ServiceRegistry& registry_;
     MethodInvoker& invoker_;
 };
 
-}  // namespace novanet::rpc
+} // namespace novanet::rpc

@@ -7,18 +7,18 @@
 #include "rpc_meta.pb.h"
 
 namespace novanet::rpc {
-
+using namespace meta;
 class RpcStatus final {
 public:
     RpcStatus() = default;
 
     static RpcStatus success() {
-        return RpcStatus(RPC_OK, "");
+        return RpcStatus(meta::RPC_OK, "");
     }
 
-    static RpcStatus failure(RpcErrorCode code, std::string errorText) {
-        if (code == RPC_OK) {
-            code = RPC_UNKNOWN_ERROR;
+    static RpcStatus failure(meta::RpcErrorCode code, std::string errorText) {
+        if (code == meta::RPC_OK) {
+            code = meta::RPC_UNKNOWN_ERROR;
         }
 
         if (errorText.empty()) {

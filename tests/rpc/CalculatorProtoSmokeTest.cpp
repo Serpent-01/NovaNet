@@ -8,11 +8,12 @@
 
 #include "calculator.pb.h"
 
-class CalculatorServiceImpl final : public novanet::example::CalculatorService {
+class CalculatorServiceImpl final
+    : public ::novanet::example::calculator::CalculatorService {
 public:
     void Add(::google::protobuf::RpcController* controller,
-             const ::novanet::example::AddRequest* request,
-             ::novanet::example::AddResponse* response,
+             const ::novanet::example::calculator::AddRequest* request,
+             ::novanet::example::calculator::AddResponse* response,
              ::google::protobuf::Closure* done) override {
         (void)controller;
 
@@ -24,7 +25,7 @@ public:
 };
 
 int main() {
-    using namespace novanet::example;
+    using namespace novanet::example::calculator;
 
     AddRequest req;
 

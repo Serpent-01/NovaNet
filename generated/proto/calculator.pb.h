@@ -57,25 +57,28 @@ struct TableStruct_calculator_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_calculator_2eproto;
 namespace novanet {
 namespace example {
+namespace calculator {
 class AddRequest;
 class AddRequestDefaultTypeInternal;
 extern AddRequestDefaultTypeInternal _AddRequest_default_instance_;
 class AddResponse;
 class AddResponseDefaultTypeInternal;
 extern AddResponseDefaultTypeInternal _AddResponse_default_instance_;
+}  // namespace calculator
 }  // namespace example
 }  // namespace novanet
 PROTOBUF_NAMESPACE_OPEN
-template<> ::novanet::example::AddRequest* Arena::CreateMaybeMessage<::novanet::example::AddRequest>(Arena*);
-template<> ::novanet::example::AddResponse* Arena::CreateMaybeMessage<::novanet::example::AddResponse>(Arena*);
+template<> ::novanet::example::calculator::AddRequest* Arena::CreateMaybeMessage<::novanet::example::calculator::AddRequest>(Arena*);
+template<> ::novanet::example::calculator::AddResponse* Arena::CreateMaybeMessage<::novanet::example::calculator::AddResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace novanet {
 namespace example {
+namespace calculator {
 
 // ===================================================================
 
 class AddRequest PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.example.AddRequest) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.example.calculator.AddRequest) */ {
  public:
   inline AddRequest() : AddRequest(nullptr) {};
   virtual ~AddRequest();
@@ -164,7 +167,7 @@ class AddRequest PROTOBUF_FINAL :
   void InternalSwap(AddRequest* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.example.AddRequest";
+    return "novanet.example.calculator.AddRequest";
   }
   protected:
   explicit AddRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -208,7 +211,7 @@ class AddRequest PROTOBUF_FINAL :
   void _internal_set_rhs(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.example.AddRequest)
+  // @@protoc_insertion_point(class_scope:novanet.example.calculator.AddRequest)
  private:
   class _Internal;
 
@@ -223,7 +226,7 @@ class AddRequest PROTOBUF_FINAL :
 // -------------------------------------------------------------------
 
 class AddResponse PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.example.AddResponse) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.example.calculator.AddResponse) */ {
  public:
   inline AddResponse() : AddResponse(nullptr) {};
   virtual ~AddResponse();
@@ -312,7 +315,7 @@ class AddResponse PROTOBUF_FINAL :
   void InternalSwap(AddResponse* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.example.AddResponse";
+    return "novanet.example.calculator.AddResponse";
   }
   protected:
   explicit AddResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -346,7 +349,7 @@ class AddResponse PROTOBUF_FINAL :
   void _internal_set_result(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.example.AddResponse)
+  // @@protoc_insertion_point(class_scope:novanet.example.calculator.AddResponse)
  private:
   class _Internal;
 
@@ -373,8 +376,8 @@ class CalculatorService : public ::PROTOBUF_NAMESPACE_ID::Service {
   static const ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor* descriptor();
 
   virtual void Add(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
-                       const ::novanet::example::AddRequest* request,
-                       ::novanet::example::AddResponse* response,
+                       const ::novanet::example::calculator::AddRequest* request,
+                       ::novanet::example::calculator::AddResponse* response,
                        ::google::protobuf::Closure* done);
 
   // implements Service ----------------------------------------------
@@ -406,8 +409,8 @@ class CalculatorService_Stub : public CalculatorService {
   // implements CalculatorService ------------------------------------------
 
   void Add(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
-                       const ::novanet::example::AddRequest* request,
-                       ::novanet::example::AddResponse* response,
+                       const ::novanet::example::calculator::AddRequest* request,
+                       ::novanet::example::calculator::AddResponse* response,
                        ::google::protobuf::Closure* done);
  private:
   ::PROTOBUF_NAMESPACE_ID::RpcChannel* channel_;
@@ -435,7 +438,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 AddRequest::_internal_lhs() const {
   return lhs_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 AddRequest::lhs() const {
-  // @@protoc_insertion_point(field_get:novanet.example.AddRequest.lhs)
+  // @@protoc_insertion_point(field_get:novanet.example.calculator.AddRequest.lhs)
   return _internal_lhs();
 }
 inline void AddRequest::_internal_set_lhs(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -444,7 +447,7 @@ inline void AddRequest::_internal_set_lhs(::PROTOBUF_NAMESPACE_ID::int64 value) 
 }
 inline void AddRequest::set_lhs(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_lhs(value);
-  // @@protoc_insertion_point(field_set:novanet.example.AddRequest.lhs)
+  // @@protoc_insertion_point(field_set:novanet.example.calculator.AddRequest.lhs)
 }
 
 // sint64 rhs = 2;
@@ -455,7 +458,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 AddRequest::_internal_rhs() const {
   return rhs_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 AddRequest::rhs() const {
-  // @@protoc_insertion_point(field_get:novanet.example.AddRequest.rhs)
+  // @@protoc_insertion_point(field_get:novanet.example.calculator.AddRequest.rhs)
   return _internal_rhs();
 }
 inline void AddRequest::_internal_set_rhs(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -464,7 +467,7 @@ inline void AddRequest::_internal_set_rhs(::PROTOBUF_NAMESPACE_ID::int64 value) 
 }
 inline void AddRequest::set_rhs(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_rhs(value);
-  // @@protoc_insertion_point(field_set:novanet.example.AddRequest.rhs)
+  // @@protoc_insertion_point(field_set:novanet.example.calculator.AddRequest.rhs)
 }
 
 // -------------------------------------------------------------------
@@ -479,7 +482,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 AddResponse::_internal_result() const {
   return result_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 AddResponse::result() const {
-  // @@protoc_insertion_point(field_get:novanet.example.AddResponse.result)
+  // @@protoc_insertion_point(field_get:novanet.example.calculator.AddResponse.result)
   return _internal_result();
 }
 inline void AddResponse::_internal_set_result(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -488,7 +491,7 @@ inline void AddResponse::_internal_set_result(::PROTOBUF_NAMESPACE_ID::int64 val
 }
 inline void AddResponse::set_result(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_result(value);
-  // @@protoc_insertion_point(field_set:novanet.example.AddResponse.result)
+  // @@protoc_insertion_point(field_set:novanet.example.calculator.AddResponse.result)
 }
 
 #ifdef __GNUC__
@@ -499,6 +502,7 @@ inline void AddResponse::set_result(::PROTOBUF_NAMESPACE_ID::int64 value) {
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace calculator
 }  // namespace example
 }  // namespace novanet
 

@@ -1,8 +1,7 @@
 #include "novanet/rpc/protocol/FrameType.h"
 #include <cstdint>
 
-namespace novanet::rpc{
-
+namespace novanet::rpc {
 
 bool isValidFrameType(uint16_t type) noexcept {
     switch (static_cast<FrameType>(type)) {
@@ -22,7 +21,6 @@ bool isValidFrameType(uint16_t type) noexcept {
         return false;
     }
 }
-
 
 FrameType toFrameType(uint16_t type) noexcept {
     if (!isValidFrameType(type)) {
@@ -55,7 +53,6 @@ bool isStreamFrameType(FrameType type) noexcept {
         return false;
     }
 }
-
 
 bool isHeartbeatFrameType(FrameType type) noexcept {
     switch (type) {
@@ -105,4 +102,4 @@ std::string_view frameTypeToString(FrameType type) noexcept {
     }
 }
 
-};
+}; // namespace novanet::rpc

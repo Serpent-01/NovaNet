@@ -16,6 +16,7 @@
 #include <google/protobuf/port_def.inc>
 namespace novanet {
 namespace example {
+namespace calculator {
 class AddRequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AddRequest> _instance;
@@ -24,17 +25,18 @@ class AddResponseDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AddResponse> _instance;
 } _AddResponse_default_instance_;
+}  // namespace calculator
 }  // namespace example
 }  // namespace novanet
 static void InitDefaultsscc_info_AddRequest_calculator_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::example::_AddRequest_default_instance_;
-    new (ptr) ::novanet::example::AddRequest();
+    void* ptr = &::novanet::example::calculator::_AddRequest_default_instance_;
+    new (ptr) ::novanet::example::calculator::AddRequest();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::example::AddRequest::InitAsDefaultInstance();
+  ::novanet::example::calculator::AddRequest::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AddRequest_calculator_2eproto =
@@ -44,11 +46,11 @@ static void InitDefaultsscc_info_AddResponse_calculator_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::example::_AddResponse_default_instance_;
-    new (ptr) ::novanet::example::AddResponse();
+    void* ptr = &::novanet::example::calculator::_AddResponse_default_instance_;
+    new (ptr) ::novanet::example::calculator::AddResponse();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::example::AddResponse::InitAsDefaultInstance();
+  ::novanet::example::calculator::AddResponse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AddResponse_calculator_2eproto =
@@ -60,36 +62,37 @@ static const ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor* file_level_service_desc
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_calculator_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::example::AddRequest, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::example::calculator::AddRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::example::AddRequest, lhs_),
-  PROTOBUF_FIELD_OFFSET(::novanet::example::AddRequest, rhs_),
+  PROTOBUF_FIELD_OFFSET(::novanet::example::calculator::AddRequest, lhs_),
+  PROTOBUF_FIELD_OFFSET(::novanet::example::calculator::AddRequest, rhs_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::example::AddResponse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::example::calculator::AddResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::example::AddResponse, result_),
+  PROTOBUF_FIELD_OFFSET(::novanet::example::calculator::AddResponse, result_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::novanet::example::AddRequest)},
-  { 7, -1, sizeof(::novanet::example::AddResponse)},
+  { 0, -1, sizeof(::novanet::example::calculator::AddRequest)},
+  { 7, -1, sizeof(::novanet::example::calculator::AddResponse)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::example::_AddRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::example::_AddResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::example::calculator::_AddRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::example::calculator::_AddResponse_default_instance_),
 };
 
 const char descriptor_table_protodef_calculator_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\020calculator.proto\022\017novanet.example\"&\n\nA"
-  "ddRequest\022\013\n\003lhs\030\001 \001(\022\022\013\n\003rhs\030\002 \001(\022\"\035\n\013A"
-  "ddResponse\022\016\n\006result\030\001 \001(\0222U\n\021Calculator"
-  "Service\022@\n\003Add\022\033.novanet.example.AddRequ"
-  "est\032\034.novanet.example.AddResponseB\010H\001\200\001\001"
-  "\370\001\001b\006proto3"
+  "\n\020calculator.proto\022\032novanet.example.calc"
+  "ulator\"&\n\nAddRequest\022\013\n\003lhs\030\001 \001(\022\022\013\n\003rhs"
+  "\030\002 \001(\022\"\035\n\013AddResponse\022\016\n\006result\030\001 \001(\0222k\n"
+  "\021CalculatorService\022V\n\003Add\022&.novanet.exam"
+  "ple.calculator.AddRequest\032\'.novanet.exam"
+  "ple.calculator.AddResponseB\010H\001\200\001\001\370\001\001b\006pr"
+  "oto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_calculator_2eproto_deps[1] = {
 };
@@ -99,7 +102,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_cal
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_calculator_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_calculator_2eproto = {
-  false, false, descriptor_table_protodef_calculator_2eproto, "calculator.proto", 211,
+  false, false, descriptor_table_protodef_calculator_2eproto, "calculator.proto", 244,
   &descriptor_table_calculator_2eproto_once, descriptor_table_calculator_2eproto_sccs, descriptor_table_calculator_2eproto_deps, 2, 0,
   schemas, file_default_instances, TableStruct_calculator_2eproto::offsets,
   file_level_metadata_calculator_2eproto, 2, file_level_enum_descriptors_calculator_2eproto, file_level_service_descriptors_calculator_2eproto,
@@ -109,6 +112,7 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_calcul
 static bool dynamic_init_dummy_calculator_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_calculator_2eproto)), true);
 namespace novanet {
 namespace example {
+namespace calculator {
 
 // ===================================================================
 
@@ -122,7 +126,7 @@ AddRequest::AddRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.example.AddRequest)
+  // @@protoc_insertion_point(arena_constructor:novanet.example.calculator.AddRequest)
 }
 AddRequest::AddRequest(const AddRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -130,7 +134,7 @@ AddRequest::AddRequest(const AddRequest& from)
   ::memcpy(&lhs_, &from.lhs_,
     static_cast<size_t>(reinterpret_cast<char*>(&rhs_) -
     reinterpret_cast<char*>(&lhs_)) + sizeof(rhs_));
-  // @@protoc_insertion_point(copy_constructor:novanet.example.AddRequest)
+  // @@protoc_insertion_point(copy_constructor:novanet.example.calculator.AddRequest)
 }
 
 void AddRequest::SharedCtor() {
@@ -140,7 +144,7 @@ void AddRequest::SharedCtor() {
 }
 
 AddRequest::~AddRequest() {
-  // @@protoc_insertion_point(destructor:novanet.example.AddRequest)
+  // @@protoc_insertion_point(destructor:novanet.example.calculator.AddRequest)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -165,7 +169,7 @@ const AddRequest& AddRequest::default_instance() {
 
 
 void AddRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.example.AddRequest)
+// @@protoc_insertion_point(message_clear_start:novanet.example.calculator.AddRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -222,7 +226,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* AddRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.example.AddRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.example.calculator.AddRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -242,12 +246,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.example.AddRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.example.calculator.AddRequest)
   return target;
 }
 
 size_t AddRequest::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.example.AddRequest)
+// @@protoc_insertion_point(message_byte_size_start:novanet.example.calculator.AddRequest)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -278,22 +282,22 @@ size_t AddRequest::ByteSizeLong() const {
 }
 
 void AddRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.example.AddRequest)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.example.calculator.AddRequest)
   GOOGLE_DCHECK_NE(&from, this);
   const AddRequest* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AddRequest>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.example.AddRequest)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.example.calculator.AddRequest)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.example.AddRequest)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.example.calculator.AddRequest)
     MergeFrom(*source);
   }
 }
 
 void AddRequest::MergeFrom(const AddRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.example.AddRequest)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.example.calculator.AddRequest)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -308,14 +312,14 @@ void AddRequest::MergeFrom(const AddRequest& from) {
 }
 
 void AddRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.example.AddRequest)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.example.calculator.AddRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void AddRequest::CopyFrom(const AddRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.example.AddRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.example.calculator.AddRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -353,13 +357,13 @@ AddResponse::AddResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.example.AddResponse)
+  // @@protoc_insertion_point(arena_constructor:novanet.example.calculator.AddResponse)
 }
 AddResponse::AddResponse(const AddResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   result_ = from.result_;
-  // @@protoc_insertion_point(copy_constructor:novanet.example.AddResponse)
+  // @@protoc_insertion_point(copy_constructor:novanet.example.calculator.AddResponse)
 }
 
 void AddResponse::SharedCtor() {
@@ -367,7 +371,7 @@ void AddResponse::SharedCtor() {
 }
 
 AddResponse::~AddResponse() {
-  // @@protoc_insertion_point(destructor:novanet.example.AddResponse)
+  // @@protoc_insertion_point(destructor:novanet.example.calculator.AddResponse)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -392,7 +396,7 @@ const AddResponse& AddResponse::default_instance() {
 
 
 void AddResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.example.AddResponse)
+// @@protoc_insertion_point(message_clear_start:novanet.example.calculator.AddResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -440,7 +444,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* AddResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.example.AddResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.example.calculator.AddResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -454,12 +458,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.example.AddResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.example.calculator.AddResponse)
   return target;
 }
 
 size_t AddResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.example.AddResponse)
+// @@protoc_insertion_point(message_byte_size_start:novanet.example.calculator.AddResponse)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -483,22 +487,22 @@ size_t AddResponse::ByteSizeLong() const {
 }
 
 void AddResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.example.AddResponse)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.example.calculator.AddResponse)
   GOOGLE_DCHECK_NE(&from, this);
   const AddResponse* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AddResponse>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.example.AddResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.example.calculator.AddResponse)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.example.AddResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.example.calculator.AddResponse)
     MergeFrom(*source);
   }
 }
 
 void AddResponse::MergeFrom(const AddResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.example.AddResponse)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.example.calculator.AddResponse)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -510,14 +514,14 @@ void AddResponse::MergeFrom(const AddResponse& from) {
 }
 
 void AddResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.example.AddResponse)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.example.calculator.AddResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void AddResponse::CopyFrom(const AddResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.example.AddResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.example.calculator.AddResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -552,8 +556,8 @@ const ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor* CalculatorService::GetDescript
 }
 
 void CalculatorService::Add(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
-                         const ::novanet::example::AddRequest*,
-                         ::novanet::example::AddResponse*,
+                         const ::novanet::example::calculator::AddRequest*,
+                         ::novanet::example::calculator::AddResponse*,
                          ::google::protobuf::Closure* done) {
   controller->SetFailed("Method Add() not implemented.");
   done->Run();
@@ -568,9 +572,9 @@ void CalculatorService::CallMethod(const ::PROTOBUF_NAMESPACE_ID::MethodDescript
   switch(method->index()) {
     case 0:
       Add(controller,
-             ::PROTOBUF_NAMESPACE_ID::internal::DownCast<const ::novanet::example::AddRequest*>(
+             ::PROTOBUF_NAMESPACE_ID::internal::DownCast<const ::novanet::example::calculator::AddRequest*>(
                  request),
-             ::PROTOBUF_NAMESPACE_ID::internal::DownCast<::novanet::example::AddResponse*>(
+             ::PROTOBUF_NAMESPACE_ID::internal::DownCast<::novanet::example::calculator::AddResponse*>(
                  response),
              done);
       break;
@@ -585,7 +589,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message& CalculatorService::GetRequestPrototype(
   GOOGLE_DCHECK_EQ(method->service(), descriptor());
   switch(method->index()) {
     case 0:
-      return ::novanet::example::AddRequest::default_instance();
+      return ::novanet::example::calculator::AddRequest::default_instance();
     default:
       GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
       return *::PROTOBUF_NAMESPACE_ID::MessageFactory::generated_factory()
@@ -598,7 +602,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message& CalculatorService::GetResponsePrototype(
   GOOGLE_DCHECK_EQ(method->service(), descriptor());
   switch(method->index()) {
     case 0:
-      return ::novanet::example::AddResponse::default_instance();
+      return ::novanet::example::calculator::AddResponse::default_instance();
     default:
       GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
       return *::PROTOBUF_NAMESPACE_ID::MessageFactory::generated_factory()
@@ -618,22 +622,23 @@ CalculatorService_Stub::~CalculatorService_Stub() {
 }
 
 void CalculatorService_Stub::Add(::PROTOBUF_NAMESPACE_ID::RpcController* controller,
-                              const ::novanet::example::AddRequest* request,
-                              ::novanet::example::AddResponse* response,
+                              const ::novanet::example::calculator::AddRequest* request,
+                              ::novanet::example::calculator::AddResponse* response,
                               ::google::protobuf::Closure* done) {
   channel_->CallMethod(descriptor()->method(0),
                        controller, request, response, done);
 }
 
 // @@protoc_insertion_point(namespace_scope)
+}  // namespace calculator
 }  // namespace example
 }  // namespace novanet
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::novanet::example::AddRequest* Arena::CreateMaybeMessage< ::novanet::example::AddRequest >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::example::AddRequest >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::example::calculator::AddRequest* Arena::CreateMaybeMessage< ::novanet::example::calculator::AddRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::example::calculator::AddRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::example::AddResponse* Arena::CreateMaybeMessage< ::novanet::example::AddResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::example::AddResponse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::example::calculator::AddResponse* Arena::CreateMaybeMessage< ::novanet::example::calculator::AddResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::example::calculator::AddResponse >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

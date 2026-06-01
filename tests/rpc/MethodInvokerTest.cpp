@@ -9,11 +9,12 @@
 
 namespace {
 
-class CalculatorServiceImpl final : public novanet::example::CalculatorService {
+class CalculatorServiceImpl final
+    : public ::novanet::example::calculator::CalculatorService {
 public:
     void Add(::google::protobuf::RpcController* controller,
-             const ::novanet::example::AddRequest* request,
-             ::novanet::example::AddResponse* response,
+             const ::novanet::example::calculator::AddRequest* request,
+             ::novanet::example::calculator::AddResponse* response,
              ::google::protobuf::Closure* done) override {
         if (controller == nullptr || request == nullptr ||
             response == nullptr) {
@@ -33,11 +34,11 @@ public:
 };
 
 class FailingCalculatorServiceImpl final
-    : public novanet::example::CalculatorService {
+    : public ::novanet::example::calculator::CalculatorService {
 public:
     void Add(::google::protobuf::RpcController* controller,
-             const ::novanet::example::AddRequest* request,
-             ::novanet::example::AddResponse* response,
+             const ::novanet::example::calculator::AddRequest* request,
+             ::novanet::example::calculator::AddResponse* response,
              ::google::protobuf::Closure* done) override {
         (void)request;
         (void)response;
@@ -52,7 +53,7 @@ public:
     }
 };
 
-}  // namespace
+} // namespace
 
 int main() {
     using novanet::rpc::MethodInvoker;
@@ -73,7 +74,7 @@ int main() {
         const auto* methodMeta = registry.findMethod(*serviceMeta, "Add");
         assert(methodMeta != nullptr);
 
-        novanet::example::AddRequest request;
+        ::novanet::example::calculator::AddRequest request;
         request.set_lhs(1);
         request.set_rhs(2);
 
@@ -90,7 +91,7 @@ int main() {
         assert(result.errorText().empty());
         assert(!result.responseBytes().empty());
 
-        novanet::example::AddResponse response;
+        ::novanet::example::calculator::AddResponse response;
         assert(response.ParseFromString(result.responseBytes()));
         assert(response.result() == 3);
     }
@@ -138,7 +139,7 @@ int main() {
         const auto* methodMeta = registry.findMethod(*serviceMeta, "Add");
         assert(methodMeta != nullptr);
 
-        novanet::example::AddRequest request;
+        ::novanet::example::calculator::AddRequest request;
         request.set_lhs(10);
         request.set_rhs(20);
 

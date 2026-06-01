@@ -60,6 +60,7 @@ struct TableStruct_rpc_5fmeta_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmeta_2eproto;
 namespace novanet {
 namespace rpc {
+namespace meta {
 class ErrorFrameMeta;
 class ErrorFrameMetaDefaultTypeInternal;
 extern ErrorFrameMetaDefaultTypeInternal _ErrorFrameMeta_default_instance_;
@@ -108,28 +109,30 @@ extern UnaryResponseMetaDefaultTypeInternal _UnaryResponseMeta_default_instance_
 class UnaryResponseMeta_MetadataEntry_DoNotUse;
 class UnaryResponseMeta_MetadataEntry_DoNotUseDefaultTypeInternal;
 extern UnaryResponseMeta_MetadataEntry_DoNotUseDefaultTypeInternal _UnaryResponseMeta_MetadataEntry_DoNotUse_default_instance_;
+}  // namespace meta
 }  // namespace rpc
 }  // namespace novanet
 PROTOBUF_NAMESPACE_OPEN
-template<> ::novanet::rpc::ErrorFrameMeta* Arena::CreateMaybeMessage<::novanet::rpc::ErrorFrameMeta>(Arena*);
-template<> ::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse>(Arena*);
-template<> ::novanet::rpc::HeartbeatMeta* Arena::CreateMaybeMessage<::novanet::rpc::HeartbeatMeta>(Arena*);
-template<> ::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse>(Arena*);
-template<> ::novanet::rpc::StreamCancelMeta* Arena::CreateMaybeMessage<::novanet::rpc::StreamCancelMeta>(Arena*);
-template<> ::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse>(Arena*);
-template<> ::novanet::rpc::StreamDataMeta* Arena::CreateMaybeMessage<::novanet::rpc::StreamDataMeta>(Arena*);
-template<> ::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse>(Arena*);
-template<> ::novanet::rpc::StreamEndMeta* Arena::CreateMaybeMessage<::novanet::rpc::StreamEndMeta>(Arena*);
-template<> ::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse>(Arena*);
-template<> ::novanet::rpc::StreamOpenMeta* Arena::CreateMaybeMessage<::novanet::rpc::StreamOpenMeta>(Arena*);
-template<> ::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse>(Arena*);
-template<> ::novanet::rpc::UnaryRequestMeta* Arena::CreateMaybeMessage<::novanet::rpc::UnaryRequestMeta>(Arena*);
-template<> ::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse>(Arena*);
-template<> ::novanet::rpc::UnaryResponseMeta* Arena::CreateMaybeMessage<::novanet::rpc::UnaryResponseMeta>(Arena*);
-template<> ::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::ErrorFrameMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::ErrorFrameMeta>(Arena*);
+template<> ::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::HeartbeatMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::HeartbeatMeta>(Arena*);
+template<> ::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::StreamCancelMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamCancelMeta>(Arena*);
+template<> ::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::StreamDataMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamDataMeta>(Arena*);
+template<> ::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::StreamEndMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamEndMeta>(Arena*);
+template<> ::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::StreamOpenMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamOpenMeta>(Arena*);
+template<> ::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::UnaryRequestMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::UnaryRequestMeta>(Arena*);
+template<> ::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse>(Arena*);
+template<> ::novanet::rpc::meta::UnaryResponseMeta* Arena::CreateMaybeMessage<::novanet::rpc::meta::UnaryResponseMeta>(Arena*);
+template<> ::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage<::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace novanet {
 namespace rpc {
+namespace meta {
 
 enum RpcErrorCode : int {
   RPC_OK = 0,
@@ -197,10 +200,10 @@ public:
   void MergeFrom(const UnaryRequestMeta_MetadataEntry_DoNotUse& other);
   static const UnaryRequestMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const UnaryRequestMeta_MetadataEntry_DoNotUse*>(&_UnaryRequestMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.UnaryRequestMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.UnaryRequestMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.UnaryRequestMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.UnaryRequestMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -216,7 +219,7 @@ public:
 // -------------------------------------------------------------------
 
 class UnaryRequestMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.UnaryRequestMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.UnaryRequestMeta) */ {
  public:
   inline UnaryRequestMeta() : UnaryRequestMeta(nullptr) {};
   virtual ~UnaryRequestMeta();
@@ -305,7 +308,7 @@ class UnaryRequestMeta PROTOBUF_FINAL :
   void InternalSwap(UnaryRequestMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.UnaryRequestMeta";
+    return "novanet.rpc.meta.UnaryRequestMeta";
   }
   protected:
   explicit UnaryRequestMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -426,7 +429,7 @@ class UnaryRequestMeta PROTOBUF_FINAL :
   std::string* _internal_mutable_request_payload();
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.UnaryRequestMeta)
  private:
   class _Internal;
 
@@ -463,10 +466,10 @@ public:
   void MergeFrom(const UnaryResponseMeta_MetadataEntry_DoNotUse& other);
   static const UnaryResponseMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const UnaryResponseMeta_MetadataEntry_DoNotUse*>(&_UnaryResponseMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.UnaryResponseMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.UnaryResponseMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.UnaryResponseMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.UnaryResponseMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -482,7 +485,7 @@ public:
 // -------------------------------------------------------------------
 
 class UnaryResponseMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.UnaryResponseMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.UnaryResponseMeta) */ {
  public:
   inline UnaryResponseMeta() : UnaryResponseMeta(nullptr) {};
   virtual ~UnaryResponseMeta();
@@ -571,7 +574,7 @@ class UnaryResponseMeta PROTOBUF_FINAL :
   void InternalSwap(UnaryResponseMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.UnaryResponseMeta";
+    return "novanet.rpc.meta.UnaryResponseMeta";
   }
   protected:
   explicit UnaryResponseMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -667,16 +670,16 @@ class UnaryResponseMeta PROTOBUF_FINAL :
   std::string* _internal_mutable_response_payload();
   public:
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   void clear_error_code();
-  ::novanet::rpc::RpcErrorCode error_code() const;
-  void set_error_code(::novanet::rpc::RpcErrorCode value);
+  ::novanet::rpc::meta::RpcErrorCode error_code() const;
+  void set_error_code(::novanet::rpc::meta::RpcErrorCode value);
   private:
-  ::novanet::rpc::RpcErrorCode _internal_error_code() const;
-  void _internal_set_error_code(::novanet::rpc::RpcErrorCode value);
+  ::novanet::rpc::meta::RpcErrorCode _internal_error_code() const;
+  void _internal_set_error_code(::novanet::rpc::meta::RpcErrorCode value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.UnaryResponseMeta)
  private:
   class _Internal;
 
@@ -713,10 +716,10 @@ public:
   void MergeFrom(const StreamOpenMeta_MetadataEntry_DoNotUse& other);
   static const StreamOpenMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const StreamOpenMeta_MetadataEntry_DoNotUse*>(&_StreamOpenMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamOpenMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamOpenMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamOpenMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamOpenMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -732,7 +735,7 @@ public:
 // -------------------------------------------------------------------
 
 class StreamOpenMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.StreamOpenMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.StreamOpenMeta) */ {
  public:
   inline StreamOpenMeta() : StreamOpenMeta(nullptr) {};
   virtual ~StreamOpenMeta();
@@ -821,7 +824,7 @@ class StreamOpenMeta PROTOBUF_FINAL :
   void InternalSwap(StreamOpenMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.StreamOpenMeta";
+    return "novanet.rpc.meta.StreamOpenMeta";
   }
   protected:
   explicit StreamOpenMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -952,7 +955,7 @@ class StreamOpenMeta PROTOBUF_FINAL :
   void _internal_set_initial_window_bytes(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.StreamOpenMeta)
  private:
   class _Internal;
 
@@ -990,10 +993,10 @@ public:
   void MergeFrom(const StreamDataMeta_MetadataEntry_DoNotUse& other);
   static const StreamDataMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const StreamDataMeta_MetadataEntry_DoNotUse*>(&_StreamDataMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamDataMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamDataMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamDataMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamDataMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -1009,7 +1012,7 @@ public:
 // -------------------------------------------------------------------
 
 class StreamDataMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.StreamDataMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.StreamDataMeta) */ {
  public:
   inline StreamDataMeta() : StreamDataMeta(nullptr) {};
   virtual ~StreamDataMeta();
@@ -1098,7 +1101,7 @@ class StreamDataMeta PROTOBUF_FINAL :
   void InternalSwap(StreamDataMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.StreamDataMeta";
+    return "novanet.rpc.meta.StreamDataMeta";
   }
   protected:
   explicit StreamDataMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -1177,7 +1180,7 @@ class StreamDataMeta PROTOBUF_FINAL :
   void _internal_set_sequence(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.StreamDataMeta)
  private:
   class _Internal;
 
@@ -1213,10 +1216,10 @@ public:
   void MergeFrom(const StreamEndMeta_MetadataEntry_DoNotUse& other);
   static const StreamEndMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const StreamEndMeta_MetadataEntry_DoNotUse*>(&_StreamEndMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamEndMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamEndMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamEndMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamEndMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -1232,7 +1235,7 @@ public:
 // -------------------------------------------------------------------
 
 class StreamEndMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.StreamEndMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.StreamEndMeta) */ {
  public:
   inline StreamEndMeta() : StreamEndMeta(nullptr) {};
   virtual ~StreamEndMeta();
@@ -1321,7 +1324,7 @@ class StreamEndMeta PROTOBUF_FINAL :
   void InternalSwap(StreamEndMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.StreamEndMeta";
+    return "novanet.rpc.meta.StreamEndMeta";
   }
   protected:
   explicit StreamEndMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -1401,16 +1404,16 @@ class StreamEndMeta PROTOBUF_FINAL :
   void _internal_set_total_sequences(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   void clear_error_code();
-  ::novanet::rpc::RpcErrorCode error_code() const;
-  void set_error_code(::novanet::rpc::RpcErrorCode value);
+  ::novanet::rpc::meta::RpcErrorCode error_code() const;
+  void set_error_code(::novanet::rpc::meta::RpcErrorCode value);
   private:
-  ::novanet::rpc::RpcErrorCode _internal_error_code() const;
-  void _internal_set_error_code(::novanet::rpc::RpcErrorCode value);
+  ::novanet::rpc::meta::RpcErrorCode _internal_error_code() const;
+  void _internal_set_error_code(::novanet::rpc::meta::RpcErrorCode value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.StreamEndMeta)
  private:
   class _Internal;
 
@@ -1447,10 +1450,10 @@ public:
   void MergeFrom(const StreamCancelMeta_MetadataEntry_DoNotUse& other);
   static const StreamCancelMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const StreamCancelMeta_MetadataEntry_DoNotUse*>(&_StreamCancelMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamCancelMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamCancelMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.StreamCancelMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.StreamCancelMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -1466,7 +1469,7 @@ public:
 // -------------------------------------------------------------------
 
 class StreamCancelMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.StreamCancelMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.StreamCancelMeta) */ {
  public:
   inline StreamCancelMeta() : StreamCancelMeta(nullptr) {};
   virtual ~StreamCancelMeta();
@@ -1555,7 +1558,7 @@ class StreamCancelMeta PROTOBUF_FINAL :
   void InternalSwap(StreamCancelMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.StreamCancelMeta";
+    return "novanet.rpc.meta.StreamCancelMeta";
   }
   protected:
   explicit StreamCancelMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -1624,7 +1627,7 @@ class StreamCancelMeta PROTOBUF_FINAL :
   std::string* _internal_mutable_reason();
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.StreamCancelMeta)
  private:
   class _Internal;
 
@@ -1659,10 +1662,10 @@ public:
   void MergeFrom(const ErrorFrameMeta_MetadataEntry_DoNotUse& other);
   static const ErrorFrameMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const ErrorFrameMeta_MetadataEntry_DoNotUse*>(&_ErrorFrameMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.ErrorFrameMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.ErrorFrameMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.ErrorFrameMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.ErrorFrameMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -1678,7 +1681,7 @@ public:
 // -------------------------------------------------------------------
 
 class ErrorFrameMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.ErrorFrameMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.ErrorFrameMeta) */ {
  public:
   inline ErrorFrameMeta() : ErrorFrameMeta(nullptr) {};
   virtual ~ErrorFrameMeta();
@@ -1767,7 +1770,7 @@ class ErrorFrameMeta PROTOBUF_FINAL :
   void InternalSwap(ErrorFrameMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.ErrorFrameMeta";
+    return "novanet.rpc.meta.ErrorFrameMeta";
   }
   protected:
   explicit ErrorFrameMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -1863,16 +1866,16 @@ class ErrorFrameMeta PROTOBUF_FINAL :
   std::string* _internal_mutable_debug_info();
   public:
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   void clear_error_code();
-  ::novanet::rpc::RpcErrorCode error_code() const;
-  void set_error_code(::novanet::rpc::RpcErrorCode value);
+  ::novanet::rpc::meta::RpcErrorCode error_code() const;
+  void set_error_code(::novanet::rpc::meta::RpcErrorCode value);
   private:
-  ::novanet::rpc::RpcErrorCode _internal_error_code() const;
-  void _internal_set_error_code(::novanet::rpc::RpcErrorCode value);
+  ::novanet::rpc::meta::RpcErrorCode _internal_error_code() const;
+  void _internal_set_error_code(::novanet::rpc::meta::RpcErrorCode value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.ErrorFrameMeta)
  private:
   class _Internal;
 
@@ -1909,10 +1912,10 @@ public:
   void MergeFrom(const HeartbeatMeta_MetadataEntry_DoNotUse& other);
   static const HeartbeatMeta_MetadataEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const HeartbeatMeta_MetadataEntry_DoNotUse*>(&_HeartbeatMeta_MetadataEntry_DoNotUse_default_instance_); }
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.HeartbeatMeta.MetadataEntry.key");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.HeartbeatMeta.MetadataEntry.key");
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.HeartbeatMeta.MetadataEntry.value");
+    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cast<int>(s->size()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE, "novanet.rpc.meta.HeartbeatMeta.MetadataEntry.value");
  }
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -1928,7 +1931,7 @@ public:
 // -------------------------------------------------------------------
 
 class HeartbeatMeta PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.HeartbeatMeta) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:novanet.rpc.meta.HeartbeatMeta) */ {
  public:
   inline HeartbeatMeta() : HeartbeatMeta(nullptr) {};
   virtual ~HeartbeatMeta();
@@ -2017,7 +2020,7 @@ class HeartbeatMeta PROTOBUF_FINAL :
   void InternalSwap(HeartbeatMeta* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "novanet.rpc.HeartbeatMeta";
+    return "novanet.rpc.meta.HeartbeatMeta";
   }
   protected:
   explicit HeartbeatMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -2096,7 +2099,7 @@ class HeartbeatMeta PROTOBUF_FINAL :
   void _internal_set_unix_millis(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(class_scope:novanet.rpc.meta.HeartbeatMeta)
  private:
   class _Internal;
 
@@ -2132,15 +2135,15 @@ inline void UnaryRequestMeta::clear_service_name() {
   service_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& UnaryRequestMeta::service_name() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.UnaryRequestMeta.service_name)
   return _internal_service_name();
 }
 inline void UnaryRequestMeta::set_service_name(const std::string& value) {
   _internal_set_service_name(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.UnaryRequestMeta.service_name)
 }
 inline std::string* UnaryRequestMeta::mutable_service_name() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.UnaryRequestMeta.service_name)
   return _internal_mutable_service_name();
 }
 inline const std::string& UnaryRequestMeta::_internal_service_name() const {
@@ -2154,28 +2157,28 @@ inline void UnaryRequestMeta::set_service_name(std::string&& value) {
   
   service_name_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.UnaryRequestMeta.service_name)
 }
 inline void UnaryRequestMeta::set_service_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.UnaryRequestMeta.service_name)
 }
 inline void UnaryRequestMeta::set_service_name(const char* value,
     size_t size) {
   
   service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.UnaryRequestMeta.service_name)
 }
 inline std::string* UnaryRequestMeta::_internal_mutable_service_name() {
   
   return service_name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* UnaryRequestMeta::release_service_name() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.UnaryRequestMeta.service_name)
   return service_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void UnaryRequestMeta::set_allocated_service_name(std::string* service_name) {
@@ -2186,10 +2189,10 @@ inline void UnaryRequestMeta::set_allocated_service_name(std::string* service_na
   }
   service_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), service_name,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.UnaryRequestMeta.service_name)
 }
 inline std::string* UnaryRequestMeta::unsafe_arena_release_service_name() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.UnaryRequestMeta.service_name)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return service_name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2205,7 +2208,7 @@ inline void UnaryRequestMeta::unsafe_arena_set_allocated_service_name(
   }
   service_name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       service_name, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.UnaryRequestMeta.service_name)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.UnaryRequestMeta.service_name)
 }
 
 // string method_name = 2;
@@ -2213,15 +2216,15 @@ inline void UnaryRequestMeta::clear_method_name() {
   method_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& UnaryRequestMeta::method_name() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.UnaryRequestMeta.method_name)
   return _internal_method_name();
 }
 inline void UnaryRequestMeta::set_method_name(const std::string& value) {
   _internal_set_method_name(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.UnaryRequestMeta.method_name)
 }
 inline std::string* UnaryRequestMeta::mutable_method_name() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.UnaryRequestMeta.method_name)
   return _internal_mutable_method_name();
 }
 inline const std::string& UnaryRequestMeta::_internal_method_name() const {
@@ -2235,28 +2238,28 @@ inline void UnaryRequestMeta::set_method_name(std::string&& value) {
   
   method_name_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.UnaryRequestMeta.method_name)
 }
 inline void UnaryRequestMeta::set_method_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   method_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.UnaryRequestMeta.method_name)
 }
 inline void UnaryRequestMeta::set_method_name(const char* value,
     size_t size) {
   
   method_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.UnaryRequestMeta.method_name)
 }
 inline std::string* UnaryRequestMeta::_internal_mutable_method_name() {
   
   return method_name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* UnaryRequestMeta::release_method_name() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.UnaryRequestMeta.method_name)
   return method_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void UnaryRequestMeta::set_allocated_method_name(std::string* method_name) {
@@ -2267,10 +2270,10 @@ inline void UnaryRequestMeta::set_allocated_method_name(std::string* method_name
   }
   method_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), method_name,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.UnaryRequestMeta.method_name)
 }
 inline std::string* UnaryRequestMeta::unsafe_arena_release_method_name() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.UnaryRequestMeta.method_name)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return method_name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2286,7 +2289,7 @@ inline void UnaryRequestMeta::unsafe_arena_set_allocated_method_name(
   }
   method_name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       method_name, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.UnaryRequestMeta.method_name)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.UnaryRequestMeta.method_name)
 }
 
 // bytes request_payload = 3;
@@ -2294,15 +2297,15 @@ inline void UnaryRequestMeta::clear_request_payload() {
   request_payload_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& UnaryRequestMeta::request_payload() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.UnaryRequestMeta.request_payload)
   return _internal_request_payload();
 }
 inline void UnaryRequestMeta::set_request_payload(const std::string& value) {
   _internal_set_request_payload(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.UnaryRequestMeta.request_payload)
 }
 inline std::string* UnaryRequestMeta::mutable_request_payload() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.UnaryRequestMeta.request_payload)
   return _internal_mutable_request_payload();
 }
 inline const std::string& UnaryRequestMeta::_internal_request_payload() const {
@@ -2316,28 +2319,28 @@ inline void UnaryRequestMeta::set_request_payload(std::string&& value) {
   
   request_payload_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.UnaryRequestMeta.request_payload)
 }
 inline void UnaryRequestMeta::set_request_payload(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   request_payload_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.UnaryRequestMeta.request_payload)
 }
 inline void UnaryRequestMeta::set_request_payload(const void* value,
     size_t size) {
   
   request_payload_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.UnaryRequestMeta.request_payload)
 }
 inline std::string* UnaryRequestMeta::_internal_mutable_request_payload() {
   
   return request_payload_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* UnaryRequestMeta::release_request_payload() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.UnaryRequestMeta.request_payload)
   return request_payload_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void UnaryRequestMeta::set_allocated_request_payload(std::string* request_payload) {
@@ -2348,10 +2351,10 @@ inline void UnaryRequestMeta::set_allocated_request_payload(std::string* request
   }
   request_payload_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), request_payload,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.UnaryRequestMeta.request_payload)
 }
 inline std::string* UnaryRequestMeta::unsafe_arena_release_request_payload() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.UnaryRequestMeta.request_payload)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return request_payload_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2367,7 +2370,7 @@ inline void UnaryRequestMeta::unsafe_arena_set_allocated_request_payload(
   }
   request_payload_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       request_payload, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.UnaryRequestMeta.request_payload)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.UnaryRequestMeta.request_payload)
 }
 
 // map<string, string> metadata = 10;
@@ -2386,7 +2389,7 @@ UnaryRequestMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 UnaryRequestMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.UnaryRequestMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.UnaryRequestMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -2395,7 +2398,7 @@ UnaryRequestMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 UnaryRequestMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.UnaryRequestMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.UnaryRequestMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -2405,24 +2408,24 @@ UnaryRequestMeta::mutable_metadata() {
 
 // UnaryResponseMeta
 
-// .novanet.rpc.RpcErrorCode error_code = 1;
+// .novanet.rpc.meta.RpcErrorCode error_code = 1;
 inline void UnaryResponseMeta::clear_error_code() {
   error_code_ = 0;
 }
-inline ::novanet::rpc::RpcErrorCode UnaryResponseMeta::_internal_error_code() const {
-  return static_cast< ::novanet::rpc::RpcErrorCode >(error_code_);
+inline ::novanet::rpc::meta::RpcErrorCode UnaryResponseMeta::_internal_error_code() const {
+  return static_cast< ::novanet::rpc::meta::RpcErrorCode >(error_code_);
 }
-inline ::novanet::rpc::RpcErrorCode UnaryResponseMeta::error_code() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.UnaryResponseMeta.error_code)
+inline ::novanet::rpc::meta::RpcErrorCode UnaryResponseMeta::error_code() const {
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.UnaryResponseMeta.error_code)
   return _internal_error_code();
 }
-inline void UnaryResponseMeta::_internal_set_error_code(::novanet::rpc::RpcErrorCode value) {
+inline void UnaryResponseMeta::_internal_set_error_code(::novanet::rpc::meta::RpcErrorCode value) {
   
   error_code_ = value;
 }
-inline void UnaryResponseMeta::set_error_code(::novanet::rpc::RpcErrorCode value) {
+inline void UnaryResponseMeta::set_error_code(::novanet::rpc::meta::RpcErrorCode value) {
   _internal_set_error_code(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.UnaryResponseMeta.error_code)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.UnaryResponseMeta.error_code)
 }
 
 // string error_text = 2;
@@ -2430,15 +2433,15 @@ inline void UnaryResponseMeta::clear_error_text() {
   error_text_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& UnaryResponseMeta::error_text() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.UnaryResponseMeta.error_text)
   return _internal_error_text();
 }
 inline void UnaryResponseMeta::set_error_text(const std::string& value) {
   _internal_set_error_text(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.UnaryResponseMeta.error_text)
 }
 inline std::string* UnaryResponseMeta::mutable_error_text() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.UnaryResponseMeta.error_text)
   return _internal_mutable_error_text();
 }
 inline const std::string& UnaryResponseMeta::_internal_error_text() const {
@@ -2452,28 +2455,28 @@ inline void UnaryResponseMeta::set_error_text(std::string&& value) {
   
   error_text_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.UnaryResponseMeta.error_text)
 }
 inline void UnaryResponseMeta::set_error_text(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   error_text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.UnaryResponseMeta.error_text)
 }
 inline void UnaryResponseMeta::set_error_text(const char* value,
     size_t size) {
   
   error_text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.UnaryResponseMeta.error_text)
 }
 inline std::string* UnaryResponseMeta::_internal_mutable_error_text() {
   
   return error_text_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* UnaryResponseMeta::release_error_text() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.UnaryResponseMeta.error_text)
   return error_text_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void UnaryResponseMeta::set_allocated_error_text(std::string* error_text) {
@@ -2484,10 +2487,10 @@ inline void UnaryResponseMeta::set_allocated_error_text(std::string* error_text)
   }
   error_text_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), error_text,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.UnaryResponseMeta.error_text)
 }
 inline std::string* UnaryResponseMeta::unsafe_arena_release_error_text() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.UnaryResponseMeta.error_text)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return error_text_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2503,7 +2506,7 @@ inline void UnaryResponseMeta::unsafe_arena_set_allocated_error_text(
   }
   error_text_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       error_text, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.UnaryResponseMeta.error_text)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.UnaryResponseMeta.error_text)
 }
 
 // bytes response_payload = 3;
@@ -2511,15 +2514,15 @@ inline void UnaryResponseMeta::clear_response_payload() {
   response_payload_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& UnaryResponseMeta::response_payload() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.UnaryResponseMeta.response_payload)
   return _internal_response_payload();
 }
 inline void UnaryResponseMeta::set_response_payload(const std::string& value) {
   _internal_set_response_payload(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.UnaryResponseMeta.response_payload)
 }
 inline std::string* UnaryResponseMeta::mutable_response_payload() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.UnaryResponseMeta.response_payload)
   return _internal_mutable_response_payload();
 }
 inline const std::string& UnaryResponseMeta::_internal_response_payload() const {
@@ -2533,28 +2536,28 @@ inline void UnaryResponseMeta::set_response_payload(std::string&& value) {
   
   response_payload_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.UnaryResponseMeta.response_payload)
 }
 inline void UnaryResponseMeta::set_response_payload(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   response_payload_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.UnaryResponseMeta.response_payload)
 }
 inline void UnaryResponseMeta::set_response_payload(const void* value,
     size_t size) {
   
   response_payload_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.UnaryResponseMeta.response_payload)
 }
 inline std::string* UnaryResponseMeta::_internal_mutable_response_payload() {
   
   return response_payload_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* UnaryResponseMeta::release_response_payload() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.UnaryResponseMeta.response_payload)
   return response_payload_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void UnaryResponseMeta::set_allocated_response_payload(std::string* response_payload) {
@@ -2565,10 +2568,10 @@ inline void UnaryResponseMeta::set_allocated_response_payload(std::string* respo
   }
   response_payload_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), response_payload,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.UnaryResponseMeta.response_payload)
 }
 inline std::string* UnaryResponseMeta::unsafe_arena_release_response_payload() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.UnaryResponseMeta.response_payload)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return response_payload_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2584,7 +2587,7 @@ inline void UnaryResponseMeta::unsafe_arena_set_allocated_response_payload(
   }
   response_payload_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       response_payload, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.UnaryResponseMeta.response_payload)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.UnaryResponseMeta.response_payload)
 }
 
 // map<string, string> metadata = 10;
@@ -2603,7 +2606,7 @@ UnaryResponseMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 UnaryResponseMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.UnaryResponseMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.UnaryResponseMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -2612,7 +2615,7 @@ UnaryResponseMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 UnaryResponseMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.UnaryResponseMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.UnaryResponseMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -2627,15 +2630,15 @@ inline void StreamOpenMeta::clear_service_name() {
   service_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& StreamOpenMeta::service_name() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamOpenMeta.service_name)
   return _internal_service_name();
 }
 inline void StreamOpenMeta::set_service_name(const std::string& value) {
   _internal_set_service_name(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamOpenMeta.service_name)
 }
 inline std::string* StreamOpenMeta::mutable_service_name() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.StreamOpenMeta.service_name)
   return _internal_mutable_service_name();
 }
 inline const std::string& StreamOpenMeta::_internal_service_name() const {
@@ -2649,28 +2652,28 @@ inline void StreamOpenMeta::set_service_name(std::string&& value) {
   
   service_name_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.StreamOpenMeta.service_name)
 }
 inline void StreamOpenMeta::set_service_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.StreamOpenMeta.service_name)
 }
 inline void StreamOpenMeta::set_service_name(const char* value,
     size_t size) {
   
   service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.StreamOpenMeta.service_name)
 }
 inline std::string* StreamOpenMeta::_internal_mutable_service_name() {
   
   return service_name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* StreamOpenMeta::release_service_name() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.StreamOpenMeta.service_name)
   return service_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void StreamOpenMeta::set_allocated_service_name(std::string* service_name) {
@@ -2681,10 +2684,10 @@ inline void StreamOpenMeta::set_allocated_service_name(std::string* service_name
   }
   service_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), service_name,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.StreamOpenMeta.service_name)
 }
 inline std::string* StreamOpenMeta::unsafe_arena_release_service_name() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.StreamOpenMeta.service_name)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return service_name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2700,7 +2703,7 @@ inline void StreamOpenMeta::unsafe_arena_set_allocated_service_name(
   }
   service_name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       service_name, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.StreamOpenMeta.service_name)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.StreamOpenMeta.service_name)
 }
 
 // string method_name = 2;
@@ -2708,15 +2711,15 @@ inline void StreamOpenMeta::clear_method_name() {
   method_name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& StreamOpenMeta::method_name() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamOpenMeta.method_name)
   return _internal_method_name();
 }
 inline void StreamOpenMeta::set_method_name(const std::string& value) {
   _internal_set_method_name(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamOpenMeta.method_name)
 }
 inline std::string* StreamOpenMeta::mutable_method_name() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.StreamOpenMeta.method_name)
   return _internal_mutable_method_name();
 }
 inline const std::string& StreamOpenMeta::_internal_method_name() const {
@@ -2730,28 +2733,28 @@ inline void StreamOpenMeta::set_method_name(std::string&& value) {
   
   method_name_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.StreamOpenMeta.method_name)
 }
 inline void StreamOpenMeta::set_method_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   method_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.StreamOpenMeta.method_name)
 }
 inline void StreamOpenMeta::set_method_name(const char* value,
     size_t size) {
   
   method_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.StreamOpenMeta.method_name)
 }
 inline std::string* StreamOpenMeta::_internal_mutable_method_name() {
   
   return method_name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* StreamOpenMeta::release_method_name() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.StreamOpenMeta.method_name)
   return method_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void StreamOpenMeta::set_allocated_method_name(std::string* method_name) {
@@ -2762,10 +2765,10 @@ inline void StreamOpenMeta::set_allocated_method_name(std::string* method_name) 
   }
   method_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), method_name,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.StreamOpenMeta.method_name)
 }
 inline std::string* StreamOpenMeta::unsafe_arena_release_method_name() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.StreamOpenMeta.method_name)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return method_name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2781,7 +2784,7 @@ inline void StreamOpenMeta::unsafe_arena_set_allocated_method_name(
   }
   method_name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       method_name, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.StreamOpenMeta.method_name)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.StreamOpenMeta.method_name)
 }
 
 // bytes request_payload = 3;
@@ -2789,15 +2792,15 @@ inline void StreamOpenMeta::clear_request_payload() {
   request_payload_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& StreamOpenMeta::request_payload() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamOpenMeta.request_payload)
   return _internal_request_payload();
 }
 inline void StreamOpenMeta::set_request_payload(const std::string& value) {
   _internal_set_request_payload(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamOpenMeta.request_payload)
 }
 inline std::string* StreamOpenMeta::mutable_request_payload() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.StreamOpenMeta.request_payload)
   return _internal_mutable_request_payload();
 }
 inline const std::string& StreamOpenMeta::_internal_request_payload() const {
@@ -2811,28 +2814,28 @@ inline void StreamOpenMeta::set_request_payload(std::string&& value) {
   
   request_payload_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.StreamOpenMeta.request_payload)
 }
 inline void StreamOpenMeta::set_request_payload(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   request_payload_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.StreamOpenMeta.request_payload)
 }
 inline void StreamOpenMeta::set_request_payload(const void* value,
     size_t size) {
   
   request_payload_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.StreamOpenMeta.request_payload)
 }
 inline std::string* StreamOpenMeta::_internal_mutable_request_payload() {
   
   return request_payload_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* StreamOpenMeta::release_request_payload() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.StreamOpenMeta.request_payload)
   return request_payload_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void StreamOpenMeta::set_allocated_request_payload(std::string* request_payload) {
@@ -2843,10 +2846,10 @@ inline void StreamOpenMeta::set_allocated_request_payload(std::string* request_p
   }
   request_payload_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), request_payload,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.StreamOpenMeta.request_payload)
 }
 inline std::string* StreamOpenMeta::unsafe_arena_release_request_payload() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.StreamOpenMeta.request_payload)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return request_payload_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -2862,7 +2865,7 @@ inline void StreamOpenMeta::unsafe_arena_set_allocated_request_payload(
   }
   request_payload_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       request_payload, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.StreamOpenMeta.request_payload)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.StreamOpenMeta.request_payload)
 }
 
 // uint32 initial_window_bytes = 4;
@@ -2873,7 +2876,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 StreamOpenMeta::_internal_initial_window_
   return initial_window_bytes_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 StreamOpenMeta::initial_window_bytes() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamOpenMeta.initial_window_bytes)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamOpenMeta.initial_window_bytes)
   return _internal_initial_window_bytes();
 }
 inline void StreamOpenMeta::_internal_set_initial_window_bytes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -2882,7 +2885,7 @@ inline void StreamOpenMeta::_internal_set_initial_window_bytes(::PROTOBUF_NAMESP
 }
 inline void StreamOpenMeta::set_initial_window_bytes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_initial_window_bytes(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamOpenMeta.initial_window_bytes)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamOpenMeta.initial_window_bytes)
 }
 
 // map<string, string> metadata = 10;
@@ -2901,7 +2904,7 @@ StreamOpenMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 StreamOpenMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.StreamOpenMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.StreamOpenMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -2910,7 +2913,7 @@ StreamOpenMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 StreamOpenMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.StreamOpenMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.StreamOpenMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -2928,7 +2931,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 StreamDataMeta::_internal_sequence() cons
   return sequence_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 StreamDataMeta::sequence() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamDataMeta.sequence)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamDataMeta.sequence)
   return _internal_sequence();
 }
 inline void StreamDataMeta::_internal_set_sequence(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -2937,7 +2940,7 @@ inline void StreamDataMeta::_internal_set_sequence(::PROTOBUF_NAMESPACE_ID::uint
 }
 inline void StreamDataMeta::set_sequence(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_sequence(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamDataMeta.sequence)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamDataMeta.sequence)
 }
 
 // bytes data = 2;
@@ -2945,15 +2948,15 @@ inline void StreamDataMeta::clear_data() {
   data_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& StreamDataMeta::data() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamDataMeta.data)
   return _internal_data();
 }
 inline void StreamDataMeta::set_data(const std::string& value) {
   _internal_set_data(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamDataMeta.data)
 }
 inline std::string* StreamDataMeta::mutable_data() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.StreamDataMeta.data)
   return _internal_mutable_data();
 }
 inline const std::string& StreamDataMeta::_internal_data() const {
@@ -2967,28 +2970,28 @@ inline void StreamDataMeta::set_data(std::string&& value) {
   
   data_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.StreamDataMeta.data)
 }
 inline void StreamDataMeta::set_data(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   data_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.StreamDataMeta.data)
 }
 inline void StreamDataMeta::set_data(const void* value,
     size_t size) {
   
   data_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.StreamDataMeta.data)
 }
 inline std::string* StreamDataMeta::_internal_mutable_data() {
   
   return data_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* StreamDataMeta::release_data() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.StreamDataMeta.data)
   return data_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void StreamDataMeta::set_allocated_data(std::string* data) {
@@ -2999,10 +3002,10 @@ inline void StreamDataMeta::set_allocated_data(std::string* data) {
   }
   data_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), data,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.StreamDataMeta.data)
 }
 inline std::string* StreamDataMeta::unsafe_arena_release_data() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.StreamDataMeta.data)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return data_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3018,7 +3021,7 @@ inline void StreamDataMeta::unsafe_arena_set_allocated_data(
   }
   data_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       data, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.StreamDataMeta.data)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.StreamDataMeta.data)
 }
 
 // map<string, string> metadata = 10;
@@ -3037,7 +3040,7 @@ StreamDataMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 StreamDataMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.StreamDataMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.StreamDataMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -3046,7 +3049,7 @@ StreamDataMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 StreamDataMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.StreamDataMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.StreamDataMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -3056,24 +3059,24 @@ StreamDataMeta::mutable_metadata() {
 
 // StreamEndMeta
 
-// .novanet.rpc.RpcErrorCode error_code = 1;
+// .novanet.rpc.meta.RpcErrorCode error_code = 1;
 inline void StreamEndMeta::clear_error_code() {
   error_code_ = 0;
 }
-inline ::novanet::rpc::RpcErrorCode StreamEndMeta::_internal_error_code() const {
-  return static_cast< ::novanet::rpc::RpcErrorCode >(error_code_);
+inline ::novanet::rpc::meta::RpcErrorCode StreamEndMeta::_internal_error_code() const {
+  return static_cast< ::novanet::rpc::meta::RpcErrorCode >(error_code_);
 }
-inline ::novanet::rpc::RpcErrorCode StreamEndMeta::error_code() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamEndMeta.error_code)
+inline ::novanet::rpc::meta::RpcErrorCode StreamEndMeta::error_code() const {
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamEndMeta.error_code)
   return _internal_error_code();
 }
-inline void StreamEndMeta::_internal_set_error_code(::novanet::rpc::RpcErrorCode value) {
+inline void StreamEndMeta::_internal_set_error_code(::novanet::rpc::meta::RpcErrorCode value) {
   
   error_code_ = value;
 }
-inline void StreamEndMeta::set_error_code(::novanet::rpc::RpcErrorCode value) {
+inline void StreamEndMeta::set_error_code(::novanet::rpc::meta::RpcErrorCode value) {
   _internal_set_error_code(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamEndMeta.error_code)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamEndMeta.error_code)
 }
 
 // string error_text = 2;
@@ -3081,15 +3084,15 @@ inline void StreamEndMeta::clear_error_text() {
   error_text_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& StreamEndMeta::error_text() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamEndMeta.error_text)
   return _internal_error_text();
 }
 inline void StreamEndMeta::set_error_text(const std::string& value) {
   _internal_set_error_text(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamEndMeta.error_text)
 }
 inline std::string* StreamEndMeta::mutable_error_text() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.StreamEndMeta.error_text)
   return _internal_mutable_error_text();
 }
 inline const std::string& StreamEndMeta::_internal_error_text() const {
@@ -3103,28 +3106,28 @@ inline void StreamEndMeta::set_error_text(std::string&& value) {
   
   error_text_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.StreamEndMeta.error_text)
 }
 inline void StreamEndMeta::set_error_text(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   error_text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.StreamEndMeta.error_text)
 }
 inline void StreamEndMeta::set_error_text(const char* value,
     size_t size) {
   
   error_text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.StreamEndMeta.error_text)
 }
 inline std::string* StreamEndMeta::_internal_mutable_error_text() {
   
   return error_text_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* StreamEndMeta::release_error_text() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.StreamEndMeta.error_text)
   return error_text_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void StreamEndMeta::set_allocated_error_text(std::string* error_text) {
@@ -3135,10 +3138,10 @@ inline void StreamEndMeta::set_allocated_error_text(std::string* error_text) {
   }
   error_text_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), error_text,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.StreamEndMeta.error_text)
 }
 inline std::string* StreamEndMeta::unsafe_arena_release_error_text() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.StreamEndMeta.error_text)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return error_text_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3154,7 +3157,7 @@ inline void StreamEndMeta::unsafe_arena_set_allocated_error_text(
   }
   error_text_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       error_text, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.StreamEndMeta.error_text)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.StreamEndMeta.error_text)
 }
 
 // uint64 total_sequences = 3;
@@ -3165,7 +3168,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 StreamEndMeta::_internal_total_sequences(
   return total_sequences_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 StreamEndMeta::total_sequences() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamEndMeta.total_sequences)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamEndMeta.total_sequences)
   return _internal_total_sequences();
 }
 inline void StreamEndMeta::_internal_set_total_sequences(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -3174,7 +3177,7 @@ inline void StreamEndMeta::_internal_set_total_sequences(::PROTOBUF_NAMESPACE_ID
 }
 inline void StreamEndMeta::set_total_sequences(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_total_sequences(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamEndMeta.total_sequences)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamEndMeta.total_sequences)
 }
 
 // map<string, string> metadata = 10;
@@ -3193,7 +3196,7 @@ StreamEndMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 StreamEndMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.StreamEndMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.StreamEndMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -3202,7 +3205,7 @@ StreamEndMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 StreamEndMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.StreamEndMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.StreamEndMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -3217,15 +3220,15 @@ inline void StreamCancelMeta::clear_reason() {
   reason_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& StreamCancelMeta::reason() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.StreamCancelMeta.reason)
   return _internal_reason();
 }
 inline void StreamCancelMeta::set_reason(const std::string& value) {
   _internal_set_reason(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.StreamCancelMeta.reason)
 }
 inline std::string* StreamCancelMeta::mutable_reason() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.StreamCancelMeta.reason)
   return _internal_mutable_reason();
 }
 inline const std::string& StreamCancelMeta::_internal_reason() const {
@@ -3239,28 +3242,28 @@ inline void StreamCancelMeta::set_reason(std::string&& value) {
   
   reason_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.StreamCancelMeta.reason)
 }
 inline void StreamCancelMeta::set_reason(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.StreamCancelMeta.reason)
 }
 inline void StreamCancelMeta::set_reason(const char* value,
     size_t size) {
   
   reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.StreamCancelMeta.reason)
 }
 inline std::string* StreamCancelMeta::_internal_mutable_reason() {
   
   return reason_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* StreamCancelMeta::release_reason() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.StreamCancelMeta.reason)
   return reason_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void StreamCancelMeta::set_allocated_reason(std::string* reason) {
@@ -3271,10 +3274,10 @@ inline void StreamCancelMeta::set_allocated_reason(std::string* reason) {
   }
   reason_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), reason,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.StreamCancelMeta.reason)
 }
 inline std::string* StreamCancelMeta::unsafe_arena_release_reason() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.StreamCancelMeta.reason)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return reason_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3290,7 +3293,7 @@ inline void StreamCancelMeta::unsafe_arena_set_allocated_reason(
   }
   reason_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       reason, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.StreamCancelMeta.reason)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.StreamCancelMeta.reason)
 }
 
 // map<string, string> metadata = 10;
@@ -3309,7 +3312,7 @@ StreamCancelMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 StreamCancelMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.StreamCancelMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.StreamCancelMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -3318,7 +3321,7 @@ StreamCancelMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 StreamCancelMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.StreamCancelMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.StreamCancelMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -3328,24 +3331,24 @@ StreamCancelMeta::mutable_metadata() {
 
 // ErrorFrameMeta
 
-// .novanet.rpc.RpcErrorCode error_code = 1;
+// .novanet.rpc.meta.RpcErrorCode error_code = 1;
 inline void ErrorFrameMeta::clear_error_code() {
   error_code_ = 0;
 }
-inline ::novanet::rpc::RpcErrorCode ErrorFrameMeta::_internal_error_code() const {
-  return static_cast< ::novanet::rpc::RpcErrorCode >(error_code_);
+inline ::novanet::rpc::meta::RpcErrorCode ErrorFrameMeta::_internal_error_code() const {
+  return static_cast< ::novanet::rpc::meta::RpcErrorCode >(error_code_);
 }
-inline ::novanet::rpc::RpcErrorCode ErrorFrameMeta::error_code() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.ErrorFrameMeta.error_code)
+inline ::novanet::rpc::meta::RpcErrorCode ErrorFrameMeta::error_code() const {
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.ErrorFrameMeta.error_code)
   return _internal_error_code();
 }
-inline void ErrorFrameMeta::_internal_set_error_code(::novanet::rpc::RpcErrorCode value) {
+inline void ErrorFrameMeta::_internal_set_error_code(::novanet::rpc::meta::RpcErrorCode value) {
   
   error_code_ = value;
 }
-inline void ErrorFrameMeta::set_error_code(::novanet::rpc::RpcErrorCode value) {
+inline void ErrorFrameMeta::set_error_code(::novanet::rpc::meta::RpcErrorCode value) {
   _internal_set_error_code(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.ErrorFrameMeta.error_code)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.ErrorFrameMeta.error_code)
 }
 
 // string error_text = 2;
@@ -3353,15 +3356,15 @@ inline void ErrorFrameMeta::clear_error_text() {
   error_text_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& ErrorFrameMeta::error_text() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.ErrorFrameMeta.error_text)
   return _internal_error_text();
 }
 inline void ErrorFrameMeta::set_error_text(const std::string& value) {
   _internal_set_error_text(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.ErrorFrameMeta.error_text)
 }
 inline std::string* ErrorFrameMeta::mutable_error_text() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.ErrorFrameMeta.error_text)
   return _internal_mutable_error_text();
 }
 inline const std::string& ErrorFrameMeta::_internal_error_text() const {
@@ -3375,28 +3378,28 @@ inline void ErrorFrameMeta::set_error_text(std::string&& value) {
   
   error_text_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.ErrorFrameMeta.error_text)
 }
 inline void ErrorFrameMeta::set_error_text(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   error_text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.ErrorFrameMeta.error_text)
 }
 inline void ErrorFrameMeta::set_error_text(const char* value,
     size_t size) {
   
   error_text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.ErrorFrameMeta.error_text)
 }
 inline std::string* ErrorFrameMeta::_internal_mutable_error_text() {
   
   return error_text_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* ErrorFrameMeta::release_error_text() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.ErrorFrameMeta.error_text)
   return error_text_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void ErrorFrameMeta::set_allocated_error_text(std::string* error_text) {
@@ -3407,10 +3410,10 @@ inline void ErrorFrameMeta::set_allocated_error_text(std::string* error_text) {
   }
   error_text_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), error_text,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.ErrorFrameMeta.error_text)
 }
 inline std::string* ErrorFrameMeta::unsafe_arena_release_error_text() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.ErrorFrameMeta.error_text)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return error_text_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3426,7 +3429,7 @@ inline void ErrorFrameMeta::unsafe_arena_set_allocated_error_text(
   }
   error_text_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       error_text, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.ErrorFrameMeta.error_text)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.ErrorFrameMeta.error_text)
 }
 
 // string debug_info = 3;
@@ -3434,15 +3437,15 @@ inline void ErrorFrameMeta::clear_debug_info() {
   debug_info_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& ErrorFrameMeta::debug_info() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.ErrorFrameMeta.debug_info)
   return _internal_debug_info();
 }
 inline void ErrorFrameMeta::set_debug_info(const std::string& value) {
   _internal_set_debug_info(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.ErrorFrameMeta.debug_info)
 }
 inline std::string* ErrorFrameMeta::mutable_debug_info() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.ErrorFrameMeta.debug_info)
   return _internal_mutable_debug_info();
 }
 inline const std::string& ErrorFrameMeta::_internal_debug_info() const {
@@ -3456,28 +3459,28 @@ inline void ErrorFrameMeta::set_debug_info(std::string&& value) {
   
   debug_info_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.ErrorFrameMeta.debug_info)
 }
 inline void ErrorFrameMeta::set_debug_info(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   debug_info_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.ErrorFrameMeta.debug_info)
 }
 inline void ErrorFrameMeta::set_debug_info(const char* value,
     size_t size) {
   
   debug_info_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.ErrorFrameMeta.debug_info)
 }
 inline std::string* ErrorFrameMeta::_internal_mutable_debug_info() {
   
   return debug_info_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* ErrorFrameMeta::release_debug_info() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.ErrorFrameMeta.debug_info)
   return debug_info_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void ErrorFrameMeta::set_allocated_debug_info(std::string* debug_info) {
@@ -3488,10 +3491,10 @@ inline void ErrorFrameMeta::set_allocated_debug_info(std::string* debug_info) {
   }
   debug_info_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), debug_info,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.ErrorFrameMeta.debug_info)
 }
 inline std::string* ErrorFrameMeta::unsafe_arena_release_debug_info() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.ErrorFrameMeta.debug_info)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return debug_info_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3507,7 +3510,7 @@ inline void ErrorFrameMeta::unsafe_arena_set_allocated_debug_info(
   }
   debug_info_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       debug_info, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.ErrorFrameMeta.debug_info)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.ErrorFrameMeta.debug_info)
 }
 
 // map<string, string> metadata = 10;
@@ -3526,7 +3529,7 @@ ErrorFrameMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 ErrorFrameMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.ErrorFrameMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.ErrorFrameMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -3535,7 +3538,7 @@ ErrorFrameMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 ErrorFrameMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.ErrorFrameMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.ErrorFrameMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -3553,7 +3556,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 HeartbeatMeta::_internal_unix_millis() con
   return unix_millis_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 HeartbeatMeta::unix_millis() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.HeartbeatMeta.unix_millis)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.HeartbeatMeta.unix_millis)
   return _internal_unix_millis();
 }
 inline void HeartbeatMeta::_internal_set_unix_millis(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -3562,7 +3565,7 @@ inline void HeartbeatMeta::_internal_set_unix_millis(::PROTOBUF_NAMESPACE_ID::in
 }
 inline void HeartbeatMeta::set_unix_millis(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_unix_millis(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.HeartbeatMeta.unix_millis)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.HeartbeatMeta.unix_millis)
 }
 
 // string node_id = 2;
@@ -3570,15 +3573,15 @@ inline void HeartbeatMeta::clear_node_id() {
   node_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline const std::string& HeartbeatMeta::node_id() const {
-  // @@protoc_insertion_point(field_get:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_get:novanet.rpc.meta.HeartbeatMeta.node_id)
   return _internal_node_id();
 }
 inline void HeartbeatMeta::set_node_id(const std::string& value) {
   _internal_set_node_id(value);
-  // @@protoc_insertion_point(field_set:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_set:novanet.rpc.meta.HeartbeatMeta.node_id)
 }
 inline std::string* HeartbeatMeta::mutable_node_id() {
-  // @@protoc_insertion_point(field_mutable:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_mutable:novanet.rpc.meta.HeartbeatMeta.node_id)
   return _internal_mutable_node_id();
 }
 inline const std::string& HeartbeatMeta::_internal_node_id() const {
@@ -3592,28 +3595,28 @@ inline void HeartbeatMeta::set_node_id(std::string&& value) {
   
   node_id_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_set_rvalue:novanet.rpc.meta.HeartbeatMeta.node_id)
 }
 inline void HeartbeatMeta::set_node_id(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   node_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_set_char:novanet.rpc.meta.HeartbeatMeta.node_id)
 }
 inline void HeartbeatMeta::set_node_id(const char* value,
     size_t size) {
   
   node_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_set_pointer:novanet.rpc.meta.HeartbeatMeta.node_id)
 }
 inline std::string* HeartbeatMeta::_internal_mutable_node_id() {
   
   return node_id_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* HeartbeatMeta::release_node_id() {
-  // @@protoc_insertion_point(field_release:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_release:novanet.rpc.meta.HeartbeatMeta.node_id)
   return node_id_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void HeartbeatMeta::set_allocated_node_id(std::string* node_id) {
@@ -3624,10 +3627,10 @@ inline void HeartbeatMeta::set_allocated_node_id(std::string* node_id) {
   }
   node_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), node_id,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_set_allocated:novanet.rpc.meta.HeartbeatMeta.node_id)
 }
 inline std::string* HeartbeatMeta::unsafe_arena_release_node_id() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_unsafe_arena_release:novanet.rpc.meta.HeartbeatMeta.node_id)
   GOOGLE_DCHECK(GetArena() != nullptr);
   
   return node_id_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3643,7 +3646,7 @@ inline void HeartbeatMeta::unsafe_arena_set_allocated_node_id(
   }
   node_id_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       node_id, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.HeartbeatMeta.node_id)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:novanet.rpc.meta.HeartbeatMeta.node_id)
 }
 
 // map<string, string> metadata = 10;
@@ -3662,7 +3665,7 @@ HeartbeatMeta::_internal_metadata() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 HeartbeatMeta::metadata() const {
-  // @@protoc_insertion_point(field_map:novanet.rpc.HeartbeatMeta.metadata)
+  // @@protoc_insertion_point(field_map:novanet.rpc.meta.HeartbeatMeta.metadata)
   return _internal_metadata();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
@@ -3671,7 +3674,7 @@ HeartbeatMeta::_internal_mutable_metadata() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 HeartbeatMeta::mutable_metadata() {
-  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.HeartbeatMeta.metadata)
+  // @@protoc_insertion_point(field_mutable_map:novanet.rpc.meta.HeartbeatMeta.metadata)
   return _internal_mutable_metadata();
 }
 
@@ -3711,15 +3714,16 @@ HeartbeatMeta::mutable_metadata() {
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace meta
 }  // namespace rpc
 }  // namespace novanet
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::novanet::rpc::RpcErrorCode> : ::std::true_type {};
+template <> struct is_proto_enum< ::novanet::rpc::meta::RpcErrorCode> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::novanet::rpc::RpcErrorCode>() {
-  return ::novanet::rpc::RpcErrorCode_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::novanet::rpc::meta::RpcErrorCode>() {
+  return ::novanet::rpc::meta::RpcErrorCode_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

@@ -24,6 +24,7 @@ extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmeta_2eproto ::PROTOBUF_NAMESPACE_ID::inte
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmeta_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UnaryResponseMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto;
 namespace novanet {
 namespace rpc {
+namespace meta {
 class UnaryRequestMeta_MetadataEntry_DoNotUseDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UnaryRequestMeta_MetadataEntry_DoNotUse> _instance;
@@ -88,17 +89,18 @@ class HeartbeatMetaDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<HeartbeatMeta> _instance;
 } _HeartbeatMeta_default_instance_;
+}  // namespace meta
 }  // namespace rpc
 }  // namespace novanet
 static void InitDefaultsscc_info_ErrorFrameMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_ErrorFrameMeta_default_instance_;
-    new (ptr) ::novanet::rpc::ErrorFrameMeta();
+    void* ptr = &::novanet::rpc::meta::_ErrorFrameMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::ErrorFrameMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::ErrorFrameMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::ErrorFrameMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_ErrorFrameMeta_rpc_5fmeta_2eproto =
@@ -109,10 +111,10 @@ static void InitDefaultsscc_info_ErrorFrameMeta_MetadataEntry_DoNotUse_rpc_5fmet
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_ErrorFrameMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_ErrorFrameMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ErrorFrameMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -122,11 +124,11 @@ static void InitDefaultsscc_info_HeartbeatMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_HeartbeatMeta_default_instance_;
-    new (ptr) ::novanet::rpc::HeartbeatMeta();
+    void* ptr = &::novanet::rpc::meta::_HeartbeatMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::HeartbeatMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::HeartbeatMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::HeartbeatMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_HeartbeatMeta_rpc_5fmeta_2eproto =
@@ -137,10 +139,10 @@ static void InitDefaultsscc_info_HeartbeatMeta_MetadataEntry_DoNotUse_rpc_5fmeta
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_HeartbeatMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_HeartbeatMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_HeartbeatMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -150,11 +152,11 @@ static void InitDefaultsscc_info_StreamCancelMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamCancelMeta_default_instance_;
-    new (ptr) ::novanet::rpc::StreamCancelMeta();
+    void* ptr = &::novanet::rpc::meta::_StreamCancelMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamCancelMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::StreamCancelMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamCancelMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_StreamCancelMeta_rpc_5fmeta_2eproto =
@@ -165,10 +167,10 @@ static void InitDefaultsscc_info_StreamCancelMeta_MetadataEntry_DoNotUse_rpc_5fm
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamCancelMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_StreamCancelMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_StreamCancelMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -178,11 +180,11 @@ static void InitDefaultsscc_info_StreamDataMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamDataMeta_default_instance_;
-    new (ptr) ::novanet::rpc::StreamDataMeta();
+    void* ptr = &::novanet::rpc::meta::_StreamDataMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamDataMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::StreamDataMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamDataMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_StreamDataMeta_rpc_5fmeta_2eproto =
@@ -193,10 +195,10 @@ static void InitDefaultsscc_info_StreamDataMeta_MetadataEntry_DoNotUse_rpc_5fmet
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamDataMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_StreamDataMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_StreamDataMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -206,11 +208,11 @@ static void InitDefaultsscc_info_StreamEndMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamEndMeta_default_instance_;
-    new (ptr) ::novanet::rpc::StreamEndMeta();
+    void* ptr = &::novanet::rpc::meta::_StreamEndMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamEndMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::StreamEndMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamEndMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_StreamEndMeta_rpc_5fmeta_2eproto =
@@ -221,10 +223,10 @@ static void InitDefaultsscc_info_StreamEndMeta_MetadataEntry_DoNotUse_rpc_5fmeta
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamEndMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_StreamEndMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_StreamEndMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -234,11 +236,11 @@ static void InitDefaultsscc_info_StreamOpenMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamOpenMeta_default_instance_;
-    new (ptr) ::novanet::rpc::StreamOpenMeta();
+    void* ptr = &::novanet::rpc::meta::_StreamOpenMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamOpenMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::StreamOpenMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamOpenMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_StreamOpenMeta_rpc_5fmeta_2eproto =
@@ -249,10 +251,10 @@ static void InitDefaultsscc_info_StreamOpenMeta_MetadataEntry_DoNotUse_rpc_5fmet
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_StreamOpenMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_StreamOpenMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_StreamOpenMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -262,11 +264,11 @@ static void InitDefaultsscc_info_UnaryRequestMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_UnaryRequestMeta_default_instance_;
-    new (ptr) ::novanet::rpc::UnaryRequestMeta();
+    void* ptr = &::novanet::rpc::meta::_UnaryRequestMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::UnaryRequestMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::UnaryRequestMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::UnaryRequestMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_UnaryRequestMeta_rpc_5fmeta_2eproto =
@@ -277,10 +279,10 @@ static void InitDefaultsscc_info_UnaryRequestMeta_MetadataEntry_DoNotUse_rpc_5fm
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_UnaryRequestMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_UnaryRequestMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UnaryRequestMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -290,11 +292,11 @@ static void InitDefaultsscc_info_UnaryResponseMeta_rpc_5fmeta_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_UnaryResponseMeta_default_instance_;
-    new (ptr) ::novanet::rpc::UnaryResponseMeta();
+    void* ptr = &::novanet::rpc::meta::_UnaryResponseMeta_default_instance_;
+    new (ptr) ::novanet::rpc::meta::UnaryResponseMeta();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::novanet::rpc::UnaryResponseMeta::InitAsDefaultInstance();
+  ::novanet::rpc::meta::UnaryResponseMeta::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_UnaryResponseMeta_rpc_5fmeta_2eproto =
@@ -305,10 +307,10 @@ static void InitDefaultsscc_info_UnaryResponseMeta_MetadataEntry_DoNotUse_rpc_5f
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::novanet::rpc::_UnaryResponseMeta_MetadataEntry_DoNotUse_default_instance_;
-    new (ptr) ::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse();
+    void* ptr = &::novanet::rpc::meta::_UnaryResponseMeta_MetadataEntry_DoNotUse_default_instance_;
+    new (ptr) ::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse();
   }
-  ::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
+  ::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UnaryResponseMeta_MetadataEntry_DoNotUse_rpc_5fmeta_2eproto =
@@ -319,244 +321,246 @@ static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptor
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_rpc_5fmeta_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmeta_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta, service_name_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta, method_name_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta, request_payload_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryRequestMeta, metadata_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta, service_name_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta, method_name_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta, request_payload_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryRequestMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta, error_code_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta, error_text_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta, response_payload_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::UnaryResponseMeta, metadata_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta, error_code_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta, error_text_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta, response_payload_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::UnaryResponseMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta, service_name_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta, method_name_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta, request_payload_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta, initial_window_bytes_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamOpenMeta, metadata_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta, service_name_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta, method_name_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta, request_payload_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta, initial_window_bytes_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamOpenMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta, sequence_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta, data_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamDataMeta, metadata_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta, sequence_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta, data_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamDataMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta, error_code_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta, error_text_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta, total_sequences_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamEndMeta, metadata_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta, error_code_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta, error_text_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta, total_sequences_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamEndMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamCancelMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamCancelMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamCancelMeta, reason_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::StreamCancelMeta, metadata_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamCancelMeta, reason_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::StreamCancelMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta, error_code_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta, error_text_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta, debug_info_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::ErrorFrameMeta, metadata_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta, error_code_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta, error_text_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta, debug_info_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::ErrorFrameMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse, key_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse, value_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse, key_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse, value_),
   0,
   1,
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta, unix_millis_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta, node_id_),
-  PROTOBUF_FIELD_OFFSET(::novanet::rpc::HeartbeatMeta, metadata_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta, unix_millis_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta, node_id_),
+  PROTOBUF_FIELD_OFFSET(::novanet::rpc::meta::HeartbeatMeta, metadata_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 7, sizeof(::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse)},
-  { 9, -1, sizeof(::novanet::rpc::UnaryRequestMeta)},
-  { 18, 25, sizeof(::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse)},
-  { 27, -1, sizeof(::novanet::rpc::UnaryResponseMeta)},
-  { 36, 43, sizeof(::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse)},
-  { 45, -1, sizeof(::novanet::rpc::StreamOpenMeta)},
-  { 55, 62, sizeof(::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse)},
-  { 64, -1, sizeof(::novanet::rpc::StreamDataMeta)},
-  { 72, 79, sizeof(::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse)},
-  { 81, -1, sizeof(::novanet::rpc::StreamEndMeta)},
-  { 90, 97, sizeof(::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse)},
-  { 99, -1, sizeof(::novanet::rpc::StreamCancelMeta)},
-  { 106, 113, sizeof(::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse)},
-  { 115, -1, sizeof(::novanet::rpc::ErrorFrameMeta)},
-  { 124, 131, sizeof(::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse)},
-  { 133, -1, sizeof(::novanet::rpc::HeartbeatMeta)},
+  { 0, 7, sizeof(::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse)},
+  { 9, -1, sizeof(::novanet::rpc::meta::UnaryRequestMeta)},
+  { 18, 25, sizeof(::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse)},
+  { 27, -1, sizeof(::novanet::rpc::meta::UnaryResponseMeta)},
+  { 36, 43, sizeof(::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse)},
+  { 45, -1, sizeof(::novanet::rpc::meta::StreamOpenMeta)},
+  { 55, 62, sizeof(::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse)},
+  { 64, -1, sizeof(::novanet::rpc::meta::StreamDataMeta)},
+  { 72, 79, sizeof(::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse)},
+  { 81, -1, sizeof(::novanet::rpc::meta::StreamEndMeta)},
+  { 90, 97, sizeof(::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse)},
+  { 99, -1, sizeof(::novanet::rpc::meta::StreamCancelMeta)},
+  { 106, 113, sizeof(::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse)},
+  { 115, -1, sizeof(::novanet::rpc::meta::ErrorFrameMeta)},
+  { 124, 131, sizeof(::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse)},
+  { 133, -1, sizeof(::novanet::rpc::meta::HeartbeatMeta)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_UnaryRequestMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_UnaryRequestMeta_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_UnaryResponseMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_UnaryResponseMeta_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamOpenMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamOpenMeta_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamDataMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamDataMeta_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamEndMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamEndMeta_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamCancelMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_StreamCancelMeta_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_ErrorFrameMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_ErrorFrameMeta_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_HeartbeatMeta_MetadataEntry_DoNotUse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::_HeartbeatMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_UnaryRequestMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_UnaryRequestMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_UnaryResponseMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_UnaryResponseMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamOpenMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamOpenMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamDataMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamDataMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamEndMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamEndMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamCancelMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_StreamCancelMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_ErrorFrameMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_ErrorFrameMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_HeartbeatMeta_MetadataEntry_DoNotUse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::rpc::meta::_HeartbeatMeta_default_instance_),
 };
 
 const char descriptor_table_protodef_rpc_5fmeta_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016rpc_meta.proto\022\013novanet.rpc\"\306\001\n\020UnaryR"
-  "equestMeta\022\024\n\014service_name\030\001 \001(\t\022\023\n\013meth"
-  "od_name\030\002 \001(\t\022\027\n\017request_payload\030\003 \001(\014\022="
-  "\n\010metadata\030\n \003(\0132+.novanet.rpc.UnaryRequ"
-  "estMeta.MetadataEntry\032/\n\rMetadataEntry\022\013"
-  "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\341\001\n\021Unary"
-  "ResponseMeta\022-\n\nerror_code\030\001 \001(\0162\031.novan"
-  "et.rpc.RpcErrorCode\022\022\n\nerror_text\030\002 \001(\t\022"
-  "\030\n\020response_payload\030\003 \001(\014\022>\n\010metadata\030\n "
-  "\003(\0132,.novanet.rpc.UnaryResponseMeta.Meta"
-  "dataEntry\032/\n\rMetadataEntry\022\013\n\003key\030\001 \001(\t\022"
-  "\r\n\005value\030\002 \001(\t:\0028\001\"\340\001\n\016StreamOpenMeta\022\024\n"
-  "\014service_name\030\001 \001(\t\022\023\n\013method_name\030\002 \001(\t"
-  "\022\027\n\017request_payload\030\003 \001(\014\022\034\n\024initial_win"
-  "dow_bytes\030\004 \001(\r\022;\n\010metadata\030\n \003(\0132).nova"
-  "net.rpc.StreamOpenMeta.MetadataEntry\032/\n\r"
-  "MetadataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001("
-  "\t:\0028\001\"\236\001\n\016StreamDataMeta\022\020\n\010sequence\030\001 \001"
-  "(\004\022\014\n\004data\030\002 \001(\014\022;\n\010metadata\030\n \003(\0132).nov"
-  "anet.rpc.StreamDataMeta.MetadataEntry\032/\n"
-  "\rMetadataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001"
-  "(\t:\0028\001\"\330\001\n\rStreamEndMeta\022-\n\nerror_code\030\001"
-  " \001(\0162\031.novanet.rpc.RpcErrorCode\022\022\n\nerror"
-  "_text\030\002 \001(\t\022\027\n\017total_sequences\030\003 \001(\004\022:\n\010"
-  "metadata\030\n \003(\0132(.novanet.rpc.StreamEndMe"
+  "\n\016rpc_meta.proto\022\020novanet.rpc.meta\"\313\001\n\020U"
+  "naryRequestMeta\022\024\n\014service_name\030\001 \001(\t\022\023\n"
+  "\013method_name\030\002 \001(\t\022\027\n\017request_payload\030\003 "
+  "\001(\014\022B\n\010metadata\030\n \003(\01320.novanet.rpc.meta"
+  ".UnaryRequestMeta.MetadataEntry\032/\n\rMetad"
+  "ataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001"
+  "\"\353\001\n\021UnaryResponseMeta\0222\n\nerror_code\030\001 \001"
+  "(\0162\036.novanet.rpc.meta.RpcErrorCode\022\022\n\ner"
+  "ror_text\030\002 \001(\t\022\030\n\020response_payload\030\003 \001(\014"
+  "\022C\n\010metadata\030\n \003(\01321.novanet.rpc.meta.Un"
+  "aryResponseMeta.MetadataEntry\032/\n\rMetadat"
+  "aEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\345"
+  "\001\n\016StreamOpenMeta\022\024\n\014service_name\030\001 \001(\t\022"
+  "\023\n\013method_name\030\002 \001(\t\022\027\n\017request_payload\030"
+  "\003 \001(\014\022\034\n\024initial_window_bytes\030\004 \001(\r\022@\n\010m"
+  "etadata\030\n \003(\0132..novanet.rpc.meta.StreamO"
+  "penMeta.MetadataEntry\032/\n\rMetadataEntry\022\013"
+  "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\243\001\n\016Strea"
+  "mDataMeta\022\020\n\010sequence\030\001 \001(\004\022\014\n\004data\030\002 \001("
+  "\014\022@\n\010metadata\030\n \003(\0132..novanet.rpc.meta.S"
+  "treamDataMeta.MetadataEntry\032/\n\rMetadataE"
+  "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\342\001\n"
+  "\rStreamEndMeta\0222\n\nerror_code\030\001 \001(\0162\036.nov"
+  "anet.rpc.meta.RpcErrorCode\022\022\n\nerror_text"
+  "\030\002 \001(\t\022\027\n\017total_sequences\030\003 \001(\004\022\?\n\010metad"
+  "ata\030\n \003(\0132-.novanet.rpc.meta.StreamEndMe"
   "ta.MetadataEntry\032/\n\rMetadataEntry\022\013\n\003key"
-  "\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\222\001\n\020StreamCanc"
-  "elMeta\022\016\n\006reason\030\001 \001(\t\022=\n\010metadata\030\n \003(\013"
-  "2+.novanet.rpc.StreamCancelMeta.Metadata"
-  "Entry\032/\n\rMetadataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005v"
-  "alue\030\002 \001(\t:\0028\001\"\325\001\n\016ErrorFrameMeta\022-\n\nerr"
-  "or_code\030\001 \001(\0162\031.novanet.rpc.RpcErrorCode"
-  "\022\022\n\nerror_text\030\002 \001(\t\022\022\n\ndebug_info\030\003 \001(\t"
-  "\022;\n\010metadata\030\n \003(\0132).novanet.rpc.ErrorFr"
-  "ameMeta.MetadataEntry\032/\n\rMetadataEntry\022\013"
-  "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\242\001\n\rHeart"
-  "beatMeta\022\023\n\013unix_millis\030\001 \001(\003\022\017\n\007node_id"
-  "\030\002 \001(\t\022:\n\010metadata\030\n \003(\0132(.novanet.rpc.H"
-  "eartbeatMeta.MetadataEntry\032/\n\rMetadataEn"
-  "try\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001*\223\005\n\014"
-  "RpcErrorCode\022\n\n\006RPC_OK\020\000\022\025\n\021RPC_UNKNOWN_"
-  "ERROR\020\001\022\023\n\017RPC_BAD_REQUEST\020\002\022\025\n\021RPC_INVA"
-  "LID_FRAME\020\003\022\036\n\032RPC_UNSUPPORTED_FRAME_TYP"
-  "E\020\004\022\026\n\022RPC_INTERNAL_ERROR\020\005\022\031\n\025RPC_SERVI"
-  "CE_NOT_FOUND\020\n\022\030\n\024RPC_METHOD_NOT_FOUND\020\013"
-  "\022\034\n\030RPC_PARSE_REQUEST_FAILED\020\024\022\035\n\031RPC_PA"
-  "RSE_RESPONSE_FAILED\020\025\022 \n\034RPC_SERIALIZE_R"
-  "EQUEST_FAILED\020\026\022!\n\035RPC_SERIALIZE_RESPONS"
-  "E_FAILED\020\027\022\025\n\021RPC_INVOKE_FAILED\020\036\022\017\n\013RPC"
-  "_TIMEOUT\020\037\022\021\n\rRPC_CANCELLED\020 \022\031\n\025RPC_CON"
-  "NECTION_CLOSED\020!\022\030\n\024RPC_STREAM_NOT_FOUND"
-  "\020(\022\025\n\021RPC_STREAM_CLOSED\020)\022\030\n\024RPC_STREAM_"
-  "CANCELLED\020*\022\035\n\031RPC_STREAM_PROTOCOL_ERROR"
-  "\020+\022\024\n\020RPC_BACKPRESSURE\0202\022\032\n\026RPC_RESOURCE"
-  "_EXHAUSTED\0203\022\035\n\031RPC_NO_AVAILABLE_INSTANC"
-  "E\020d\022\033\n\027RPC_LOAD_BALANCE_FAILED\020e\022\027\n\023RPC_"
-  "RETRY_EXHAUSTED\020fB\005H\001\370\001\001b\006proto3"
+  "\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\227\001\n\020StreamCanc"
+  "elMeta\022\016\n\006reason\030\001 \001(\t\022B\n\010metadata\030\n \003(\013"
+  "20.novanet.rpc.meta.StreamCancelMeta.Met"
+  "adataEntry\032/\n\rMetadataEntry\022\013\n\003key\030\001 \001(\t"
+  "\022\r\n\005value\030\002 \001(\t:\0028\001\"\337\001\n\016ErrorFrameMeta\0222"
+  "\n\nerror_code\030\001 \001(\0162\036.novanet.rpc.meta.Rp"
+  "cErrorCode\022\022\n\nerror_text\030\002 \001(\t\022\022\n\ndebug_"
+  "info\030\003 \001(\t\022@\n\010metadata\030\n \003(\0132..novanet.r"
+  "pc.meta.ErrorFrameMeta.MetadataEntry\032/\n\r"
+  "MetadataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001("
+  "\t:\0028\001\"\247\001\n\rHeartbeatMeta\022\023\n\013unix_millis\030\001"
+  " \001(\003\022\017\n\007node_id\030\002 \001(\t\022\?\n\010metadata\030\n \003(\0132"
+  "-.novanet.rpc.meta.HeartbeatMeta.Metadat"
+  "aEntry\032/\n\rMetadataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005"
+  "value\030\002 \001(\t:\0028\001*\223\005\n\014RpcErrorCode\022\n\n\006RPC_"
+  "OK\020\000\022\025\n\021RPC_UNKNOWN_ERROR\020\001\022\023\n\017RPC_BAD_R"
+  "EQUEST\020\002\022\025\n\021RPC_INVALID_FRAME\020\003\022\036\n\032RPC_U"
+  "NSUPPORTED_FRAME_TYPE\020\004\022\026\n\022RPC_INTERNAL_"
+  "ERROR\020\005\022\031\n\025RPC_SERVICE_NOT_FOUND\020\n\022\030\n\024RP"
+  "C_METHOD_NOT_FOUND\020\013\022\034\n\030RPC_PARSE_REQUES"
+  "T_FAILED\020\024\022\035\n\031RPC_PARSE_RESPONSE_FAILED\020"
+  "\025\022 \n\034RPC_SERIALIZE_REQUEST_FAILED\020\026\022!\n\035R"
+  "PC_SERIALIZE_RESPONSE_FAILED\020\027\022\025\n\021RPC_IN"
+  "VOKE_FAILED\020\036\022\017\n\013RPC_TIMEOUT\020\037\022\021\n\rRPC_CA"
+  "NCELLED\020 \022\031\n\025RPC_CONNECTION_CLOSED\020!\022\030\n\024"
+  "RPC_STREAM_NOT_FOUND\020(\022\025\n\021RPC_STREAM_CLO"
+  "SED\020)\022\030\n\024RPC_STREAM_CANCELLED\020*\022\035\n\031RPC_S"
+  "TREAM_PROTOCOL_ERROR\020+\022\024\n\020RPC_BACKPRESSU"
+  "RE\0202\022\032\n\026RPC_RESOURCE_EXHAUSTED\0203\022\035\n\031RPC_"
+  "NO_AVAILABLE_INSTANCE\020d\022\033\n\027RPC_LOAD_BALA"
+  "NCE_FAILED\020e\022\027\n\023RPC_RETRY_EXHAUSTED\020fB\005H"
+  "\001\370\001\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmeta_2eproto_deps[1] = {
 };
@@ -580,7 +584,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmeta_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmeta_2eproto = {
-  false, false, descriptor_table_protodef_rpc_5fmeta_2eproto, "rpc_meta.proto", 2272,
+  false, false, descriptor_table_protodef_rpc_5fmeta_2eproto, "rpc_meta.proto", 2332,
   &descriptor_table_rpc_5fmeta_2eproto_once, descriptor_table_rpc_5fmeta_2eproto_sccs, descriptor_table_rpc_5fmeta_2eproto_deps, 16, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmeta_2eproto::offsets,
   file_level_metadata_rpc_5fmeta_2eproto, 16, file_level_enum_descriptors_rpc_5fmeta_2eproto, file_level_service_descriptors_rpc_5fmeta_2eproto,
@@ -590,6 +594,7 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5f
 static bool dynamic_init_dummy_rpc_5fmeta_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_rpc_5fmeta_2eproto)), true);
 namespace novanet {
 namespace rpc {
+namespace meta {
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RpcErrorCode_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_rpc_5fmeta_2eproto);
   return file_level_enum_descriptors_rpc_5fmeta_2eproto[0];
@@ -658,7 +663,7 @@ UnaryRequestMeta::UnaryRequestMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.UnaryRequestMeta)
 }
 UnaryRequestMeta::UnaryRequestMeta(const UnaryRequestMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -679,7 +684,7 @@ UnaryRequestMeta::UnaryRequestMeta(const UnaryRequestMeta& from)
     request_payload_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_request_payload(),
       GetArena());
   }
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.UnaryRequestMeta)
 }
 
 void UnaryRequestMeta::SharedCtor() {
@@ -690,7 +695,7 @@ void UnaryRequestMeta::SharedCtor() {
 }
 
 UnaryRequestMeta::~UnaryRequestMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.UnaryRequestMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -718,7 +723,7 @@ const UnaryRequestMeta& UnaryRequestMeta::default_instance() {
 
 
 void UnaryRequestMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.UnaryRequestMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.UnaryRequestMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -743,7 +748,7 @@ const char* UnaryRequestMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_service_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.UnaryRequestMeta.service_name"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.UnaryRequestMeta.service_name"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -752,7 +757,7 @@ const char* UnaryRequestMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_method_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.UnaryRequestMeta.method_name"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.UnaryRequestMeta.method_name"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -800,7 +805,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* UnaryRequestMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.UnaryRequestMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -809,7 +814,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_service_name().data(), static_cast<int>(this->_internal_service_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.UnaryRequestMeta.service_name");
+      "novanet.rpc.meta.UnaryRequestMeta.service_name");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_service_name(), target);
   }
@@ -819,7 +824,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_method_name().data(), static_cast<int>(this->_internal_method_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.UnaryRequestMeta.method_name");
+      "novanet.rpc.meta.UnaryRequestMeta.method_name");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_method_name(), target);
   }
@@ -841,11 +846,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.UnaryRequestMeta.MetadataEntry.key");
+          "novanet.rpc.meta.UnaryRequestMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.UnaryRequestMeta.MetadataEntry.value");
+          "novanet.rpc.meta.UnaryRequestMeta.MetadataEntry.value");
       }
     };
 
@@ -879,12 +884,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.UnaryRequestMeta)
   return target;
 }
 
 size_t UnaryRequestMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.UnaryRequestMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.UnaryRequestMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -931,22 +936,22 @@ size_t UnaryRequestMeta::ByteSizeLong() const {
 }
 
 void UnaryRequestMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.UnaryRequestMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.UnaryRequestMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const UnaryRequestMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<UnaryRequestMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.UnaryRequestMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.UnaryRequestMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.UnaryRequestMeta)
     MergeFrom(*source);
   }
 }
 
 void UnaryRequestMeta::MergeFrom(const UnaryRequestMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.UnaryRequestMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.UnaryRequestMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -965,14 +970,14 @@ void UnaryRequestMeta::MergeFrom(const UnaryRequestMeta& from) {
 }
 
 void UnaryRequestMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.UnaryRequestMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.UnaryRequestMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void UnaryRequestMeta::CopyFrom(const UnaryRequestMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.UnaryRequestMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.UnaryRequestMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1026,7 +1031,7 @@ UnaryResponseMeta::UnaryResponseMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.UnaryResponseMeta)
 }
 UnaryResponseMeta::UnaryResponseMeta(const UnaryResponseMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -1043,7 +1048,7 @@ UnaryResponseMeta::UnaryResponseMeta(const UnaryResponseMeta& from)
       GetArena());
   }
   error_code_ = from.error_code_;
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.UnaryResponseMeta)
 }
 
 void UnaryResponseMeta::SharedCtor() {
@@ -1054,7 +1059,7 @@ void UnaryResponseMeta::SharedCtor() {
 }
 
 UnaryResponseMeta::~UnaryResponseMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.UnaryResponseMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1081,7 +1086,7 @@ const UnaryResponseMeta& UnaryResponseMeta::default_instance() {
 
 
 void UnaryResponseMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.UnaryResponseMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.UnaryResponseMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -1101,12 +1106,12 @@ const char* UnaryResponseMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .novanet.rpc.RpcErrorCode error_code = 1;
+      // .novanet.rpc.meta.RpcErrorCode error_code = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_error_code(static_cast<::novanet::rpc::RpcErrorCode>(val));
+          _internal_set_error_code(static_cast<::novanet::rpc::meta::RpcErrorCode>(val));
         } else goto handle_unusual;
         continue;
       // string error_text = 2;
@@ -1114,7 +1119,7 @@ const char* UnaryResponseMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_error_text();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.UnaryResponseMeta.error_text"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.UnaryResponseMeta.error_text"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1162,11 +1167,11 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* UnaryResponseMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.UnaryResponseMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   if (this->error_code() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -1178,7 +1183,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_error_text().data(), static_cast<int>(this->_internal_error_text().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.UnaryResponseMeta.error_text");
+      "novanet.rpc.meta.UnaryResponseMeta.error_text");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_error_text(), target);
   }
@@ -1200,11 +1205,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.UnaryResponseMeta.MetadataEntry.key");
+          "novanet.rpc.meta.UnaryResponseMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.UnaryResponseMeta.MetadataEntry.value");
+          "novanet.rpc.meta.UnaryResponseMeta.MetadataEntry.value");
       }
     };
 
@@ -1238,12 +1243,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.UnaryResponseMeta)
   return target;
 }
 
 size_t UnaryResponseMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.UnaryResponseMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.UnaryResponseMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1273,7 +1278,7 @@ size_t UnaryResponseMeta::ByteSizeLong() const {
         this->_internal_response_payload());
   }
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   if (this->error_code() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_error_code());
@@ -1289,22 +1294,22 @@ size_t UnaryResponseMeta::ByteSizeLong() const {
 }
 
 void UnaryResponseMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.UnaryResponseMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.UnaryResponseMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const UnaryResponseMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<UnaryResponseMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.UnaryResponseMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.UnaryResponseMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.UnaryResponseMeta)
     MergeFrom(*source);
   }
 }
 
 void UnaryResponseMeta::MergeFrom(const UnaryResponseMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.UnaryResponseMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.UnaryResponseMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1323,14 +1328,14 @@ void UnaryResponseMeta::MergeFrom(const UnaryResponseMeta& from) {
 }
 
 void UnaryResponseMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.UnaryResponseMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.UnaryResponseMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void UnaryResponseMeta::CopyFrom(const UnaryResponseMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.UnaryResponseMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.UnaryResponseMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1384,7 +1389,7 @@ StreamOpenMeta::StreamOpenMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.StreamOpenMeta)
 }
 StreamOpenMeta::StreamOpenMeta(const StreamOpenMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -1406,7 +1411,7 @@ StreamOpenMeta::StreamOpenMeta(const StreamOpenMeta& from)
       GetArena());
   }
   initial_window_bytes_ = from.initial_window_bytes_;
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.StreamOpenMeta)
 }
 
 void StreamOpenMeta::SharedCtor() {
@@ -1418,7 +1423,7 @@ void StreamOpenMeta::SharedCtor() {
 }
 
 StreamOpenMeta::~StreamOpenMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.StreamOpenMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1446,7 +1451,7 @@ const StreamOpenMeta& StreamOpenMeta::default_instance() {
 
 
 void StreamOpenMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.StreamOpenMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.StreamOpenMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -1472,7 +1477,7 @@ const char* StreamOpenMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_service_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.StreamOpenMeta.service_name"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.StreamOpenMeta.service_name"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1481,7 +1486,7 @@ const char* StreamOpenMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_method_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.StreamOpenMeta.method_name"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.StreamOpenMeta.method_name"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1536,7 +1541,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* StreamOpenMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.StreamOpenMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -1545,7 +1550,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_service_name().data(), static_cast<int>(this->_internal_service_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.StreamOpenMeta.service_name");
+      "novanet.rpc.meta.StreamOpenMeta.service_name");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_service_name(), target);
   }
@@ -1555,7 +1560,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_method_name().data(), static_cast<int>(this->_internal_method_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.StreamOpenMeta.method_name");
+      "novanet.rpc.meta.StreamOpenMeta.method_name");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_method_name(), target);
   }
@@ -1583,11 +1588,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamOpenMeta.MetadataEntry.key");
+          "novanet.rpc.meta.StreamOpenMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamOpenMeta.MetadataEntry.value");
+          "novanet.rpc.meta.StreamOpenMeta.MetadataEntry.value");
       }
     };
 
@@ -1621,12 +1626,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.StreamOpenMeta)
   return target;
 }
 
 size_t StreamOpenMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.StreamOpenMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.StreamOpenMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1680,22 +1685,22 @@ size_t StreamOpenMeta::ByteSizeLong() const {
 }
 
 void StreamOpenMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.StreamOpenMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.StreamOpenMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const StreamOpenMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<StreamOpenMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.StreamOpenMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.StreamOpenMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.StreamOpenMeta)
     MergeFrom(*source);
   }
 }
 
 void StreamOpenMeta::MergeFrom(const StreamOpenMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.StreamOpenMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.StreamOpenMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1717,14 +1722,14 @@ void StreamOpenMeta::MergeFrom(const StreamOpenMeta& from) {
 }
 
 void StreamOpenMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.StreamOpenMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.StreamOpenMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void StreamOpenMeta::CopyFrom(const StreamOpenMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.StreamOpenMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.StreamOpenMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1779,7 +1784,7 @@ StreamDataMeta::StreamDataMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.StreamDataMeta)
 }
 StreamDataMeta::StreamDataMeta(const StreamDataMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -1791,7 +1796,7 @@ StreamDataMeta::StreamDataMeta(const StreamDataMeta& from)
       GetArena());
   }
   sequence_ = from.sequence_;
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.StreamDataMeta)
 }
 
 void StreamDataMeta::SharedCtor() {
@@ -1801,7 +1806,7 @@ void StreamDataMeta::SharedCtor() {
 }
 
 StreamDataMeta::~StreamDataMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.StreamDataMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1827,7 +1832,7 @@ const StreamDataMeta& StreamDataMeta::default_instance() {
 
 
 void StreamDataMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.StreamDataMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.StreamDataMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -1897,7 +1902,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* StreamDataMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.StreamDataMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -1924,11 +1929,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamDataMeta.MetadataEntry.key");
+          "novanet.rpc.meta.StreamDataMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamDataMeta.MetadataEntry.value");
+          "novanet.rpc.meta.StreamDataMeta.MetadataEntry.value");
       }
     };
 
@@ -1962,12 +1967,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.StreamDataMeta)
   return target;
 }
 
 size_t StreamDataMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.StreamDataMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.StreamDataMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -2007,22 +2012,22 @@ size_t StreamDataMeta::ByteSizeLong() const {
 }
 
 void StreamDataMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.StreamDataMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.StreamDataMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const StreamDataMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<StreamDataMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.StreamDataMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.StreamDataMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.StreamDataMeta)
     MergeFrom(*source);
   }
 }
 
 void StreamDataMeta::MergeFrom(const StreamDataMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.StreamDataMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.StreamDataMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -2038,14 +2043,14 @@ void StreamDataMeta::MergeFrom(const StreamDataMeta& from) {
 }
 
 void StreamDataMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.StreamDataMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.StreamDataMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void StreamDataMeta::CopyFrom(const StreamDataMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.StreamDataMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.StreamDataMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2098,7 +2103,7 @@ StreamEndMeta::StreamEndMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.StreamEndMeta)
 }
 StreamEndMeta::StreamEndMeta(const StreamEndMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -2112,7 +2117,7 @@ StreamEndMeta::StreamEndMeta(const StreamEndMeta& from)
   ::memcpy(&total_sequences_, &from.total_sequences_,
     static_cast<size_t>(reinterpret_cast<char*>(&error_code_) -
     reinterpret_cast<char*>(&total_sequences_)) + sizeof(error_code_));
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.StreamEndMeta)
 }
 
 void StreamEndMeta::SharedCtor() {
@@ -2124,7 +2129,7 @@ void StreamEndMeta::SharedCtor() {
 }
 
 StreamEndMeta::~StreamEndMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.StreamEndMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -2150,7 +2155,7 @@ const StreamEndMeta& StreamEndMeta::default_instance() {
 
 
 void StreamEndMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.StreamEndMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.StreamEndMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -2171,12 +2176,12 @@ const char* StreamEndMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .novanet.rpc.RpcErrorCode error_code = 1;
+      // .novanet.rpc.meta.RpcErrorCode error_code = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_error_code(static_cast<::novanet::rpc::RpcErrorCode>(val));
+          _internal_set_error_code(static_cast<::novanet::rpc::meta::RpcErrorCode>(val));
         } else goto handle_unusual;
         continue;
       // string error_text = 2;
@@ -2184,7 +2189,7 @@ const char* StreamEndMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_error_text();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.StreamEndMeta.error_text"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.StreamEndMeta.error_text"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2231,11 +2236,11 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* StreamEndMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.StreamEndMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   if (this->error_code() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -2247,7 +2252,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_error_text().data(), static_cast<int>(this->_internal_error_text().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.StreamEndMeta.error_text");
+      "novanet.rpc.meta.StreamEndMeta.error_text");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_error_text(), target);
   }
@@ -2269,11 +2274,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamEndMeta.MetadataEntry.key");
+          "novanet.rpc.meta.StreamEndMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamEndMeta.MetadataEntry.value");
+          "novanet.rpc.meta.StreamEndMeta.MetadataEntry.value");
       }
     };
 
@@ -2307,12 +2312,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.StreamEndMeta)
   return target;
 }
 
 size_t StreamEndMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.StreamEndMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.StreamEndMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -2342,7 +2347,7 @@ size_t StreamEndMeta::ByteSizeLong() const {
         this->_internal_total_sequences());
   }
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   if (this->error_code() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_error_code());
@@ -2358,22 +2363,22 @@ size_t StreamEndMeta::ByteSizeLong() const {
 }
 
 void StreamEndMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.StreamEndMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.StreamEndMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const StreamEndMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<StreamEndMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.StreamEndMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.StreamEndMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.StreamEndMeta)
     MergeFrom(*source);
   }
 }
 
 void StreamEndMeta::MergeFrom(const StreamEndMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.StreamEndMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.StreamEndMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -2392,14 +2397,14 @@ void StreamEndMeta::MergeFrom(const StreamEndMeta& from) {
 }
 
 void StreamEndMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.StreamEndMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.StreamEndMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void StreamEndMeta::CopyFrom(const StreamEndMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.StreamEndMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.StreamEndMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2457,7 +2462,7 @@ StreamCancelMeta::StreamCancelMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.StreamCancelMeta)
 }
 StreamCancelMeta::StreamCancelMeta(const StreamCancelMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -2468,7 +2473,7 @@ StreamCancelMeta::StreamCancelMeta(const StreamCancelMeta& from)
     reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_reason(),
       GetArena());
   }
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.StreamCancelMeta)
 }
 
 void StreamCancelMeta::SharedCtor() {
@@ -2477,7 +2482,7 @@ void StreamCancelMeta::SharedCtor() {
 }
 
 StreamCancelMeta::~StreamCancelMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.StreamCancelMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -2503,7 +2508,7 @@ const StreamCancelMeta& StreamCancelMeta::default_instance() {
 
 
 void StreamCancelMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.StreamCancelMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.StreamCancelMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -2526,7 +2531,7 @@ const char* StreamCancelMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_reason();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.StreamCancelMeta.reason"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.StreamCancelMeta.reason"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2566,7 +2571,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* StreamCancelMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.StreamCancelMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2575,7 +2580,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_reason().data(), static_cast<int>(this->_internal_reason().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.StreamCancelMeta.reason");
+      "novanet.rpc.meta.StreamCancelMeta.reason");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_reason(), target);
   }
@@ -2591,11 +2596,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamCancelMeta.MetadataEntry.key");
+          "novanet.rpc.meta.StreamCancelMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.StreamCancelMeta.MetadataEntry.value");
+          "novanet.rpc.meta.StreamCancelMeta.MetadataEntry.value");
       }
     };
 
@@ -2629,12 +2634,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.StreamCancelMeta)
   return target;
 }
 
 size_t StreamCancelMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.StreamCancelMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.StreamCancelMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -2667,22 +2672,22 @@ size_t StreamCancelMeta::ByteSizeLong() const {
 }
 
 void StreamCancelMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.StreamCancelMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.StreamCancelMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const StreamCancelMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<StreamCancelMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.StreamCancelMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.StreamCancelMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.StreamCancelMeta)
     MergeFrom(*source);
   }
 }
 
 void StreamCancelMeta::MergeFrom(const StreamCancelMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.StreamCancelMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.StreamCancelMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -2695,14 +2700,14 @@ void StreamCancelMeta::MergeFrom(const StreamCancelMeta& from) {
 }
 
 void StreamCancelMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.StreamCancelMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.StreamCancelMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void StreamCancelMeta::CopyFrom(const StreamCancelMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.StreamCancelMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.StreamCancelMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2754,7 +2759,7 @@ ErrorFrameMeta::ErrorFrameMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.ErrorFrameMeta)
 }
 ErrorFrameMeta::ErrorFrameMeta(const ErrorFrameMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -2771,7 +2776,7 @@ ErrorFrameMeta::ErrorFrameMeta(const ErrorFrameMeta& from)
       GetArena());
   }
   error_code_ = from.error_code_;
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.ErrorFrameMeta)
 }
 
 void ErrorFrameMeta::SharedCtor() {
@@ -2782,7 +2787,7 @@ void ErrorFrameMeta::SharedCtor() {
 }
 
 ErrorFrameMeta::~ErrorFrameMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.ErrorFrameMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -2809,7 +2814,7 @@ const ErrorFrameMeta& ErrorFrameMeta::default_instance() {
 
 
 void ErrorFrameMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.ErrorFrameMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.ErrorFrameMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -2829,12 +2834,12 @@ const char* ErrorFrameMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // .novanet.rpc.RpcErrorCode error_code = 1;
+      // .novanet.rpc.meta.RpcErrorCode error_code = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_error_code(static_cast<::novanet::rpc::RpcErrorCode>(val));
+          _internal_set_error_code(static_cast<::novanet::rpc::meta::RpcErrorCode>(val));
         } else goto handle_unusual;
         continue;
       // string error_text = 2;
@@ -2842,7 +2847,7 @@ const char* ErrorFrameMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_error_text();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.ErrorFrameMeta.error_text"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.ErrorFrameMeta.error_text"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2851,7 +2856,7 @@ const char* ErrorFrameMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_debug_info();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.ErrorFrameMeta.debug_info"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.ErrorFrameMeta.debug_info"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2891,11 +2896,11 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* ErrorFrameMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.ErrorFrameMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   if (this->error_code() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -2907,7 +2912,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_error_text().data(), static_cast<int>(this->_internal_error_text().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.ErrorFrameMeta.error_text");
+      "novanet.rpc.meta.ErrorFrameMeta.error_text");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_error_text(), target);
   }
@@ -2917,7 +2922,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_debug_info().data(), static_cast<int>(this->_internal_debug_info().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.ErrorFrameMeta.debug_info");
+      "novanet.rpc.meta.ErrorFrameMeta.debug_info");
     target = stream->WriteStringMaybeAliased(
         3, this->_internal_debug_info(), target);
   }
@@ -2933,11 +2938,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.ErrorFrameMeta.MetadataEntry.key");
+          "novanet.rpc.meta.ErrorFrameMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.ErrorFrameMeta.MetadataEntry.value");
+          "novanet.rpc.meta.ErrorFrameMeta.MetadataEntry.value");
       }
     };
 
@@ -2971,12 +2976,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.ErrorFrameMeta)
   return target;
 }
 
 size_t ErrorFrameMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.ErrorFrameMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.ErrorFrameMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3006,7 +3011,7 @@ size_t ErrorFrameMeta::ByteSizeLong() const {
         this->_internal_debug_info());
   }
 
-  // .novanet.rpc.RpcErrorCode error_code = 1;
+  // .novanet.rpc.meta.RpcErrorCode error_code = 1;
   if (this->error_code() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_error_code());
@@ -3022,22 +3027,22 @@ size_t ErrorFrameMeta::ByteSizeLong() const {
 }
 
 void ErrorFrameMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.ErrorFrameMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.ErrorFrameMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const ErrorFrameMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ErrorFrameMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.ErrorFrameMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.ErrorFrameMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.ErrorFrameMeta)
     MergeFrom(*source);
   }
 }
 
 void ErrorFrameMeta::MergeFrom(const ErrorFrameMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.ErrorFrameMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.ErrorFrameMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3056,14 +3061,14 @@ void ErrorFrameMeta::MergeFrom(const ErrorFrameMeta& from) {
 }
 
 void ErrorFrameMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.ErrorFrameMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.ErrorFrameMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void ErrorFrameMeta::CopyFrom(const ErrorFrameMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.ErrorFrameMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.ErrorFrameMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -3117,7 +3122,7 @@ HeartbeatMeta::HeartbeatMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   metadata_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(arena_constructor:novanet.rpc.meta.HeartbeatMeta)
 }
 HeartbeatMeta::HeartbeatMeta(const HeartbeatMeta& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -3129,7 +3134,7 @@ HeartbeatMeta::HeartbeatMeta(const HeartbeatMeta& from)
       GetArena());
   }
   unix_millis_ = from.unix_millis_;
-  // @@protoc_insertion_point(copy_constructor:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(copy_constructor:novanet.rpc.meta.HeartbeatMeta)
 }
 
 void HeartbeatMeta::SharedCtor() {
@@ -3139,7 +3144,7 @@ void HeartbeatMeta::SharedCtor() {
 }
 
 HeartbeatMeta::~HeartbeatMeta() {
-  // @@protoc_insertion_point(destructor:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(destructor:novanet.rpc.meta.HeartbeatMeta)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -3165,7 +3170,7 @@ const HeartbeatMeta& HeartbeatMeta::default_instance() {
 
 
 void HeartbeatMeta::Clear() {
-// @@protoc_insertion_point(message_clear_start:novanet.rpc.HeartbeatMeta)
+// @@protoc_insertion_point(message_clear_start:novanet.rpc.meta.HeartbeatMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -3196,7 +3201,7 @@ const char* HeartbeatMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_node_id();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.HeartbeatMeta.node_id"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.rpc.meta.HeartbeatMeta.node_id"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -3236,7 +3241,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* HeartbeatMeta::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(serialize_to_array_start:novanet.rpc.meta.HeartbeatMeta)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3251,7 +3256,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_node_id().data(), static_cast<int>(this->_internal_node_id().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "novanet.rpc.HeartbeatMeta.node_id");
+      "novanet.rpc.meta.HeartbeatMeta.node_id");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_node_id(), target);
   }
@@ -3267,11 +3272,11 @@ failure:
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->first.data(), static_cast<int>(p->first.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.HeartbeatMeta.MetadataEntry.key");
+          "novanet.rpc.meta.HeartbeatMeta.MetadataEntry.key");
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
           p->second.data(), static_cast<int>(p->second.length()),
           ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-          "novanet.rpc.HeartbeatMeta.MetadataEntry.value");
+          "novanet.rpc.meta.HeartbeatMeta.MetadataEntry.value");
       }
     };
 
@@ -3305,12 +3310,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(serialize_to_array_end:novanet.rpc.meta.HeartbeatMeta)
   return target;
 }
 
 size_t HeartbeatMeta::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.HeartbeatMeta)
+// @@protoc_insertion_point(message_byte_size_start:novanet.rpc.meta.HeartbeatMeta)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3350,22 +3355,22 @@ size_t HeartbeatMeta::ByteSizeLong() const {
 }
 
 void HeartbeatMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.HeartbeatMeta)
+// @@protoc_insertion_point(generalized_merge_from_start:novanet.rpc.meta.HeartbeatMeta)
   GOOGLE_DCHECK_NE(&from, this);
   const HeartbeatMeta* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<HeartbeatMeta>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.rpc.meta.HeartbeatMeta)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.HeartbeatMeta)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.rpc.meta.HeartbeatMeta)
     MergeFrom(*source);
   }
 }
 
 void HeartbeatMeta::MergeFrom(const HeartbeatMeta& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.HeartbeatMeta)
+// @@protoc_insertion_point(class_specific_merge_from_start:novanet.rpc.meta.HeartbeatMeta)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3381,14 +3386,14 @@ void HeartbeatMeta::MergeFrom(const HeartbeatMeta& from) {
 }
 
 void HeartbeatMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.HeartbeatMeta)
+// @@protoc_insertion_point(generalized_copy_from_start:novanet.rpc.meta.HeartbeatMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void HeartbeatMeta::CopyFrom(const HeartbeatMeta& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.HeartbeatMeta)
+// @@protoc_insertion_point(class_specific_copy_from_start:novanet.rpc.meta.HeartbeatMeta)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -3412,56 +3417,57 @@ void HeartbeatMeta::InternalSwap(HeartbeatMeta* other) {
 
 
 // @@protoc_insertion_point(namespace_scope)
+}  // namespace meta
 }  // namespace rpc
 }  // namespace novanet
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::UnaryRequestMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::UnaryRequestMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::UnaryRequestMeta* Arena::CreateMaybeMessage< ::novanet::rpc::UnaryRequestMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::UnaryRequestMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::UnaryRequestMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::UnaryRequestMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::UnaryRequestMeta >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::UnaryResponseMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::UnaryResponseMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::UnaryResponseMeta* Arena::CreateMaybeMessage< ::novanet::rpc::UnaryResponseMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::UnaryResponseMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::UnaryResponseMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::UnaryResponseMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::UnaryResponseMeta >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamOpenMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamOpenMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamOpenMeta* Arena::CreateMaybeMessage< ::novanet::rpc::StreamOpenMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamOpenMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamOpenMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamOpenMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamOpenMeta >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamDataMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamDataMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamDataMeta* Arena::CreateMaybeMessage< ::novanet::rpc::StreamDataMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamDataMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamDataMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamDataMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamDataMeta >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamEndMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamEndMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamEndMeta* Arena::CreateMaybeMessage< ::novanet::rpc::StreamEndMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamEndMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamEndMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamEndMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamEndMeta >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamCancelMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamCancelMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::StreamCancelMeta* Arena::CreateMaybeMessage< ::novanet::rpc::StreamCancelMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::StreamCancelMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::StreamCancelMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::StreamCancelMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::StreamCancelMeta >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::ErrorFrameMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::ErrorFrameMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::ErrorFrameMeta* Arena::CreateMaybeMessage< ::novanet::rpc::ErrorFrameMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::ErrorFrameMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::ErrorFrameMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::ErrorFrameMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::ErrorFrameMeta >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::HeartbeatMeta_MetadataEntry_DoNotUse >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse* Arena::CreateMaybeMessage< ::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::HeartbeatMeta_MetadataEntry_DoNotUse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::rpc::HeartbeatMeta* Arena::CreateMaybeMessage< ::novanet::rpc::HeartbeatMeta >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::novanet::rpc::HeartbeatMeta >(arena);
+template<> PROTOBUF_NOINLINE ::novanet::rpc::meta::HeartbeatMeta* Arena::CreateMaybeMessage< ::novanet::rpc::meta::HeartbeatMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::novanet::rpc::meta::HeartbeatMeta >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

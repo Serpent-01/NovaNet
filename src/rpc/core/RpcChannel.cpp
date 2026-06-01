@@ -10,7 +10,7 @@
 #include "rpc_meta.pb.h"
 
 namespace novanet::rpc {
-
+using namespace meta;
 RpcChannel::RpcChannel(std::shared_ptr<net::TcpConnection> conn)
     : connection_(std::move(conn)) {
 }
@@ -152,35 +152,34 @@ void RpcChannel::onMessage(net::Buffer* buffer) {
             return;
         }
         switch (message.frameType()) {
-            case FrameType::UNARY_RESPONSE:
-                handleUnaryResponse(message);
-                break;
-            case FrameType::ERROR_FRAME:
-                handleErrorFrame(message);
-                break;
+        case FrameType::UNARY_RESPONSE:
+            handleUnaryResponse(message);
+            break;
+        case FrameType::ERROR_FRAME:
+            handleErrorFrame(message);
+            break;
 
-            case FrameType::HEARTBEAT_PING:
-            case FrameType::HEARTBEAT_PONG:
-                break;
-            case FrameType::STREAM_OPEN:
-            case FrameType::STREAM_DATA:
-            case FrameType::STREAM_END:
-            case FrameType::STREAM_CANCEL:
-                LOG_WARN << "RpcChannel::onMessage got stream frame before "
-                         << "stream client is implemented, requestId="
-                         << message.requestId()
-                         << ", streamId=" << message.streamId()
-                         << ", frameType="
-                         << frameTypeToString(message.frameType());
-                break;
-            case FrameType::UNARY_REQUEST:
-            case FrameType::UNKNOWN:
-            default:
-                LOG_WARN << "RpcChannel::onMessage got unexpected frame type: "
-                         << frameTypeToString(message.frameType())
-                         << ", requestId=" << message.requestId()
-                         << ", streamId=" << message.streamId();
-                break;
+        case FrameType::HEARTBEAT_PING:
+        case FrameType::HEARTBEAT_PONG:
+            break;
+        case FrameType::STREAM_OPEN:
+        case FrameType::STREAM_DATA:
+        case FrameType::STREAM_END:
+        case FrameType::STREAM_CANCEL:
+            LOG_WARN << "RpcChannel::onMessage got stream frame before "
+                     << "stream client is implemented, requestId="
+                     << message.requestId()
+                     << ", streamId=" << message.streamId() << ", frameType="
+                     << frameTypeToString(message.frameType());
+            break;
+        case FrameType::UNARY_REQUEST:
+        case FrameType::UNKNOWN:
+        default:
+            LOG_WARN << "RpcChannel::onMessage got unexpected frame type: "
+                     << frameTypeToString(message.frameType())
+                     << ", requestId=" << message.requestId()
+                     << ", streamId=" << message.streamId();
+            break;
         }
     }
 }
@@ -397,4 +396,4 @@ bool RpcChannel::cancelStream(std::uint32_t streamId) {
     return false;
 }
 
-}  // namespace novanet::rpc
+} // namespace novanet::rpc
