@@ -2,36 +2,48 @@ syntax = "proto3";
 
 package novanet.ai.chat;
 
+option cc_enable_arenas = true;
+option optimize_for = SPEED;
 option cc_generic_services = true;
 
 /*
- * ChatMessage 表示一条对话消息。
+ * chat.proto 是 NovaNet Phase 4 server streaming 的业务 proto。
  *
- * role:
- *   "system" / "user" / "assistant" / "tool"
+ * 它只描述业务 payload：
+ * - GenerateRequest
+ * - GenerateChunk
+ * - GenerateResponse
  *
- * content:
- *   消息文本内容。
+ * 它不描述 RPC 协议控制字段：
+ * - stream_id
+ * - request_id
+ * - cancel
+ * - heartbeat
+ * - timeout
+ * - backpressure
+ *
+ * 这些控制语义属于 NovaNet RPC 协议层：
+ * - RpcHeader
+ * - FrameType
+ * - RpcMessage
+ * - StreamManager
+ * - StreamResponder
  */
+
 message ChatMessage {
+    // 常见取值："system" / "user" / "assistant" / "tool"
     string role = 1;
+
+    // 消息内容。
     string content = 2;
 }
 
-/*
- * GenerateRequest 表示一次 LLM Chat 生成请求。
- *
- * 注意：
- * - 不放 stream_id
- * - 不放 request_id
- * - 不放 cancel / heartbeat / timeout
- *
- * 这些属于 NovaNet RPC 协议层，由 RpcHeader / FrameType 表达。
- */
 message GenerateRequest {
     // 多轮对话上下文。
     repeated ChatMessage messages = 1;
+
     // 模型名称，例如 "fake-llm" / "demo-chat-model"。
+    // Phase 4 不接真实 LLM，但保留该字段用于模拟和后续扩展。
     string model = 2;
 
     // 最大生成 token 数。
@@ -45,26 +57,30 @@ message GenerateRequest {
 }
 
 /*
- * GenerateChunk 表示 server streaming 中的一段增量输出。
+ * GenerateChunk 表示 LLM streaming 的一个业务增量。
  *
- * 每个 STREAM_DATA frame 的 payload 可以是一个 GenerateChunk。
+ * Phase 4 企业级协议中推荐：
  *
- * 注意：
- * - finish_reason 只是业务信息；
- * - 真正结束 stream 必须靠 FrameType::STREAM_END；
- * - 不能用 finish_reason 替代 STREAM_END。
+ *   STREAM_DATA payload = StreamDataMeta bytes
+ *   StreamDataMeta.data = GenerateChunk bytes
+ *
+ * 也就是说：
+ * - GenerateChunk 是业务 chunk；
+ * - StreamDataMeta 是协议层 data frame 的元信息包装。
  */
 message GenerateChunk {
     // chunk 序号，从 0 开始。
     uint32 index = 1;
 
-    // 本次新增的文本片段。
+    // 本次新增文本片段。
     string delta = 2;
 
     // 可选结束原因：
     // "stop" / "length" / "cancelled" / "timeout" / "error"
     //
-    // 普通中间 chunk 可以为空。
+    // 注意：
+    // finish_reason 只是业务信息，不能替代 STREAM_END。
+    // 真正结束 stream 必须靠 FrameType::STREAM_END。
     string finish_reason = 3;
 }
 
@@ -75,8 +91,16 @@ message TokenUsage {
 }
 
 /*
- * GenerateResponse 表示非 streaming fallback 或最终聚合结果。
- * 返回流式数据。
+ * GenerateResponse 用于：
+ * - unary fallback
+ * - protobuf service descriptor
+ * - MethodInvoker 测试
+ * - 最终聚合结果
+ *
+ * 在 server streaming 链路中，服务端主要返回：
+ *
+ *   STREAM_DATA payload = StreamDataMeta{ data = GenerateChunk bytes }
+ *   STREAM_END  payload = StreamEndMeta
  */
 message GenerateResponse {
     string full_text = 1;

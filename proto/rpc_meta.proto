@@ -5,8 +5,23 @@ package novanet.rpc.meta;
 option cc_enable_arenas = true;
 option optimize_for = SPEED;
 
-// RPC 层通用错误码。
-// 注意：这是 RPC 协议层错误，不是业务错误码。
+/*
+ * rpc_meta.proto 是 NovaNet RPC 协议层元信息。
+ *
+ * 它不定义具体业务请求/响应。
+ * 具体业务 payload 放在：
+ *
+ *   calculator.proto
+ *   chat.proto
+ *
+ * 本文件只定义：
+ * - unary 请求/响应元信息
+ * - stream open/data/end/cancel 元信息
+ * - error frame 元信息
+ * - heartbeat 元信息
+ * - RPC 层错误码
+ */
+
 enum RpcErrorCode {
     RPC_OK = 0;
 
@@ -41,11 +56,9 @@ enum RpcErrorCode {
     RPC_STREAM_PROTOCOL_ERROR = 43;
 
     // 背压 / 资源限制
-    //
-    // 保留 RPC_BACKPRESSURE，避免你现有 RpcStatus.cpp/RpcStatus.h 报错。
-    // RPC_BACKPRESSURE_REJECTED 可以后续再加，但现在先别引入新名字。
     RPC_BACKPRESSURE = 50;
-    RPC_RESOURCE_EXHAUSTED = 51;
+    RPC_BACKPRESSURE_REJECTED = 51;
+    RPC_RESOURCE_EXHAUSTED = 52;
 
     // Phase 5 预留：服务发现 / 负载均衡 / 重试
     RPC_NO_AVAILABLE_INSTANCE = 100;
@@ -53,35 +66,89 @@ enum RpcErrorCode {
     RPC_RETRY_EXHAUSTED = 102;
 }
 
-// Unary 请求元信息。
-// 对应 FrameType::UNARY_REQUEST。
+/*
+ * Unary 请求元信息。
+ *
+ * 对应 FrameType::UNARY_REQUEST。
+ *
+ * 真正的业务请求放在 request_payload 里。
+ * 例如：
+ *
+ *   AddRequest.SerializeToString(&request_payload)
+ */
 message UnaryRequestMeta {
+    // Protobuf service full name。
+    //
+    // 例如：
+    //   "novanet.example.calculator.CalculatorService"
+    //   "novanet.ai.chat.ChatService"
     string service_name = 1;
+
+    // Protobuf method name。
+    //
+    // 例如：
+    //   "Add"
+    //   "Generate"
     string method_name = 2;
+
+    // 业务请求 protobuf 的序列化结果。
     bytes request_payload = 3;
 
+    // 扩展元信息。
+    //
+    // 可用于：
+    // - trace_id
+    // - deadline_ms
+    // - caller
+    // - auth token
+    // - routing hint
+    // - content type
     map<string, string> metadata = 10;
 }
 
-// Unary 响应元信息。
-// 对应 FrameType::UNARY_RESPONSE。
+/*
+ * Unary 响应元信息。
+ *
+ * 对应 FrameType::UNARY_RESPONSE。
+ *
+ * RPC 成功时：
+ *   error_code = RPC_OK
+ *   response_payload = 业务响应 bytes
+ *
+ * RPC 失败时：
+ *   error_code != RPC_OK
+ *   error_text 描述错误
+ *   response_payload 通常为空
+ */
 message UnaryResponseMeta {
     RpcErrorCode error_code = 1;
     string error_text = 2;
+
+    // 业务响应 protobuf 的序列化结果。
     bytes response_payload = 3;
 
     map<string, string> metadata = 10;
 }
 
-// 打开一个逻辑 stream。
-// 对应 FrameType::STREAM_OPEN。
+/*
+ * 打开一个逻辑 stream。
+ *
+ * 对应 FrameType::STREAM_OPEN。
+ *
+ * 真正业务请求放在 request_payload 里。
+ * 例如：
+ *
+ *   GenerateRequest.SerializeToString(&request_payload)
+ */
 message StreamOpenMeta {
     string service_name = 1;
     string method_name = 2;
 
-    // 例如 GenerateRequest 的序列化结果。
+    // 业务请求 protobuf 的序列化结果。
     bytes request_payload = 3;
 
+    // 客户端期望的初始窗口大小。
+    //
     // 用于未来 backpressure / flow control。
     // 如果为 0，表示使用服务端默认值。
     uint32 initial_window_bytes = 4;
@@ -89,53 +156,107 @@ message StreamOpenMeta {
     map<string, string> metadata = 10;
 }
 
-// 流数据帧元信息。
-// 对应 FrameType::STREAM_DATA。
-//
-// 最终版推荐：
-//   STREAM_DATA payload = StreamDataMeta bytes
-//   StreamDataMeta.data = GenerateChunk bytes
+/*
+ * 流数据帧元信息。
+ *
+ * 对应 FrameType::STREAM_DATA。
+ *
+ * 企业级 Phase 4 推荐：
+ *
+ *   STREAM_DATA payload = StreamDataMeta bytes
+ *   StreamDataMeta.data = 业务 chunk bytes
+ *
+ * 对于 chat streaming：
+ *
+ *   StreamDataMeta.data = GenerateChunk bytes
+ */
 message StreamDataMeta {
+    // 数据序号，方便测试、日志、未来乱序检测。
+    //
+    // TCP 本身有序，但 sequence 对 streaming 调试很有价值。
     uint64 sequence = 1;
+
+    // 业务 chunk 数据。
+    //
+    // 例如：
+    //   GenerateChunk bytes
     bytes data = 2;
 
     map<string, string> metadata = 10;
 }
 
-// 正常或异常结束一个 stream。
-// 对应 FrameType::STREAM_END。
+/*
+ * 正常或异常结束一个 stream。
+ *
+ * 对应 FrameType::STREAM_END。
+ *
+ * 正常结束：
+ *   error_code = RPC_OK
+ *
+ * 异常结束：
+ *   error_code != RPC_OK
+ *   error_text 描述原因
+ */
 message StreamEndMeta {
     RpcErrorCode error_code = 1;
     string error_text = 2;
 
-    // 可选：总共发送了多少个 chunk。
+    // 总共发送了多少个 DATA sequence。
     uint64 total_sequences = 3;
 
     map<string, string> metadata = 10;
 }
 
-// 取消一个逻辑 stream。
-// 对应 FrameType::STREAM_CANCEL。
+/*
+ * 取消一个逻辑 stream。
+ *
+ * 对应 FrameType::STREAM_CANCEL。
+ *
+ * cancel 是 stream 级别操作：
+ * - 只影响对应 stream_id
+ * - 不影响同连接上的其他 stream
+ */
 message StreamCancelMeta {
     string reason = 1;
 
     map<string, string> metadata = 10;
 }
 
-// 协议级错误。
-// 对应 FrameType::ERROR_FRAME。
+/*
+ * 协议级错误。
+ *
+ * 对应 FrameType::ERROR_FRAME。
+ *
+ * ERROR_FRAME 用于协议层或分发层错误，例如：
+ * - invalid frame
+ * - service not found
+ * - method not found
+ * - parse failed
+ * - stream not found
+ * - backpressure rejected
+ */
 message ErrorFrameMeta {
     RpcErrorCode error_code = 1;
     string error_text = 2;
 
     // 调试信息。
+    // Phase 4 本地 debug 模式可以使用。
+    // 生产环境可选择不填，避免泄露内部细节。
     string debug_info = 3;
 
     map<string, string> metadata = 10;
 }
 
-// 心跳 payload。
-// 对应 FrameType::HEARTBEAT_PING / HEARTBEAT_PONG。
+/*
+ * 心跳 payload。
+ *
+ * 对应 FrameType::HEARTBEAT_PING / HEARTBEAT_PONG。
+ *
+ * heartbeat 是连接级控制帧，不属于任何业务 stream。
+ *
+ * 通常：
+ *   stream_id = 0
+ */
 message HeartbeatMeta {
     int64 unix_millis = 1;
     string node_id = 2;

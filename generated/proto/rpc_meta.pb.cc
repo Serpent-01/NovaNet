@@ -543,7 +543,7 @@ const char descriptor_table_protodef_rpc_5fmeta_2eproto[] PROTOBUF_SECTION_VARIA
   " \001(\003\022\017\n\007node_id\030\002 \001(\t\022\?\n\010metadata\030\n \003(\0132"
   "-.novanet.rpc.meta.HeartbeatMeta.Metadat"
   "aEntry\032/\n\rMetadataEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005"
-  "value\030\002 \001(\t:\0028\001*\223\005\n\014RpcErrorCode\022\n\n\006RPC_"
+  "value\030\002 \001(\t:\0028\001*\262\005\n\014RpcErrorCode\022\n\n\006RPC_"
   "OK\020\000\022\025\n\021RPC_UNKNOWN_ERROR\020\001\022\023\n\017RPC_BAD_R"
   "EQUEST\020\002\022\025\n\021RPC_INVALID_FRAME\020\003\022\036\n\032RPC_U"
   "NSUPPORTED_FRAME_TYPE\020\004\022\026\n\022RPC_INTERNAL_"
@@ -557,10 +557,11 @@ const char descriptor_table_protodef_rpc_5fmeta_2eproto[] PROTOBUF_SECTION_VARIA
   "RPC_STREAM_NOT_FOUND\020(\022\025\n\021RPC_STREAM_CLO"
   "SED\020)\022\030\n\024RPC_STREAM_CANCELLED\020*\022\035\n\031RPC_S"
   "TREAM_PROTOCOL_ERROR\020+\022\024\n\020RPC_BACKPRESSU"
-  "RE\0202\022\032\n\026RPC_RESOURCE_EXHAUSTED\0203\022\035\n\031RPC_"
-  "NO_AVAILABLE_INSTANCE\020d\022\033\n\027RPC_LOAD_BALA"
-  "NCE_FAILED\020e\022\027\n\023RPC_RETRY_EXHAUSTED\020fB\005H"
-  "\001\370\001\001b\006proto3"
+  "RE\0202\022\035\n\031RPC_BACKPRESSURE_REJECTED\0203\022\032\n\026R"
+  "PC_RESOURCE_EXHAUSTED\0204\022\035\n\031RPC_NO_AVAILA"
+  "BLE_INSTANCE\020d\022\033\n\027RPC_LOAD_BALANCE_FAILE"
+  "D\020e\022\027\n\023RPC_RETRY_EXHAUSTED\020fB\005H\001\370\001\001b\006pro"
+  "to3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmeta_2eproto_deps[1] = {
 };
@@ -584,7 +585,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmeta_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmeta_2eproto = {
-  false, false, descriptor_table_protodef_rpc_5fmeta_2eproto, "rpc_meta.proto", 2332,
+  false, false, descriptor_table_protodef_rpc_5fmeta_2eproto, "rpc_meta.proto", 2363,
   &descriptor_table_rpc_5fmeta_2eproto_once, descriptor_table_rpc_5fmeta_2eproto_sccs, descriptor_table_rpc_5fmeta_2eproto_deps, 16, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmeta_2eproto::offsets,
   file_level_metadata_rpc_5fmeta_2eproto, 16, file_level_enum_descriptors_rpc_5fmeta_2eproto, file_level_service_descriptors_rpc_5fmeta_2eproto,
@@ -623,6 +624,7 @@ bool RpcErrorCode_IsValid(int value) {
     case 43:
     case 50:
     case 51:
+    case 52:
     case 100:
     case 101:
     case 102:

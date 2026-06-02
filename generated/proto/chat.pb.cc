@@ -192,7 +192,7 @@ const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "t.TokenUsage\022\025\n\rfinish_reason\030\003 \001(\t2^\n\013C"
   "hatService\022O\n\010Generate\022 .novanet.ai.chat"
   ".GenerateRequest\032!.novanet.ai.chat.Gener"
-  "ateResponseB\003\200\001\001b\006proto3"
+  "ateResponseB\010H\001\200\001\001\370\001\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_chat_2eproto_deps[1] = {
 };
@@ -205,7 +205,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_cha
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_chat_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chat_2eproto = {
-  false, false, descriptor_table_protodef_chat_2eproto, "chat.proto", 584,
+  false, false, descriptor_table_protodef_chat_2eproto, "chat.proto", 589,
   &descriptor_table_chat_2eproto_once, descriptor_table_chat_2eproto_sccs, descriptor_table_chat_2eproto_deps, 5, 0,
   schemas, file_default_instances, TableStruct_chat_2eproto::offsets,
   file_level_metadata_chat_2eproto, 5, file_level_enum_descriptors_chat_2eproto, file_level_service_descriptors_chat_2eproto,

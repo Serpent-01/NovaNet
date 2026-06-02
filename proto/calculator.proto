@@ -6,7 +6,25 @@ option cc_enable_arenas = true;
 option optimize_for = SPEED;
 option cc_generic_services = true;
 
+/*
+ * CalculatorService 是 NovaNet Phase 4 unary RPC 示例服务。
+ *
+ * 它的目标不是实现复杂计算器，而是验证 unary RPC 的完整链路：
+ *
+ *   client -> UNARY_REQUEST
+ *   server -> RpcDispatcher
+ *   server -> ServiceRegistry / MethodInvoker
+ *   server -> UNARY_RESPONSE
+ *   client -> PendingCall 完成
+ *
+ * 注意：
+ * - request_id 不放在 AddRequest 中，它属于 RpcHeader。
+ * - service_name / method_name 不放在 AddRequest 中，它们属于
+ * UnaryRequestMeta。
+ * - error_code 不放在 AddResponse 中，它属于 UnaryResponseMeta。
+ */
 message AddRequest {
+    // 使用 sint64 支持负数，并对负数使用 zigzag 编码。
     sint64 lhs = 1;
     sint64 rhs = 2;
 }
