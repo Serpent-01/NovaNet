@@ -1,207 +1,388 @@
 #include "novanet/rpc/core/RpcServer.h"
 
-#include <google/protobuf/service.h>
-
-#include <memory>
-#include <string>
 #include <utility>
-#include <vector>
 
 #include "novanet/base/Logger.h"
-#include "novanet/net/Buffer.h"
-#include "novanet/net/TcpConnection.h"
-#include "novanet/net/TcpServer.h"
-#include "novanet/rpc/protocol/FrameType.h"
-#include "novanet/rpc/protocol/RpcCodec.h"
-#include "novanet/rpc/protocol/RpcMessage.h"
 
 namespace novanet::rpc {
+
 RpcServer::RpcServer(novanet::net::EventLoop* loop,
-                     const novanet::net::InetAddress& listenAddr,
-                     std::string name)
-    : tcpServer_(loop, listenAddr, std::move(name)),
-      codec_(),
-      registry_(),
-      invoker_(),
-      dispatcher_(registry_, invoker_) {
-    installCallbacks();
-    LOG_INFO << "RpcServer constructed";
+                     const novanet::net::InetAddress& listenAddr, const std::string& name,
+                     AiProvider& aiProvider)
+    : RpcServer(loop, listenAddr, name, aiProvider, Options{}) {
 }
 
-bool RpcServer::registerService(google::protobuf::Service* service,
-                                std::string* errorText) {
-    if (errorText != nullptr) {
-        errorText->clear();
-    }
-    if (started_) {
-        const std::string message =
-            "cannot register service after RpcServer started";
+RpcServer::RpcServer(novanet::net::EventLoop* loop,
+                     const novanet::net::InetAddress& listenAddr, const std::string& name,
+                     AiProvider& aiProvider, Options options)
+    : loop_(loop),
+      server_(loop, listenAddr, name),
+      options_(std::move(options)),
+      aiProvider_(aiProvider),
+      aiExecutor_(options_.aiExecutorOptions),
+      dispatcher_(registry_, invoker_, aiProvider_, aiExecutor_) {
+    server_.setConnectionCallback(
+        [this](const TcpConnectionPtr& connection) { this->onConnection(connection); });
 
-        if (errorText != nullptr) {
-            *errorText = message;
-        }
-        LOG_ERROR << "RpcServer registerService failed: " << message;
+    server_.setMessageCallback(
+        [this](const TcpConnectionPtr& connection, novanet::net::Buffer* buffer) {
+            this->onMessage(connection, buffer);
+        });
+
+    aiExecutor_.setErrorHandler([](std::string error) {
+        LOG_ERROR << "[RpcServer] AiExecutor error: " << error;
+    });
+}
+
+RpcServer::~RpcServer() {
+    stop();
+}
+
+bool RpcServer::registerService(google::protobuf::Service* service) {
+    if (service == nullptr) {
+        LOG_ERROR << "[RpcServer] registerService failed: service is null";
         return false;
     }
-    std::string localError;
-    std::string* actualError = errorText != nullptr ? errorText : &localError;
-    const bool ok = registry_.registerService(service, actualError);
-    if (!ok) {
-        LOG_ERROR << "RpcServer registerService failed: " << *actualError;
+
+    if (started_.load(std::memory_order_acquire)) {
+        LOG_ERROR << "[RpcServer] registerService failed: server already started";
         return false;
     }
 
-    if (service != nullptr && service->GetDescriptor() != nullptr) {
-        LOG_INFO << "RpcServer registered service: "
-                 << service->GetDescriptor()->full_name();
-    } else {
-        LOG_INFO << "RpcServer registered service";
+    return registry_.registerService(service);
+}
+
+void RpcServer::setThreadNum(int numThreads) {
+    if (started_.load(std::memory_order_acquire)) {
+        LOG_ERROR << "[RpcServer] setThreadNum ignored: server already started";
+        return;
     }
 
+    server_.setThreadNum(numThreads);
+}
+
+bool RpcServer::start() {
+    bool expected = false;
+    if (!started_.compare_exchange_strong(expected, true, std::memory_order_acq_rel,
+                                          std::memory_order_acquire)) {
+        return true;
+    }
+
+    stopping_.store(false, std::memory_order_release);
+
+    if (!aiExecutor_.start()) {
+        LOG_ERROR << "[RpcServer] failed to start AiExecutor";
+        started_.store(false, std::memory_order_release);
+        stopping_.store(true, std::memory_order_release);
+        return false;
+    }
+
+    LOG_INFO << "[RpcServer] starting TcpServer";
+    server_.start();
     return true;
 }
 
-void RpcServer::start() {
-    if (started_) {
-        LOG_WARN << "RpcServer start ignored: already started";
+void RpcServer::stop() {
+    const bool wasStarted = started_.exchange(false, std::memory_order_acq_rel);
+    if (!wasStarted) {
         return;
     }
-    started_ = true;
-    LOG_INFO << "RpcServer starting, serviceCount=" << registry_.serviceCount();
-    tcpServer_.start();
+
+    stopping_.store(true, std::memory_order_release);
+
+    std::vector<std::shared_ptr<ConnectionContext>> contexts;
+
+    {
+        std::lock_guard<std::mutex> lock(contextsMutex_);
+
+        contexts.reserve(contexts_.size());
+        for (auto& item : contexts_) {
+            contexts.push_back(item.second);
+        }
+
+        contexts_.clear();
+    }
+
+    /*
+     * 先让所有 responder 进入 closed 状态。
+     * 这样 worker 里的 shouldStop 会尽快返回 cancelled。
+     */
+    for (auto& context : contexts) {
+        if (context && context->responder) {
+            context->responder->markConnectionClosed();
+        }
+    }
+
+    /*
+     * 停止 AI executor。
+     *
+     * kDiscardPending:
+     * - 丢弃尚未开始的 AI 任务；
+     * - 已经运行的任务依赖 shouldStop 尽快退出。
+     */
+    aiExecutor_.stop(AiExecutor::StopMode::kDiscardPending);
+
+    /*
+     * 如果你的 TcpServer 已经实现 stop()，可以在这里补：
+     *
+     *   server_.stop();
+     *
+     * 当前不强行调用，避免与你现有 Phase 3 TcpServer 接口不一致。
+     */
+    LOG_INFO << "[RpcServer] stopped";
 }
 
-bool RpcServer::started() const noexcept {
-    return started_;
-}
-
-std::size_t RpcServer::serviceCount() const noexcept {
-    return registry_.serviceCount();
-}
-
-ServiceRegistry& RpcServer::registry() noexcept {
-    return registry_;
-}
-
-const ServiceRegistry& RpcServer::registry() const noexcept {
-    return registry_;
-}
-
-void RpcServer::installCallbacks() {
-    tcpServer_.setMessageCallback(
-        [this](const std::shared_ptr<novanet::net::TcpConnection>& conn,
-               novanet::net::Buffer* buffer) {
-            this->handleMessage(conn, buffer);
-        });
-}
-
-void RpcServer::handleMessage(
-    const std::shared_ptr<novanet::net::TcpConnection>& conn,
-    novanet::net::Buffer* buffer) {
-    if (conn == nullptr) {
-        LOG_WARN << "RpcServer handleMessage got null connection";
+void RpcServer::onConnection(const TcpConnectionPtr& connection) {
+    if (!connection) {
         return;
     }
-    if (buffer == nullptr) {
-        LOG_WARN
-            << "RpcServer handleMessage got null buffer, closing connection";
-        closeConnection(conn);
+
+    if (stopping_.load(std::memory_order_acquire)) {
+        closeConnectionSafely(connection);
+        return;
+    }
+
+    if (connection->connected()) {
+        auto context = createConnectionContext(connection);
+        if (!context) {
+            LOG_ERROR << "[RpcServer] failed to create connection context";
+            closeConnectionSafely(connection);
+            return;
+        }
+
+        LOG_INFO << "[RpcServer] connection up: " << connection->name();
+        return;
+    }
+
+    LOG_INFO << "[RpcServer] connection down: " << connection->name();
+    removeConnectionContext(connection);
+}
+
+void RpcServer::onMessage(const TcpConnectionPtr& connection,
+                          novanet::net::Buffer* buffer) {
+    if (!connection || buffer == nullptr) {
+        return;
+    }
+
+    if (stopping_.load(std::memory_order_acquire)) {
+        closeConnectionSafely(connection);
+        return;
+    }
+
+    auto context = findConnectionContext(connection);
+    if (!context) {
+        LOG_ERROR << "[RpcServer] missing connection context: " << connection->name();
+        closeConnectionSafely(connection);
         return;
     }
 
     while (true) {
-        RpcMessage request;
-        const auto status = codec_.tryDecode(*buffer, request);
-        if (status == RpcCodec::DecodeStatus::kNeedMore) {
-            /*
-             * 半包是正常情况，不打 WARN。
-             * 如果你想调试，可以临时改成 LOG_INFO。
-             */
-            return;
-        }
-        if (status == RpcCodec::DecodeStatus::kInvalid) {
-            LOG_WARN
-                << "RpcServer decoded invalid rpc frame, closing connection";
+        RpcMessage message;
 
-            closeConnection(conn);
+        const RpcCodec::DecodeStatus status = context->codec.tryDecode(*buffer, message);
+
+        if (status == RpcCodec::DecodeStatus::kNeedMore) {
+            break;
+        }
+
+        if (status == RpcCodec::DecodeStatus::kInvalid) {
+            LOG_ERROR << "[RpcServer] RpcCodec decode error, close connection: "
+                      << connection->name();
+            closeConnectionSafely(connection);
             return;
         }
+
+        if (status != RpcCodec::DecodeStatus::kOk) {
+            LOG_ERROR << "[RpcServer] unknown RpcCodec decode status, close connection: "
+                      << connection->name();
+            closeConnectionSafely(connection);
+            return;
+        }
+
+        if (!message.valid()) {
+            LOG_ERROR << "[RpcServer] decoded invalid RpcMessage, close connection: "
+                      << connection->name();
+            closeConnectionSafely(connection);
+            return;
+        }
+
+        handleRpcMessage(connection, context, message);
+    }
+}
+
+std::shared_ptr<RpcServer::ConnectionContext> RpcServer::createConnectionContext(
+    const TcpConnectionPtr& connection) {
+    if (!connection) {
+        return nullptr;
+    }
+
+    auto streamManager = std::make_shared<StreamManager>();
+    auto context = std::make_shared<ConnectionContext>(streamManager);
+
+    auto responder = RpcServerStreamResponder::create(connection, streamManager,
+                                                      options_.streamResponderOptions);
+
+    if (!responder) {
+        return nullptr;
+    }
+
+    context->responder = std::move(responder);
+
+    const ConnectionKey key = connectionKey(connection);
+    if (key == nullptr) {
+        return nullptr;
+    }
+
+    {
+        std::lock_guard<std::mutex> lock(contextsMutex_);
 
         /*
-         * status == kOk
+         * 防御：同一个 connection 重复 up 时，先关闭旧上下文。
          */
-        LOG_INFO << "RpcServer received frame type="
-                 << frameTypeToString(request.frameType())
-                 << ", requestId=" << request.requestId()
-                 << ", streamId=" << request.streamId()
-                 << ", payloadSize=" << request.payloadSize();
-        std::vector<RpcMessage> responses;
-
-        LOG_WARN << "RpcServer before dispatch, requestId="
-                 << request.requestId()
-                 << ", frameType=" << frameTypeToString(request.frameType())
-                 << ", payloadSize=" << request.payloadSize()
-                 << ", requestValid=" << request.valid()
-                 << ", serviceCount=" << registry_.serviceCount();
-
-        const bool dispatched = dispatcher_.dispatch(request, responses);
-
-        if (!dispatched) {
-            LOG_WARN << "RpcServer dispatch failed, closing connection. "
-                     << "requestId=" << request.requestId() << ", frameType="
-                     << frameTypeToString(request.frameType());
-            closeConnection(conn);
-            return;
-        }
-        for (const auto& response : responses) {
-            if (!sendRpcMessage(conn, response)) {
-                LOG_WARN
-                    << "RpcServer failed to send response, closing connection. "
-                    << "responseType="
-                    << frameTypeToString(response.frameType())
-                    << ", requestId=" << response.requestId()
-                    << ", streamId=" << response.streamId();
-                closeConnection(conn);
-                return;
+        auto old = contexts_.find(key);
+        if (old != contexts_.end()) {
+            if (old->second && old->second->responder) {
+                old->second->responder->markConnectionClosed();
             }
+            contexts_.erase(old);
         }
+
+        contexts_.emplace(key, context);
     }
+
+    return context;
 }
 
-bool RpcServer::sendRpcMessage(
-    const std::shared_ptr<novanet::net::TcpConnection>& conn,
-    const RpcMessage& msg) const {
-    if (conn == nullptr) {
-        LOG_WARN << "RpcServer sendRpcMessage failed: null connection";
-        return false;
-    }
-    if (!msg.valid()) {
-        LOG_WARN << "RpcServer sendRpcMessage failed: invalid RpcMessage";
-        return false;
-    }
-    std::string bytes;
-    if (!codec_.encodeToString(msg, bytes)) {
-        LOG_WARN << "RpcServer sendRpcMessage failed: encodeToString failed. "
-                 << "frameType=" << frameTypeToString(msg.frameType())
-                 << ", requestId=" << msg.requestId();
-        return false;
-    }
-    if (bytes.empty()) {
-        LOG_WARN << "RpcServer sendRpcMessage failed: encoded bytes empty";
-        return false;
+std::shared_ptr<RpcServer::ConnectionContext> RpcServer::findConnectionContext(
+    const TcpConnectionPtr& connection) const {
+    const ConnectionKey key = connectionKey(connection);
+    if (key == nullptr) {
+        return nullptr;
     }
 
-    conn->send(bytes);
-    return true;
+    std::lock_guard<std::mutex> lock(contextsMutex_);
+
+    auto it = contexts_.find(key);
+    if (it == contexts_.end()) {
+        return nullptr;
+    }
+
+    return it->second;
 }
 
-void RpcServer::closeConnection(
-    const std::shared_ptr<novanet::net::TcpConnection>& conn) const {
-    if (conn == nullptr) {
+void RpcServer::removeConnectionContext(const TcpConnectionPtr& connection) {
+    const ConnectionKey key = connectionKey(connection);
+    if (key == nullptr) {
         return;
     }
-    LOG_INFO << "RpcServer closing connection";
-    conn->shutdown();
+
+    std::shared_ptr<ConnectionContext> context;
+
+    {
+        std::lock_guard<std::mutex> lock(contextsMutex_);
+
+        auto it = contexts_.find(key);
+        if (it == contexts_.end()) {
+            return;
+        }
+
+        context = it->second;
+        contexts_.erase(it);
+    }
+
+    if (context && context->responder) {
+        context->responder->markConnectionClosed();
+    }
+}
+
+void RpcServer::closeConnectionSafely(const TcpConnectionPtr& connection) {
+    if (!connection) {
+        return;
+    }
+
+    removeConnectionContext(connection);
+
+    if (connection->connected()) {
+        connection->shutdown();
+    }
+}
+
+void RpcServer::handleRpcMessage(const TcpConnectionPtr& connection,
+                                 const std::shared_ptr<ConnectionContext>& context,
+                                 const RpcMessage& message) {
+    if (!connection || !context || !context->streamManager) {
+        return;
+    }
+
+    std::vector<RpcMessage> immediateResponses;
+
+    /*
+     * 核心：
+     * - StreamManager 是当前连接自己的；
+     * - responder 是当前连接自己的；
+     * - STREAM_OPEN 成功后不会同步生成 DATA；
+     * - 后续 DATA/END 由 AiExecutor worker + responder 异步发送。
+     */
+    const bool ok = dispatcher_.dispatch(message, *context->streamManager,
+                                         immediateResponses, context->responder);
+
+    /*
+     * immediateResponses 包括：
+     * - UNARY_RESPONSE
+     * - HEARTBEAT_PONG
+     * - immediate ERROR_FRAME
+     */
+    sendImmediateResponses(connection, *context, immediateResponses);
+
+    if (!ok && immediateResponses.empty()) {
+        LOG_ERROR << "[RpcServer] dispatcher failed without response, close connection: "
+                  << connection->name();
+        closeConnectionSafely(connection);
+    }
+}
+
+void RpcServer::sendImmediateResponses(const TcpConnectionPtr& connection,
+                                       ConnectionContext& context,
+                                       std::vector<RpcMessage>& responses) {
+    if (!connection || responses.empty()) {
+        return;
+    }
+
+    /*
+     * onMessage 在连接所属 EventLoop 中执行。
+     * immediate response 可以直接 encode/send。
+     */
+    for (const auto& response : responses) {
+        sendOneImmediateResponse(connection, context, response);
+    }
+}
+
+void RpcServer::sendOneImmediateResponse(const TcpConnectionPtr& connection,
+                                         ConnectionContext& context,
+                                         const RpcMessage& response) {
+    if (!connection || !connection->connected()) {
+        return;
+    }
+
+    novanet::net::Buffer out;
+
+    if (!context.codec.encode(response, out)) {
+        LOG_ERROR << "[RpcServer] failed to encode immediate response, close connection: "
+                  << connection->name();
+        closeConnectionSafely(connection);
+        return;
+    }
+
+    connection->send(out.retrieveAllAsString());
+}
+
+RpcServer::ConnectionKey RpcServer::connectionKey(
+    const TcpConnectionPtr& connection) noexcept {
+    if (!connection) {
+        return nullptr;
+    }
+
+    return connection.get();
 }
 
 }  // namespace novanet::rpc
