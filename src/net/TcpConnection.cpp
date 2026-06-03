@@ -13,8 +13,7 @@
 using namespace novanet::net;
 
 TcpConnection::TcpConnection(EventLoop* loop, std::string name, int sockfd,
-                             const InetAddress& localAddr,
-                             const InetAddress& peerAddr)
+                             const InetAddress& localAddr, const InetAddress& peerAddr)
     : loop_(loop),
       name_(std::move(name)),
       socket_(std::make_unique<Socket>(sockfd)),
@@ -61,10 +60,9 @@ void TcpConnection::send(const void* data, size_t len) {
         } else {
             // 极其危险的裸指针跨线程，必须转为 string 进行深拷贝续命
             std::string message(static_cast<const char*>(data), len);
-            loop_->runInLoop(
-                [conn = shared_from_this(), msg = std::move(message)]() {
-                    conn->sendInLoop(msg.data(), msg.size());
-                });
+            loop_->runInLoop([conn = shared_from_this(), msg = std::move(message)]() {
+                conn->sendInLoop(msg.data(), msg.size());
+            });
         }
     }
 }
@@ -77,10 +75,9 @@ void TcpConnection::send(Buffer* buf) {
         } else {
             std::string message(buf->peek(), buf->readableBytes());
             buf->retrieveAll();
-            loop_->runInLoop(
-                [conn = shared_from_this(), msg = std::move(message)]() {
-                    conn->sendInLoop(msg.data(), msg.size());
-                });
+            loop_->runInLoop([conn = shared_from_this(), msg = std::move(message)]() {
+                conn->sendInLoop(msg.data(), msg.size());
+            });
         }
     }
 }
@@ -128,22 +125,20 @@ void TcpConnection::sendInLoop(const void* data, size_t len) {
         //必测 7：output buffer 正确
         // 【新增探针 1】：记录背压（Backpressure）发生，内核发送窗口塞满
         LOG_INFO << "[Backpressure] 发送窗口已满！尝试发送 " << len
-                 << " 字节，实际只发了 " << nwrote << " 字节。剩余 "
-                 << remaining << " 字节追加到 OutputBuffer，并注册 EPOLLOUT！";
+                 << " 字节，实际只发了 " << nwrote << " 字节。剩余 " << remaining
+                 << " 字节追加到 OutputBuffer，并注册 EPOLLOUT！";
 
         size_t oldLen = outputBuffer_.readableBytes();
 
         // 高水位回调触发保护机制
         if (oldLen + remaining >= highWaterMark_ && oldLen < highWaterMark_ &&
             highWaterMarkCallback_) {
-            loop_->queueInLoop(
-                [conn = shared_from_this(), len = oldLen + remaining]() {
-                    conn->highWaterMarkCallback_(conn, len);
-                });
+            loop_->queueInLoop([conn = shared_from_this(), len = oldLen + remaining]() {
+                conn->highWaterMarkCallback_(conn, len);
+            });
         }
 
-        outputBuffer_.append(static_cast<const char*>(data) + nwrote,
-                             remaining);
+        outputBuffer_.append(static_cast<const char*>(data) + nwrote, remaining);
         if (!channel_->isWriting()) {
             channel_->enableWriting();
         }
@@ -153,16 +148,14 @@ void TcpConnection::sendInLoop(const void* data, size_t len) {
 void TcpConnection::shutdown() {
     if (state_ == State::kConnected) {
         setState(State::kDisconnecting);
-        loop_->runInLoop(
-            [conn = shared_from_this()]() { conn->shutdownInLoop(); });
+        loop_->runInLoop([conn = shared_from_this()]() { conn->shutdownInLoop(); });
     }
 }
 
 void TcpConnection::forceClose() {
     if (state_ == State::kConnected || state_ == State::kDisconnecting) {
         setState(State::kDisconnecting);
-        loop_->queueInLoop(
-            [conn = shared_from_this()]() { conn->forceCloseInLoop(); });
+        loop_->queueInLoop([conn = shared_from_this()]() { conn->forceCloseInLoop(); });
     }
 }
 
@@ -214,9 +207,8 @@ void TcpConnection::handleWrite() {
 
             //必测 7：output buffer 正确
             // 【新增探针 2】：记录 EPOLLOUT 的局部消耗
-            LOG_INFO
-                << "[handleWrite] EPOLLOUT 触发，成功消耗 OutputBuffer 里的 "
-                << n << " 字节。";
+            LOG_INFO << "[handleWrite] EPOLLOUT 触发，成功消耗 OutputBuffer 里的 " << n
+                     << " 字节。";
 
             if (outputBuffer_.readableBytes() == 0) {
                 channel_->disableWriting();
@@ -239,8 +231,7 @@ void TcpConnection::handleWrite() {
             LOG_SYSERR << "TcpConnection::handleWrite";
         }
     } else {
-        LOG_WARN << "Connection fd = " << channel_->fd()
-                 << " is down, no more writing";
+        LOG_WARN << "Connection fd = " << channel_->fd() << " is down, no more writing";
     }
 }
 
@@ -266,8 +257,7 @@ void TcpConnection::handleClose() {
 
 void TcpConnection::handleError() {
     int err = sockets::getSocketError(channel_->fd());
-    LOG_ERROR << "TcpConnection::handleError [" << name_
-              << "] - SO_ERROR = " << err;
+    LOG_ERROR << "TcpConnection::handleError [" << name_ << "] - SO_ERROR = " << err;
 }
 
 // 生命周期控制 (由 TcpServer 调用)
@@ -293,8 +283,7 @@ void TcpConnection::connectDestroyed() {
     loop_->assertInLoopThread();
 
     // 【就是这句确切的日志代码】： test8
-    LOG_INFO << "TcpConnection::connectDestroyed [" << name_
-             << "] fd=" << channel_->fd()
+    LOG_INFO << "TcpConnection::connectDestroyed [" << name_ << "] fd=" << channel_->fd()
              << " state=" << static_cast<int>(state_);
 
     if (state_ == State::kConnected) {
@@ -307,4 +296,9 @@ void TcpConnection::connectDestroyed() {
     }
     // 把 Channel 从 EventLoop 中彻底注销
     channel_->remove();
+}
+
+std::size_t TcpConnection::outputBufferSize() const {
+    loop_->assertInLoopThread();
+    return outputBuffer_.readableBytes();
 }
