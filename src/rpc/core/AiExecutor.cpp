@@ -258,7 +258,7 @@ bool AiExecutor::isWorkerThreadLocked(std::thread::id id) const noexcept {
             return true;
         }
     }
-    return true;
+    return false;
 }
 
 }  // namespace novanet::rpc
