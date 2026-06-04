@@ -73,6 +73,7 @@ void Channel::handleEventWithGuard() {
         if (closeCallback_) {
             closeCallback_();
         }
+        return;
     }
     // 2. 处理错误事件 (EPOLLERR)
 
@@ -82,6 +83,7 @@ void Channel::handleEventWithGuard() {
         if (errorCallback_) {
             errorCallback_();
         }
+        return;
     }
 
     // 3. 处理可读事件 (EPOLLIN: 普通数据, EPOLLPRI: 带外数据, EPOLLRDHUP:

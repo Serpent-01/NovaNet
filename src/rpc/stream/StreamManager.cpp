@@ -5,6 +5,7 @@
 
 #include "novanet/rpc/stream/StreamFrame.h"
 #include "novanet/rpc/stream/StreamSession.h"
+#include "rpc_meta.pb.h"
 
 namespace novanet::rpc {
 StreamManager::SessionPtr
@@ -109,7 +110,7 @@ StreamManager::Result StreamManager::markLocalEnd(std::uint32_t streamId) {
 }
 StreamManager::Result StreamManager::handleDataFrame(const RpcMessage& msg) {
     StreamFrame frame(msg);
-    if (!frame.valid() || frame.isData()) {
+    if (!frame.valid() || !frame.isData()) {
         return Result::kInvalidFrame;
     }
     auto session = findStream(frame.streamId());
@@ -129,7 +130,7 @@ StreamManager::Result StreamManager::handleDataFrame(const RpcMessage& msg) {
 
 StreamManager::Result StreamManager::handleEndFrame(const RpcMessage& msg) {
     StreamFrame frame(msg);
-    if (!frame.valid() || frame.isEnd()) {
+    if (!frame.valid() || !frame.isEnd()) {
         return Result::kInvalidFrame;
     }
     auto session = findStream(frame.streamId());
@@ -166,10 +167,12 @@ StreamManager::Result StreamManager::handleCancelFrame(const RpcMessage& msg) {
     if (!session) {
         return Result::kStreamNotFound;
     }
-    std::string reason = frame.payload();
-
-    if (reason.empty()) {
-        reason = "stream cancelled";
+    std::string reason = "stream cancelled";
+    meta::StreamCancelMeta cancelMeta;
+    if (!frame.payload().empty() &&
+        cancelMeta.ParseFromString(frame.payload()) &&
+        !cancelMeta.reason().empty()) {
+        reason = cancelMeta.reason();
     }
     if (!session->markCancelled(std::move(reason))) {
         return Result::kStateRejected;
@@ -181,7 +184,7 @@ std::size_t StreamManager::cancelAll(std::string reason) {
     std::vector<SessionPtr> sessions;
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        sessions.reserve(sessions.size());
+        sessions.reserve(streams_.size());
         for (auto& entry : streams_) {
             sessions.push_back(std::move(entry.second));
         }
@@ -202,11 +205,25 @@ std::vector<std::uint32_t>
 StreamManager::timeoutStreams(novanet::base::Timestamp now,
                               double timeoutSeconds, std::string reason) {
     std::vector<std::uint32_t> timeoutIds;
+    auto streams =
+        timeoutStreamsWithInfo(now, timeoutSeconds, std::move(reason));
+    timeoutIds.reserve(streams.size());
+    for (const auto& stream : streams) {
+        timeoutIds.push_back(stream.streamId);
+    }
+    return timeoutIds;
+}
+
+std::vector<StreamManager::TimedOutStream>
+StreamManager::timeoutStreamsWithInfo(novanet::base::Timestamp now,
+                                      double timeoutSeconds,
+                                      std::string reason) {
+    std::vector<TimedOutStream> timedOutStreams;
     if (!now.valid()) {
-        return timeoutIds;
+        return timedOutStreams;
     }
     if (timeoutSeconds <= 0.0) {
-        return timeoutIds;
+        return timedOutStreams;
     }
     if (reason.empty()) {
         reason = "stream idle timeout";
@@ -226,6 +243,11 @@ StreamManager::timeoutStreams(novanet::base::Timestamp now,
         }
 
         const std::uint32_t streamId = session->streamId();
+        TimedOutStream info;
+        info.streamId = streamId;
+        info.requestId = session->requestId();
+        info.serviceName = session->serviceName();
+        info.methodName = session->methodName();
 
         /*
          * 只有当前 map 中的 session 仍然是这个对象时才移除。
@@ -236,11 +258,11 @@ StreamManager::timeoutStreams(novanet::base::Timestamp now,
         }
 
         if (session->markTimeout(reason)) {
-            timeoutIds.push_back(streamId);
+            timedOutStreams.push_back(std::move(info));
         }
     }
 
-    return timeoutIds;
+    return timedOutStreams;
 }
 
 std::size_t StreamManager::size() const {

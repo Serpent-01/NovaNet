@@ -10,8 +10,10 @@
 #include "novanet/rpc/core/MethodInvoker.h"
 #include "novanet/rpc/core/RpcDispatcher.h"
 #include "novanet/rpc/core/ServiceRegistry.h"
+#include "novanet/rpc/core/StreamMethodInvoker.h"
 #include "novanet/rpc/protocol/FrameType.h"
 #include "novanet/rpc/protocol/RpcMessage.h"
+#include "novanet/rpc/stream/StreamManager.h"
 #include "rpc_meta.pb.h"
 
 namespace {
@@ -54,7 +56,9 @@ int main() {
     assert(registerError.empty());
 
     MethodInvoker invoker;
-    RpcDispatcher dispatcher(registry, invoker);
+    novanet::rpc::StreamManager streamManager;
+    novanet::rpc::StreamMethodInvoker streamInvoker(registry);
+    RpcDispatcher dispatcher(registry, invoker, streamInvoker);
 
     ::novanet::example::calculator::AddRequest addRequest;
     addRequest.set_lhs(1);
@@ -80,7 +84,8 @@ int main() {
     assert(requestMsg.requestId() == 1001);
 
     std::vector<RpcMessage> responses;
-    const bool dispatched = dispatcher.dispatch(requestMsg, responses);
+    const bool dispatched =
+        dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
     assert(dispatched);
     assert(responses.size() == 1);
 

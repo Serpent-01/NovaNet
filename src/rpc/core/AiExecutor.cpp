@@ -9,6 +9,9 @@
 
 namespace novanet::rpc {
 
+AiExecutor::AiExecutor() : AiExecutor(Options{}) {
+}
+
 AiExecutor::AiExecutor(Options options) : options_(options) {
     if (options_.workerCount == 0) {
         options_.workerCount = 1;

@@ -20,6 +20,7 @@ public:
     [[nodiscard]] int fd() const { return sockfd_; }
 
     void bindAddress(const InetAddress& address);
+    int connect(const InetAddress& address);
     void listen();
     int accept(InetAddress* peeraddr);
 

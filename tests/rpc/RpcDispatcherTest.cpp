@@ -8,8 +8,10 @@
 #include "novanet/rpc/core/MethodInvoker.h"
 #include "novanet/rpc/core/RpcDispatcher.h"
 #include "novanet/rpc/core/ServiceRegistry.h"
+#include "novanet/rpc/core/StreamMethodInvoker.h"
 #include "novanet/rpc/protocol/FrameType.h"
 #include "novanet/rpc/protocol/RpcMessage.h"
+#include "novanet/rpc/stream/StreamManager.h"
 #include "rpc_meta.pb.h"
 
 namespace {
@@ -77,17 +79,6 @@ parseUnaryResponse(const novanet::rpc::RpcMessage& responseMsg) {
     return responseMeta;
 }
 
-novanet::rpc::ErrorFrameMeta
-parseErrorFrame(const novanet::rpc::RpcMessage& responseMsg) {
-    assert(responseMsg.valid());
-    assert(responseMsg.frameType() == novanet::rpc::FrameType::ERROR_FRAME);
-
-    novanet::rpc::ErrorFrameMeta errorMeta;
-    assert(errorMeta.ParseFromString(responseMsg.payload()));
-
-    return errorMeta;
-}
-
 } // namespace
 
 int main() {
@@ -101,12 +92,14 @@ int main() {
 
     ServiceRegistry registry;
     MethodInvoker invoker;
+    novanet::rpc::StreamManager streamManager;
+    novanet::rpc::StreamMethodInvoker streamInvoker(registry);
 
     std::string errorText;
     assert(registry.registerService(&calculator, &errorText));
     assert(errorText.empty());
 
-    RpcDispatcher dispatcher(registry, invoker);
+    RpcDispatcher dispatcher(registry, invoker, streamInvoker);
 
     {
         /*
@@ -123,7 +116,8 @@ int main() {
         assert(requestMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(requestMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -164,7 +158,8 @@ int main() {
         assert(requestMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(requestMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -192,7 +187,8 @@ int main() {
         assert(requestMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(requestMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -220,7 +216,8 @@ int main() {
         assert(requestMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(requestMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -248,7 +245,8 @@ int main() {
         assert(requestMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(requestMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -277,7 +275,8 @@ int main() {
         assert(requestMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(requestMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -313,7 +312,8 @@ int main() {
         assert(requestMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(requestMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(requestMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -329,17 +329,18 @@ int main() {
     {
         /*
          * 测试 8：
-         * 第一版 unary dispatcher 暂时不支持 HEARTBEAT_PING。
+         * 企业级 Phase 4 dispatcher 支持 HEARTBEAT_PING。
          *
          * 期望：
-         * ERROR_FRAME + RPC_UNSUPPORTED_FRAME_TYPE
+         * HEARTBEAT_PONG
          */
         RpcMessage pingMsg(FrameType::HEARTBEAT_PING, 0, 0, {});
 
         assert(pingMsg.valid());
 
         std::vector<RpcMessage> responses;
-        const bool ok = dispatcher.dispatch(pingMsg, responses);
+        const bool ok =
+            dispatcher.dispatch(pingMsg, streamManager, responses, nullptr);
 
         assert(ok);
         assert(responses.size() == 1);
@@ -347,15 +348,9 @@ int main() {
         const RpcMessage& responseMsg = responses[0];
 
         assert(responseMsg.valid());
-        assert(responseMsg.frameType() == FrameType::ERROR_FRAME);
+        assert(responseMsg.frameType() == FrameType::HEARTBEAT_PONG);
         assert(responseMsg.streamId() == 0);
         assert(responseMsg.requestId() == 0);
-
-        auto errorMeta = parseErrorFrame(responseMsg);
-
-        assert(errorMeta.error_code() ==
-               novanet::rpc::RPC_UNSUPPORTED_FRAME_TYPE);
-        assert(!errorMeta.error_text().empty());
     }
 
     std::cout << "[PASS] RpcDispatcherTest passed.\n";

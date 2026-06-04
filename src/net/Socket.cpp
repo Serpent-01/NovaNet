@@ -39,6 +39,10 @@ void Socket::bindAddress(const InetAddress& addr) {
     sockets::bindOrDie(sockfd_, addr.getSockAddr());
 }
 
+int Socket::connect(const InetAddress& addr) {
+    return sockets::connect(sockfd_, addr.getSockAddr());
+}
+
 // 开始监听 (失败直接 abort 程序)
 void Socket::listen() {
     sockets::listenOrDie(sockfd_);

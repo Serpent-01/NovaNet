@@ -126,6 +126,21 @@ int accept(int sockfd, struct sockaddr_storage* addr) {
     return connfd;
 }
 
+int connect(int sockfd, const struct sockaddr* addr) {
+    socklen_t addrlen = 0;
+
+    if (addr->sa_family == AF_INET) {
+        addrlen = static_cast<socklen_t>(sizeof(struct sockaddr_in));
+    } else if (addr->sa_family == AF_INET6) {
+        addrlen = static_cast<socklen_t>(sizeof(struct sockaddr_in6));
+    } else {
+        errno = EAFNOSUPPORT;
+        return -1;
+    }
+
+    return ::connect(sockfd, addr, addrlen);
+}
+
 ssize_t read(int sockfd, void* buf, size_t count) {
     return ::read(sockfd, buf, count);
 }

@@ -85,7 +85,7 @@ bool RpcHeader::isValid() const noexcept {
      *      因此这里不强行要求 requestId 非 0。
      */
     if (isHeartbeatFrameType(frameType)) {
-        return streamId == 0 && requestId == 0;
+        return streamId == 0;
     }
 
     if (isUnaryFrameType(frameType)) {

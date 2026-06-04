@@ -56,6 +56,12 @@ public:
     /// @brief 将当前调用标记为失败，并填入原因
     void SetFailed(const std::string& reason) override;
 
+    /// @brief 将当前调用标记为超时
+    void SetTimeout(const std::string& reason = "rpc timeout");
+
+    /// @brief 将当前调用标记为取消
+    void SetCancelled(const std::string& reason = "rpc cancelled");
+
     /// @brief 检查当前调用是否已被取消
     [[nodiscard]] bool IsCanceled() const override;
 
@@ -107,6 +113,9 @@ public:
 
     /// @brief 开/关超时状态，并附带自定义的超时提示原因
     void setTimeout(bool on, std::string reason);
+
+    /// @brief 设置取消状态，并触发已注册取消回调
+    void setCancelled(std::string reason = "rpc cancelled");
 
 private:
     /// @brief 内部辅助函数：执行所有已注册的取消回调

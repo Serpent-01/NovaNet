@@ -115,6 +115,7 @@ add_library(novanet STATIC
     src/net/EventLoopThread.cpp
     src/net/EventLoopThreadPool.cpp
     src/net/TcpConnection.cpp
+    src/net/TcpClient.cpp
     src/net/TcpServer.cpp
 
     
@@ -127,19 +128,24 @@ add_library(novanet STATIC
     src/rpc/core/RpcController.cpp
     src/rpc/core/ServiceRegistry.cpp
     src/rpc/core/MethodInvoker.cpp
+    src/rpc/core/StreamMethodInvoker.cpp
+    src/rpc/core/ChatGenerateStreamHandler.cpp
     src/rpc/core/RpcDispatcher.cpp
+    src/rpc/core/AiExecutor.cpp
+    src/rpc/core/FakeAiProvider.cpp
     src/rpc/core/PendingCall.cpp
     src/rpc/core/PendingCallManager.cpp
+    src/rpc/core/RpcClient.cpp
     src/rpc/core/RpcServer.cpp
     src/rpc/core/RpcChannel.cpp
+    src/rpc/core/RpcServerStreamResponder.cpp
 
     # ======================================================
     # rpc/stream
-    # 后面写到这些类时再打开
     # ======================================================
     src/rpc/stream/StreamFrame.cpp
     src/rpc/stream/StreamSession.cpp
-    # src/rpc/stream/StreamManager.cpp
+    src/rpc/stream/StreamManager.cpp
 )
 
 target_include_directories(novanet
@@ -189,6 +195,83 @@ add_executable(multireactor_echo_server
 )
 
 target_link_libraries(multireactor_echo_server
+    PRIVATE
+        novanet
+)
+
+# ==========================================================
+# Phase 4 RPC examples
+# ==========================================================
+
+add_executable(novanet_client
+    examples/phase4/novanet_client.cpp
+)
+
+target_link_libraries(novanet_client
+    PRIVATE
+        novanet
+)
+
+add_executable(novanet_server
+    examples/phase4/novanet_server.cpp
+)
+
+target_link_libraries(novanet_server
+    PRIVATE
+        novanet
+)
+
+
+add_executable(calculator_server
+    examples/phase4/calculator_server.cpp
+)
+
+target_link_libraries(calculator_server
+    PRIVATE
+        novanet
+)
+
+add_executable(calculator_client
+    examples/phase4/calculator_client.cpp
+)
+
+target_link_libraries(calculator_client
+    PRIVATE
+        novanet
+)
+
+add_executable(chat_server
+    examples/phase4/chat_server.cpp
+)
+
+target_link_libraries(chat_server
+    PRIVATE
+        novanet
+)
+
+add_executable(chat_client
+    examples/phase4/chat_client.cpp
+)
+
+target_link_libraries(chat_client
+    PRIVATE
+        novanet
+)
+
+add_executable(cancel_client
+    examples/phase4/cancel_client.cpp
+)
+
+target_link_libraries(cancel_client
+    PRIVATE
+        novanet
+)
+
+add_executable(backpressure_client
+    examples/phase4/backpressure_client.cpp
+)
+
+target_link_libraries(backpressure_client
     PRIVATE
         novanet
 )
@@ -358,4 +441,20 @@ target_link_libraries(StreamSessionTest
 add_test(
     NAME StreamSessionTest
     COMMAND StreamSessionTest
+)
+
+
+add_executable(stream_method_invoker_test
+    tests/rpc/StreamMethodInvokerTest.cpp
+)
+
+target_link_libraries(stream_method_invoker_test
+    PRIVATE
+        novanet
+        Threads::Threads
+)
+
+add_test(
+    NAME stream_method_invoker_test
+    COMMAND stream_method_invoker_test
 )

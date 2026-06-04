@@ -16,6 +16,7 @@
 #include "novanet/base/Logger.h"
 #include "novanet/net/EventLoop.h"
 #include "novanet/net/InetAddress.h"
+#include "novanet/rpc/core/FakeAiProvider.h"
 #include "novanet/rpc/core/RpcServer.h"
 #include "novanet/rpc/protocol/FrameType.h"
 #include "novanet/rpc/protocol/RpcCodec.h"
@@ -255,9 +256,9 @@ int main() {
          */
         novanet::net::InetAddress listenAddr(kTestPort);
 
+        novanet::rpc::FakeAiProvider aiProvider;
         novanet::rpc::RpcServer server(&loop, listenAddr,
-                                       "RpcServerIntegrationTest");
-
+                                       "RpcServerIntegrationTest", aiProvider);
         CalculatorServiceImpl calculator;
 
         std::string registerError;
@@ -268,7 +269,7 @@ int main() {
         assert(registerError.empty());
         assert(server.serviceCount() == 1);
 
-        server.start();
+        assert(server.start());
 
         serverReadyPromise.set_value();
 

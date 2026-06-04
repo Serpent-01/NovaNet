@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <any>
 #include <functional>
 #include <memory>
@@ -52,10 +53,10 @@ public:
     }
 
     bool connected() const {
-        return state_ == State::kConnected;
+        return state_.load(std::memory_order_acquire) == State::kConnected;
     }
     bool disconnected() const {
-        return state_ == State::kDisConnected;
+        return state_.load(std::memory_order_acquire) == State::kDisConnected;
     }
 
     // 跨线程安全接口 (可被其他业务线程调用)
@@ -110,7 +111,7 @@ public:
 
 private:
     void setState(State s) {
-        state_ = s;
+        state_.store(s, std::memory_order_release);
     }
 
     //绑定到 Channel 的核心底层回调
@@ -128,7 +129,7 @@ private:
     EventLoop* loop_;
     const std::string name_;
 
-    State state_{State::kConnecting};
+    std::atomic<State> state_{State::kConnecting};
     bool reading_{true};
 
     std::unique_ptr<Socket> socket_;

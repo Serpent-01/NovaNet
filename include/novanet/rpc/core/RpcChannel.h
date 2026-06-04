@@ -3,112 +3,159 @@
 #include <google/protobuf/message.h>
 
 #include <atomic>
+#include <chrono>
 #include <cstdint>
+#include <functional>
 #include <memory>
+#include <mutex>
+#include <optional>
 #include <string>
+#include <unordered_map>
 
+#include "chat.pb.h"
+#include "novanet/base/Timestamp.h"
+#include "novanet/net/Buffer.h"
+#include "novanet/net/TcpConnection.h"
+#include "novanet/net/TimerId.h"
 #include "novanet/rpc/core/PendingCallManager.h"
+#include "novanet/rpc/core/RpcStatus.h"
 #include "novanet/rpc/protocol/RpcCodec.h"
 #include "novanet/rpc/protocol/RpcMessage.h"
-
-namespace novanet::net {
-class Buffer;
-class TcpConnection;
-}  // namespace novanet::net
+#include "novanet/rpc/stream/StreamManager.h"
+#include "rpc_meta.pb.h"
 
 namespace novanet::rpc {
+
 class RpcChannel final {
 public:
-    explicit RpcChannel(std::shared_ptr<net::TcpConnection> conn);
+    using TcpConnectionPtr = novanet::net::TcpConnection::TcpConnectionPtr;
+
+    struct Options {
+        std::size_t sendHighWaterMarkBytes{8 * 1024 * 1024};
+
+        double heartbeatIntervalSeconds{10.0};
+        double heartbeatCheckIntervalSeconds{5.0};
+        double heartbeatTimeoutSeconds{30.0};
+
+        double streamTimeoutScanIntervalSeconds{5.0};
+        double streamIdleTimeoutSeconds{60.0};
+
+        std::string nodeId{"novanet-client"};
+    };
+
+    struct StreamCallbacks {
+        std::function<void(std::uint32_t, std::uint64_t,
+                           const novanet::ai::chat::GenerateChunk&)>
+            onData;
+
+        std::function<void(std::uint32_t, novanet::rpc::meta::RpcErrorCode, std::string)>
+            onEnd;
+
+        std::function<void(std::uint32_t, novanet::rpc::meta::RpcErrorCode, std::string)>
+            onError;
+    };
+
+    struct StreamHandle {
+        std::uint32_t streamId{0};
+        std::uint64_t requestId{0};
+        bool ok{false};
+        std::string errorText;
+
+        [[nodiscard]] explicit operator bool() const noexcept {
+            return ok;
+        }
+    };
+
+    explicit RpcChannel(TcpConnectionPtr connection);
+    RpcChannel(TcpConnectionPtr connection, Options options);
     ~RpcChannel();
 
     RpcChannel(const RpcChannel&) = delete;
     RpcChannel& operator=(const RpcChannel&) = delete;
 
-    RpcChannel(RpcChannel&&) = delete;
-    RpcChannel& operator=(RpcChannel&&) = delete;
+    [[nodiscard]] RpcStatus callUnary(const std::string& serviceName,
+                                      const std::string& methodName,
+                                      const google::protobuf::Message& request,
+                                      google::protobuf::Message* response,
+                                      std::chrono::milliseconds timeout);
 
-    /*
-     * 同步 unary RPC 调用入口。
-     *
-     * service:
-     *   服务名，例如 "CalculatorService"。
-     *
-     * method:
-     *   方法名，例如 "Add"。
-     *
-     * request:
-     *   业务请求 protobuf，例如 AddRequest。
-     *
-     * response:
-     *   业务响应 protobuf，例如 AddResponse。
-     *
-     * timeoutMs:
-     *   等待响应的最大时间，单位毫秒。
-     *
-     * 返回 true:
-     *   RPC 成功，response 已被填充。
-     *
-     * 返回 false:
-     *   可能原因：
-     *   - connection 为空
-     *   - request 序列化失败
-     *   - send 失败
-     *   - 等待超时
-     *   - 服务端返回错误
-     *   - response 反序列化失败
-     */
-    [[nodiscard]] bool callUnary(const std::string& service,
-                                 const std::string& method,
-                                 const google::protobuf::Message& request,
-                                 google::protobuf::Message& response,
-                                 int timeoutMs);
-    /*
-     * TcpConnection 的 message callback 中调用。
-     *
-     * 负责从 Buffer 中解出 RpcMessage，
-     * 然后根据 frame type 分发。
-     */
-    void onMessage(net::Buffer* buffer);
+    [[nodiscard]] StreamHandle openStream(const std::string& serviceName,
+                                          const std::string& methodName,
+                                          const google::protobuf::Message& request,
+                                          StreamCallbacks callbacks);
 
-    /*
-     * 连接关闭时调用。
-     *
-     * 必须唤醒所有正在等待的 callUnary，
-     * 否则调用线程可能永久阻塞。
-     */
-    void onConnectionClosed();
+    [[nodiscard]] bool cancelStream(std::uint32_t streamId,
+                                    std::string reason = "client cancelled");
 
-    [[nodiscard]] std::uint32_t openStream(
-        const std::string& service, const std::string& method,
-        const google::protobuf::Message& request);
-    [[nodiscard]] bool sendStreamData(std::uint32_t streamId,
-                                      const std::string& chunk);
+    void onMessage(const TcpConnectionPtr& connection, novanet::net::Buffer* buffer);
 
-    [[nodiscard]] bool sendStreamEnd(std::uint32_t streamId);
+    void onConnectionClosed(std::string reason);
 
-    [[nodiscard]] bool cancelStream(std::uint32_t streamId);
+    void startTimers();
+    void stopTimers();
+
+    [[nodiscard]] bool sendHeartbeatPing();
+    [[nodiscard]] bool checkHeartbeatTimeout();
+    void checkStreamTimeouts();
 
 private:
-    [[nodiscard]] std::uint64_t nextRequestId() noexcept;
-    [[nodiscard]] std::uint32_t nextStreamId() noexcept;
+    [[nodiscard]] std::uint64_t nextRequestId();
+    [[nodiscard]] std::uint32_t nextStreamId();
 
-    [[nodiscard]] bool buildUnaryRequestMessage(
-        const std::string& service, const std::string& method,
-        const google::protobuf::Message& request, std::uint64_t requestId,
-        RpcMessage* outMessage) const;
+    [[nodiscard]] bool sendRpcMessage(RpcMessage message);
 
-    [[nodiscard]] bool sendMessage(const RpcMessage& message);
+    [[nodiscard]] bool sendStreamOpenMessage(std::uint32_t streamId,
+                                             std::uint64_t requestId,
+                                             const std::string& serviceName,
+                                             const std::string& methodName,
+                                             const std::string& requestPayload);
 
+    [[nodiscard]] bool sendStreamCancelMessage(std::uint32_t streamId,
+                                               std::uint64_t requestId,
+                                               std::string reason);
+
+    [[nodiscard]] bool sendHeartbeatPong(const RpcMessage& ping);
+
+    void handleRpcMessage(const RpcMessage& message);
     void handleUnaryResponse(const RpcMessage& message);
+    void handleStreamData(const RpcMessage& message);
+    void handleStreamEnd(const RpcMessage& message);
+    void handleStreamCancel(const RpcMessage& message);
     void handleErrorFrame(const RpcMessage& message);
-    void handleDecodeError();
+    void handleHeartbeatPing(const RpcMessage& message);
+    void handleHeartbeatPong(const RpcMessage& message);
+
+    void saveCallbacks(std::uint32_t streamId, StreamCallbacks callbacks);
+    void eraseCallbacks(std::uint32_t streamId);
+    std::optional<StreamCallbacks> takeCallbacks(std::uint32_t streamId);
+    std::optional<StreamCallbacks> findCallbacks(std::uint32_t streamId) const;
+
+    void failStream(std::uint32_t streamId, novanet::rpc::meta::RpcErrorCode errorCode,
+                    std::string errorText);
+
+    [[nodiscard]] static StreamHandle makeStreamError(std::string errorText);
 
 private:
-    std::shared_ptr<net::TcpConnection> connection_;
+    TcpConnectionPtr connection_;
+    Options options_;
+
     RpcCodec codec_;
     PendingCallManager pendingCalls_;
+    StreamManager streamManager_;
+
     std::atomic<std::uint64_t> nextRequestId_{1};
     std::atomic<std::uint32_t> nextStreamId_{1};
+    std::atomic<bool> connectionClosed_{false};
+
+    mutable std::mutex callbacksMutex_;
+    std::unordered_map<std::uint32_t, StreamCallbacks> callbacks_;
+
+    std::atomic<std::int64_t> lastPingMicros_{0};
+    std::atomic<std::int64_t> lastPongMicros_{0};
+
+    novanet::net::TimerId heartbeatPingTimer_;
+    novanet::net::TimerId heartbeatCheckTimer_;
+    novanet::net::TimerId streamTimeoutTimer_;
 };
+
 }  // namespace novanet::rpc

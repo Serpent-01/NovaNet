@@ -25,8 +25,6 @@ void Poller::poll(int timeoutMs,ChannelList* activeChannels){
     int savedErrno = errno;
 
     if(numEvents > 0){
-        // 【日志接入】: 调试热路径，只有在设置了 INFO 级别时才会打印，零开销
-        LOG_INFO << numEvents << " events happened";
         fillActiveChannels(numEvents, activeChannels);
         if(static_cast<size_t>(numEvents) == events_.size()){
             events_.resize(events_.size()*2);

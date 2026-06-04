@@ -41,6 +41,13 @@ public:
         kStateRejected,
     };
 
+    struct TimedOutStream {
+        std::uint32_t streamId{0};
+        std::uint64_t requestId{0};
+        std::string serviceName;
+        std::string methodName;
+    };
+
     StreamManager() = default;
     ~StreamManager() = default;
 
@@ -147,6 +154,10 @@ public:
     [[nodiscard]] std::vector<std::uint32_t>
     timeoutStreams(novanet::base::Timestamp now, double timeoutSeconds,
                    std::string reason = "stream idle timeout");
+
+    [[nodiscard]] std::vector<TimedOutStream>
+    timeoutStreamsWithInfo(novanet::base::Timestamp now, double timeoutSeconds,
+                           std::string reason = "stream idle timeout");
 
     [[nodiscard]] std::size_t size() const;
     [[nodiscard]] bool empty() const;

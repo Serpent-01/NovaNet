@@ -31,13 +31,14 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string name, int sockfd,
 
 TcpConnection::~TcpConnection() {
     LOG_INFO << "TcpConnection::dtor[" << name_ << "] at fd=" << channel_->fd()
-             << " state=" << static_cast<int>(state_);
-    assert(state_ == State::kDisConnected);
+             << " state="
+             << static_cast<int>(state_.load(std::memory_order_acquire));
+    assert(state_.load(std::memory_order_acquire) == State::kDisConnected);
 }
 
 // 跨线程安全接口：send 与 shutdown
 void TcpConnection::send(const std::string& message) {
-    if (state_ == State::kConnected) {
+    if (connected()) {
         if (loop_->isInLoopThread()) {
             // 如果已经在所属的 I/O 线程，直接发送以获得极速性能
             sendInLoop(message.data(), message.size());  //零拷贝极速路径
@@ -54,7 +55,7 @@ void TcpConnection::send(const std::string& message) {
 }
 
 void TcpConnection::send(const void* data, size_t len) {
-    if (state_ == State::kConnected) {
+    if (connected()) {
         if (loop_->isInLoopThread()) {
             sendInLoop(data, len);
         } else {
@@ -68,7 +69,7 @@ void TcpConnection::send(const void* data, size_t len) {
 }
 
 void TcpConnection::send(Buffer* buf) {
-    if (state_ == State::kConnected) {
+    if (connected()) {
         if (loop_->isInLoopThread()) {
             sendInLoop(buf->peek(), buf->readableBytes());
             buf->retrieveAll();
@@ -94,7 +95,7 @@ void TcpConnection::sendInLoop(const void* data, size_t len) {
 
     bool faultError = false;
 
-    if (state_ == State::kDisConnected) {
+    if (state_.load(std::memory_order_acquire) == State::kDisConnected) {
         LOG_WARN << "disconnected, give up writing";
         return;
     }
@@ -146,17 +147,23 @@ void TcpConnection::sendInLoop(const void* data, size_t len) {
 }
 
 void TcpConnection::shutdown() {
-    if (state_ == State::kConnected) {
-        setState(State::kDisconnecting);
-        loop_->runInLoop([conn = shared_from_this()]() { conn->shutdownInLoop(); });
-    }
+    loop_->runInLoop([conn = shared_from_this()]() {
+        if (conn->state_.load(std::memory_order_acquire) ==
+            State::kConnected) {
+            conn->setState(State::kDisconnecting);
+            conn->shutdownInLoop();
+        }
+    });
 }
 
 void TcpConnection::forceClose() {
-    if (state_ == State::kConnected || state_ == State::kDisconnecting) {
-        setState(State::kDisconnecting);
-        loop_->queueInLoop([conn = shared_from_this()]() { conn->forceCloseInLoop(); });
-    }
+    loop_->queueInLoop([conn = shared_from_this()]() {
+        const State state = conn->state_.load(std::memory_order_acquire);
+        if (state == State::kConnected || state == State::kDisconnecting) {
+            conn->setState(State::kDisconnecting);
+            conn->forceCloseInLoop();
+        }
+    });
 }
 
 void TcpConnection::shutdownInLoop() {
@@ -168,7 +175,8 @@ void TcpConnection::shutdownInLoop() {
 
 void TcpConnection::forceCloseInLoop() {
     loop_->assertInLoopThread();
-    if (state_ == State::kConnected || state_ == State::kDisconnecting) {
+    const State state = state_.load(std::memory_order_acquire);
+    if (state == State::kConnected || state == State::kDisconnecting) {
         handleClose();
     }
 }
@@ -186,6 +194,9 @@ void TcpConnection::handleRead() {
     } else if (n == 0) {
         handleClose();
     } else {
+        if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK || savedErrno == EINTR) {
+            return;
+        }
         errno = savedErrno;
         LOG_SYSERR << "TcpConnection::handleRead";
         handleError();
@@ -223,12 +234,23 @@ void TcpConnection::handleWrite() {
                         conn->writeCompleteCallback_(conn);
                     });
                 }
-                if (state_ == State::kDisconnecting) {
+                if (state_.load(std::memory_order_acquire) ==
+                    State::kDisconnecting) {
                     shutdownInLoop();
                 }
             }
-        } else {
+        } else if (n < 0) {
+            const int savedErrno = errno;
+            if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK || savedErrno == EINTR) {
+                return;
+            }
+            errno = savedErrno;
             LOG_SYSERR << "TcpConnection::handleWrite";
+            handleError();
+        } else {
+            LOG_WARN << "TcpConnection::handleWrite returned 0, closing fd="
+                     << channel_->fd();
+            handleClose();
         }
     } else {
         LOG_WARN << "Connection fd = " << channel_->fd() << " is down, no more writing";
@@ -238,8 +260,10 @@ void TcpConnection::handleWrite() {
 void TcpConnection::handleClose() {
     loop_->assertInLoopThread();
     LOG_INFO << "TcpConnection::handleClose fd=" << channel_->fd()
-             << " state=" << static_cast<int>(state_);
-    assert(state_ == State::kConnected || state_ == State::kDisconnecting);
+             << " state="
+             << static_cast<int>(state_.load(std::memory_order_acquire));
+    const State state = state_.load(std::memory_order_acquire);
+    assert(state == State::kConnected || state == State::kDisconnecting);
 
     setState(State::kDisConnected);
     channel_->disableAll();
@@ -258,12 +282,17 @@ void TcpConnection::handleClose() {
 void TcpConnection::handleError() {
     int err = sockets::getSocketError(channel_->fd());
     LOG_ERROR << "TcpConnection::handleError [" << name_ << "] - SO_ERROR = " << err;
+
+    const State state = state_.load(std::memory_order_acquire);
+    if (state == State::kConnected || state == State::kDisconnecting) {
+        handleClose();
+    }
 }
 
 // 生命周期控制 (由 TcpServer 调用)
 void TcpConnection::connectEstablished() {
     loop_->assertInLoopThread();
-    assert(state_ == State::kConnecting);
+    assert(state_.load(std::memory_order_acquire) == State::kConnecting);
     setState(State::kConnected);
 
     // 【重要！】防弹衣合拢：将自身 shared_ptr 的弱引用交给 Channel
@@ -284,9 +313,10 @@ void TcpConnection::connectDestroyed() {
 
     // 【就是这句确切的日志代码】： test8
     LOG_INFO << "TcpConnection::connectDestroyed [" << name_ << "] fd=" << channel_->fd()
-             << " state=" << static_cast<int>(state_);
+             << " state="
+             << static_cast<int>(state_.load(std::memory_order_acquire));
 
-    if (state_ == State::kConnected) {
+    if (state_.load(std::memory_order_acquire) == State::kConnected) {
         setState(State::kDisconnecting);
         channel_->disableAll();  // 停止向 epoll 订阅任何事件
 

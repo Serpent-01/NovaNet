@@ -20,6 +20,8 @@ int getSocketError(int sockfd);
 
 int accept(int sockfd, struct sockaddr_storage* addr);
 
+int connect(int sockfd, const struct sockaddr* addr);
+
 ssize_t read(int sockfd,void* buf,size_t count);
 
 ssize_t write(int sockfd,const void* buf,size_t count);

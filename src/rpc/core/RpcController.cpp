@@ -33,6 +33,14 @@ void RpcController::SetFailed(const std::string &reason) {
     setFailed(reason);
 }
 
+void RpcController::SetTimeout(const std::string& reason) {
+    setTimeout(true, reason);
+}
+
+void RpcController::SetCancelled(const std::string& reason) {
+    setCancelled(reason);
+}
+
 bool RpcController::IsCanceled() const {
     return canceled_;
 }
@@ -101,6 +109,17 @@ void RpcController::setTimeout(bool on, std::string reason) {
         return;
     }
     setTimeout(false);
+}
+
+void RpcController::setCancelled(std::string reason) {
+    failed_ = true;
+    canceled_ = true;
+    if (reason.empty()) {
+        errorText_ = "rpc cancelled";
+    } else {
+        errorText_ = std::move(reason);
+    }
+    runCancelCallbacks();
 }
 
 void RpcController::runCancelCallbacks() {
