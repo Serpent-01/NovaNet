@@ -54,7 +54,8 @@ long envLongOr(const char* name, long fallback) {
 int main(int argc, char** argv) {
     using namespace novanet::examples::phase4;
 
-    if (argc > 1 && (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
+    if (argc > 1 &&
+        (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
         printUsage(argv[0]);
         return 0;
     }
@@ -81,10 +82,11 @@ int main(int argc, char** argv) {
          *   NOVANET_AI_MODEL
          */
         novanet::rpc::GatewayAiProvider::Options aiOptions;
-        aiOptions.endpoint =
-            envOr("NOVANET_AI_BRIDGE_ENDPOINT", "http://127.0.0.1:18080/chat/stream");
+        aiOptions.endpoint = envOr("NOVANET_AI_BRIDGE_ENDPOINT",
+                                   "http://127.0.0.1:18080/chat/stream");
         aiOptions.model = envOr("NOVANET_AI_MODEL", "deepseek-chat");
-        aiOptions.connectTimeoutMs = envLongOr("NOVANET_AI_CONNECT_TIMEOUT_MS", 3000);
+        aiOptions.connectTimeoutMs =
+            envLongOr("NOVANET_AI_CONNECT_TIMEOUT_MS", 3000);
 
         /*
          * streaming 请求不建议设置很短的总超时。
@@ -118,8 +120,8 @@ int main(int argc, char** argv) {
          */
         options.streamIdleTimeoutSeconds = 120.0;
 
-        novanet::rpc::RpcServer server(&loop, listenAddr, "novanet_server", aiProvider,
-                                       options);
+        novanet::rpc::RpcServer server(&loop, listenAddr, "novanet_server",
+                                       aiProvider, options);
         server.setThreadNum(2);
 
         CalculatorServiceImpl calculatorService;
