@@ -22,7 +22,8 @@ void printUsage(const char* program) {
     std::cout
         << "Usage: " << program << " [command] [host] [port] [args...]\n"
         << "Commands:\n"
-        << "  all                         run add, heartbeat, chat, cancel, backpressure\n"
+        << "  all                         run add, heartbeat, chat, cancel, "
+           "backpressure\n"
         << "  add [lhs] [rhs]             unary CalculatorService.Add\n"
         << "  chat [prompt] [model]       streaming ChatService.Generate\n"
         << "  cancel [prompt]             open stream, then send STREAM_CANCEL\n"
@@ -31,8 +32,7 @@ void printUsage(const char* program) {
         << "Defaults: command=all host=127.0.0.1 port=" << kDefaultPort << "\n";
 }
 
-int runAdd(novanet::rpc::RpcClient& client, int argc, char** argv,
-           int argIndex) {
+int runAdd(novanet::rpc::RpcClient& client, int argc, char** argv, int argIndex) {
     const std::int64_t lhs = argc > argIndex ? std::stoll(argv[argIndex]) : 1;
     const std::int64_t rhs =
         argc > argIndex + 1 ? std::stoll(argv[argIndex + 1]) : 2;
@@ -50,8 +50,7 @@ int runAdd(novanet::rpc::RpcClient& client, int argc, char** argv,
         return 1;
     }
 
-    std::cout << "ADD " << lhs << " + " << rhs << " = "
-              << response.result() << "\n";
+    std::cout << "ADD " << lhs << " + " << rhs << " = " << response.result() << "\n";
     return 0;
 }
 
@@ -66,9 +65,9 @@ int runHeartbeat(novanet::rpc::RpcClient& client) {
     return 0;
 }
 
-int runStream(novanet::rpc::RpcClient& client, std::string prompt,
-              std::string model, bool cancelAfterFirstData,
-              bool expectBackpressure, std::chrono::seconds waitTimeout) {
+int runStream(novanet::rpc::RpcClient& client, std::string prompt, std::string model,
+              bool cancelAfterFirstData, bool expectBackpressure,
+              std::chrono::seconds waitTimeout) {
     using novanet::rpc::meta::RPC_BACKPRESSURE;
     using novanet::rpc::meta::RPC_OK;
 
@@ -92,10 +91,9 @@ int runStream(novanet::rpc::RpcClient& client, std::string prompt,
             observedStreamId = streamId;
             ++dataFrames;
 
-            if (!expectBackpressure || dataFrames <= 8 ||
-                dataFrames % 100 == 0) {
-                novanet::examples::phase4::printStreamData(
-                    streamId, sequence, chunk, expectBackpressure);
+            if (!expectBackpressure || dataFrames <= 8 || dataFrames % 100 == 0) {
+                novanet::examples::phase4::printStreamData(streamId, sequence, chunk,
+                                                           expectBackpressure);
             }
         }
 
@@ -107,8 +105,7 @@ int runStream(novanet::rpc::RpcClient& client, std::string prompt,
     };
 
     callbacks.onEnd = [&](std::uint32_t streamId,
-                          novanet::rpc::meta::RpcErrorCode code,
-                          std::string text) {
+                          novanet::rpc::meta::RpcErrorCode code, std::string text) {
         novanet::examples::phase4::printStreamEnd(streamId, code, text);
         {
             std::lock_guard<std::mutex> lock(mutex);
@@ -135,8 +132,8 @@ int runStream(novanet::rpc::RpcClient& client, std::string prompt,
         cv.notify_one();
     };
 
-    auto handle = client.openStream(kChatService, "Generate", request,
-                                    std::move(callbacks));
+    auto handle =
+        client.openStream(kChatService, "Generate", request, std::move(callbacks));
     if (!handle) {
         std::cerr << "STREAM_OPEN failed: " << handle.errorText << "\n";
         return 1;
@@ -166,16 +163,15 @@ int runStream(novanet::rpc::RpcClient& client, std::string prompt,
 
     std::unique_lock<std::mutex> lock(mutex);
     if (!cv.wait_for(lock, waitTimeout, [&]() { return finished; })) {
-        std::cerr << "stream wait timeout after " << dataFrames
-                  << " DATA frames\n";
+        std::cerr << "stream wait timeout after " << dataFrames << " DATA frames\n";
         return 1;
     }
 
     return exitCode;
 }
 
-int runCommand(novanet::rpc::RpcClient& client, const std::string& command,
-               int argc, char** argv, int argIndex) {
+int runCommand(novanet::rpc::RpcClient& client, const std::string& command, int argc,
+               char** argv, int argIndex) {
     if (command == "add") {
         return runAdd(client, argc, argv, argIndex);
     }
@@ -186,23 +182,22 @@ int runCommand(novanet::rpc::RpcClient& client, const std::string& command,
 
     if (command == "chat") {
         const std::string prompt =
-            argc > argIndex ? argv[argIndex] : "hello unified novanet";
+            argc > argIndex ? argv[argIndex] : "用一句话解释 Reactor 模型";
         const std::string model =
-            argc > argIndex + 1 ? argv[argIndex + 1] : "demo-chat-model";
+            argc > argIndex + 1 ? argv[argIndex + 1] : "deepseek-chat";
         return runStream(client, prompt, model, false, false,
-                         std::chrono::seconds(5));
+                         std::chrono::seconds(60));
     }
 
     if (command == "cancel") {
         const std::string prompt =
             argc > argIndex ? argv[argIndex] : "cancel this stream";
-        return runStream(client, prompt, "cancel-demo", true, false,
-                         std::chrono::seconds(3));
+        return runStream(client, prompt, "deepseek-chat", true, false,
+                         std::chrono::seconds(10));
     }
 
     if (command == "backpressure") {
-        const std::string prompt =
-            argc > argIndex ? argv[argIndex] : "slow client";
+        const std::string prompt = argc > argIndex ? argv[argIndex] : "slow client";
         return runStream(client, prompt, "backpressure-demo", false, true,
                          std::chrono::seconds(15));
     }
@@ -222,8 +217,8 @@ int runCommand(novanet::rpc::RpcClient& client, const std::string& command,
                       std::chrono::seconds(3)) != 0) {
             return 1;
         }
-        return runStream(client, "slow client", "backpressure-demo", false,
-                         true, std::chrono::seconds(15));
+        return runStream(client, "slow client", "backpressure-demo", false, true,
+                         std::chrono::seconds(15));
     }
 
     std::cerr << "unknown command: " << command << "\n";
@@ -235,14 +230,15 @@ int runCommand(novanet::rpc::RpcClient& client, const std::string& command,
 int main(int argc, char** argv) {
     using namespace novanet::examples::phase4;
 
-    if (argc > 1 && (std::string(argv[1]) == "-h" ||
-                     std::string(argv[1]) == "--help")) {
+    if (argc > 1 &&
+        (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
         printUsage(argv[0]);
         return 0;
     }
 
     try {
-        const std::string command = argOr(argc, argv, 1, "all");
+        // const std::string command = argOr(argc, argv, 1, "all");
+        const std::string command = argOr(argc, argv, 1, "chat");
         const std::string host = argOr(argc, argv, 2, kLocalhost);
         const std::uint16_t port = parsePort(argc, argv, 3, kDefaultPort);
         constexpr int kFirstCommandArg = 4;

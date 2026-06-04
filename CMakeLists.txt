@@ -38,7 +38,8 @@ endif()
 
 find_package(Threads REQUIRED)
 find_package(Protobuf REQUIRED)
-
+find_package(CURL REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 # ==========================================================
 # Protobuf 自动生成
@@ -133,6 +134,7 @@ add_library(novanet STATIC
     src/rpc/core/RpcDispatcher.cpp
     src/rpc/core/AiExecutor.cpp
     src/rpc/core/FakeAiProvider.cpp
+    src/rpc/core/GatewayAiProvider.cpp
     src/rpc/core/PendingCall.cpp
     src/rpc/core/PendingCallManager.cpp
     src/rpc/core/RpcClient.cpp
@@ -158,6 +160,8 @@ target_link_libraries(novanet
     PUBLIC
         Threads::Threads
         protobuf::libprotobuf
+        CURL::libcurl
+        nlohmann_json::nlohmann_json
 )
 
 # ==========================================================
@@ -276,6 +280,14 @@ target_link_libraries(backpressure_client
         novanet
 )
 
+add_executable(novanet_server2
+    examples/phase4/novanet_server2.cpp
+)
+
+target_link_libraries(novanet_server2
+    PRIVATE
+        novanet
+)
 
 # ==========================================================
 # Tests
