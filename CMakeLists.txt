@@ -148,6 +148,10 @@ add_library(novanet STATIC
     src/rpc/stream/StreamFrame.cpp
     src/rpc/stream/StreamSession.cpp
     src/rpc/stream/StreamManager.cpp
+    # ======================================================
+    # rpc/sdk
+    # ======================================================
+    src/rpc/sdk/Endpoint.cpp
 )
 
 target_include_directories(novanet
@@ -469,4 +473,21 @@ target_link_libraries(stream_method_invoker_test
 add_test(
     NAME stream_method_invoker_test
     COMMAND stream_method_invoker_test
+)
+
+
+
+add_executable(EndpointTest
+    tests/rpc/sdk/EndpointTest.cpp
+)
+
+target_link_libraries(EndpointTest
+    PRIVATE
+        novanet
+        Threads::Threads
+)
+
+add_test(
+    NAME EndpointTest
+    COMMAND EndpointTest
 )
