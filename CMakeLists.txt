@@ -152,6 +152,13 @@ add_library(novanet STATIC
     # rpc/sdk
     # ======================================================
     src/rpc/sdk/Endpoint.cpp
+    src/rpc/sdk/ClientContext.cpp
+    src/rpc/sdk/ClientChannel.cpp
+    src/rpc/sdk/CreateChannel.cpp
+    src/rpc/sdk/CalculatorServiceStub.cpp
+    src/rpc/sdk/ProtobufRpcChannelAdapter.cpp
+    src/rpc/sdk/ClientReader.cpp
+    src/rpc/sdk/ChatServiceStub.cpp
 )
 
 target_include_directories(novanet
@@ -166,6 +173,26 @@ target_link_libraries(novanet
         protobuf::libprotobuf
         CURL::libcurl
         nlohmann_json::nlohmann_json
+)
+# ==========================================================
+# final main
+# ==========================================================
+add_executable(novanet_server_demo
+    examples/server_main.cpp
+)
+
+target_link_libraries(novanet_server_demo
+    novanet
+    protobuf::libprotobuf
+)
+
+add_executable(novanet_client_demo
+    examples/client_main.cpp
+)
+
+target_link_libraries(novanet_client_demo
+    novanet
+    protobuf::libprotobuf
 )
 
 # ==========================================================

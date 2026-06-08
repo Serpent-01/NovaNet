@@ -12,8 +12,28 @@
 namespace novanet::rpc {
 
 namespace chat = ::novanet::ai::chat;
+
 using novanet::base::timeDifference;
 using novanet::base::Timestamp;
+
+namespace {
+
+const RpcChannel::MetadataMap kEmptyMetadata{};
+
+void fillMetadata(const RpcChannel::MetadataMap& metadata,
+                  google::protobuf::Map<std::string, std::string>* out) {
+    if (out == nullptr) {
+        return;
+    }
+
+    for (const auto& item : metadata) {
+        if (!item.first.empty()) {
+            (*out)[item.first] = item.second;
+        }
+    }
+}
+
+}  // namespace
 
 RpcChannel::RpcChannel(TcpConnectionPtr connection)
     : RpcChannel(std::move(connection), Options{}) {
@@ -36,6 +56,16 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
                                 const google::protobuf::Message& request,
                                 google::protobuf::Message* response,
                                 std::chrono::milliseconds timeout) {
+    return callUnary(serviceName, methodName, request, response, timeout,
+                     kEmptyMetadata);
+}
+
+RpcStatus RpcChannel::callUnary(const std::string& serviceName,
+                                const std::string& methodName,
+                                const google::protobuf::Message& request,
+                                google::protobuf::Message* response,
+                                std::chrono::milliseconds timeout,
+                                const MetadataMap& metadata) {
     if (connectionClosed_.load(std::memory_order_acquire)) {
         return RpcStatus::failure(meta::RPC_CONNECTION_CLOSED,
                                   "connection already closed");
@@ -47,8 +77,7 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
     }
 
     if (response == nullptr) {
-        return RpcStatus::failure(meta::RPC_BAD_REQUEST,
-                                  "response message is null");
+        return RpcStatus::failure(meta::RPC_BAD_REQUEST, "response message is null");
     }
 
     std::string requestPayload;
@@ -58,6 +87,7 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
     }
 
     const std::uint64_t requestId = nextRequestId();
+
     auto pendingCall = pendingCalls_.create(requestId);
     if (!pendingCall) {
         return RpcStatus::failure(meta::RPC_INTERNAL_ERROR,
@@ -68,6 +98,7 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
     requestMeta.set_service_name(serviceName);
     requestMeta.set_method_name(methodName);
     requestMeta.set_request_payload(std::move(requestPayload));
+    fillMetadata(metadata, requestMeta.mutable_metadata());
 
     std::string rpcPayload;
     if (!requestMeta.SerializeToString(&rpcPayload)) {
@@ -78,6 +109,7 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
 
     RpcMessage message(FrameType::UNARY_REQUEST, 0, requestId,
                        std::move(rpcPayload));
+
     if (!message.valid()) {
         static_cast<void>(pendingCalls_.remove(requestId));
         return RpcStatus::failure(meta::RPC_INVALID_FRAME,
@@ -91,35 +123,60 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
     }
 
     const PendingCall::State state = pendingCall->waitFor(timeout);
+
     if (state == PendingCall::State::kTimeout) {
         static_cast<void>(pendingCalls_.remove(requestId));
-        return RpcStatus::failure(meta::RPC_TIMEOUT, pendingCall->errorText());
+
+        const std::string errorText = pendingCall->errorText().empty()
+                                          ? "unary call timeout"
+                                          : pendingCall->errorText();
+
+        return RpcStatus::failure(meta::RPC_TIMEOUT, errorText);
     }
 
     if (state == PendingCall::State::kFailed) {
-        return RpcStatus::failure(meta::RPC_UNKNOWN_ERROR,
-                                  pendingCall->errorText());
+        static_cast<void>(pendingCalls_.remove(requestId));
+
+        const std::string errorText = pendingCall->errorText().empty()
+                                          ? "unary call failed"
+                                          : pendingCall->errorText();
+
+        return RpcStatus::failure(meta::RPC_UNKNOWN_ERROR, errorText);
     }
 
     if (state != PendingCall::State::kDone) {
+        static_cast<void>(pendingCalls_.remove(requestId));
         return RpcStatus::failure(meta::RPC_UNKNOWN_ERROR,
                                   "unary call finished with unexpected state");
     }
 
     if (!response->ParseFromString(pendingCall->responseBytes())) {
+        static_cast<void>(pendingCalls_.remove(requestId));
         return RpcStatus::failure(meta::RPC_PARSE_RESPONSE_FAILED,
                                   "parse unary response payload failed");
     }
 
+    static_cast<void>(pendingCalls_.remove(requestId));
     return RpcStatus::success();
 }
 
-RpcChannel::StreamHandle RpcChannel::openStream(const std::string& serviceName,
-                                                const std::string& methodName,
-                                                const google::protobuf::Message& request,
-                                                StreamCallbacks callbacks) {
+RpcChannel::StreamHandle RpcChannel::openStream(
+    const std::string& serviceName, const std::string& methodName,
+    const google::protobuf::Message& request, StreamCallbacks callbacks) {
+    return openStream(serviceName, methodName, request, std::move(callbacks),
+                      kEmptyMetadata);
+}
+
+RpcChannel::StreamHandle RpcChannel::openStream(
+    const std::string& serviceName, const std::string& methodName,
+    const google::protobuf::Message& request, StreamCallbacks callbacks,
+    const MetadataMap& metadata) {
     if (connectionClosed_.load(std::memory_order_acquire)) {
         return makeStreamError("connection already closed");
+    }
+
+    if (serviceName.empty() || methodName.empty()) {
+        return makeStreamError("service_name or method_name is empty");
     }
 
     std::string requestPayload;
@@ -132,21 +189,22 @@ RpcChannel::StreamHandle RpcChannel::openStream(const std::string& serviceName,
 
     auto session =
         streamManager_.createStream(streamId, requestId, serviceName, methodName);
+
     if (!session) {
         return makeStreamError("create local stream failed");
     }
 
     if (!session->markLocalEnd()) {
-        (void)streamManager_.removeStream(streamId);
+        static_cast<void>(streamManager_.removeStream(streamId));
         return makeStreamError("mark local end failed");
     }
 
     saveCallbacks(streamId, std::move(callbacks));
 
     if (!sendStreamOpenMessage(streamId, requestId, serviceName, methodName,
-                               requestPayload)) {
+                               requestPayload, metadata)) {
         eraseCallbacks(streamId);
-        (void)streamManager_.removeStream(streamId);
+        static_cast<void>(streamManager_.removeStream(streamId));
         return makeStreamError("send STREAM_OPEN failed");
     }
 
@@ -163,10 +221,14 @@ bool RpcChannel::cancelStream(std::uint32_t streamId, std::string reason) {
         return false;
     }
 
+    if (reason.empty()) {
+        reason = "client cancelled";
+    }
+
     const std::uint64_t requestId = session->requestId();
 
-    (void)session->markCancelled(reason);
-    (void)streamManager_.removeStream(streamId);
+    static_cast<void>(session->markCancelled(reason));
+    static_cast<void>(streamManager_.removeStream(streamId));
 
     auto callbacks = takeCallbacks(streamId);
 
@@ -196,13 +258,25 @@ void RpcChannel::onMessage(const TcpConnectionPtr& connection,
             break;
         }
 
-        if (status == RpcCodec::DecodeStatus::kInvalid ||
-            status != RpcCodec::DecodeStatus::kOk || !message.valid()) {
-            LOG_ERROR << "[RpcChannel] decode error";
-            onConnectionClosed("decode error");
+        if (status == RpcCodec::DecodeStatus::kInvalid) {
+            LOG_ERROR << "[RpcChannel] decode invalid frame";
+            onConnectionClosed("decode invalid frame");
+
             if (connection->connected()) {
                 connection->shutdown();
             }
+
+            return;
+        }
+
+        if (status != RpcCodec::DecodeStatus::kOk || !message.valid()) {
+            LOG_ERROR << "[RpcChannel] decode error";
+            onConnectionClosed("decode error");
+
+            if (connection->connected()) {
+                connection->shutdown();
+            }
+
             return;
         }
 
@@ -213,6 +287,7 @@ void RpcChannel::onMessage(const TcpConnectionPtr& connection,
 void RpcChannel::onConnectionClosed(std::string reason) {
     const bool alreadyClosed =
         connectionClosed_.exchange(true, std::memory_order_acq_rel);
+
     if (alreadyClosed) {
         return;
     }
@@ -226,6 +301,7 @@ void RpcChannel::onConnectionClosed(std::string reason) {
 
     {
         std::lock_guard<std::mutex> lock(callbacksMutex_);
+
         callbacks.reserve(callbacks_.size());
 
         for (auto& item : callbacks_) {
@@ -245,6 +321,12 @@ void RpcChannel::onConnectionClosed(std::string reason) {
 }
 
 void RpcChannel::startTimers() {
+    std::lock_guard<std::mutex> lock(timersMutex_);
+
+    if (timersStarted_) {
+        return;
+    }
+
     if (!connection_) {
         return;
     }
@@ -254,40 +336,56 @@ void RpcChannel::startTimers() {
         return;
     }
 
-    heartbeatPingTimer_ = loop->runEvery(options_.heartbeatIntervalSeconds,
-                                         [this]() { (void)this->sendHeartbeatPing(); });
+    heartbeatPingTimer_ =
+        loop->runEvery(options_.heartbeatIntervalSeconds,
+                       [this]() { static_cast<void>(this->sendHeartbeatPing()); });
 
-    heartbeatCheckTimer_ =
-        loop->runEvery(options_.heartbeatCheckIntervalSeconds,
-                       [this]() { (void)this->checkHeartbeatTimeout(); });
+    heartbeatCheckTimer_ = loop->runEvery(
+        options_.heartbeatCheckIntervalSeconds,
+        [this]() { static_cast<void>(this->checkHeartbeatTimeout()); });
 
     streamTimeoutTimer_ = loop->runEvery(options_.streamTimeoutScanIntervalSeconds,
                                          [this]() { this->checkStreamTimeouts(); });
+
+    timersStarted_ = true;
 
     LOG_INFO << "[RpcChannel] timers started";
 }
 
 void RpcChannel::stopTimers() {
+    std::lock_guard<std::mutex> lock(timersMutex_);
+
+    if (!timersStarted_) {
+        return;
+    }
+
     if (!connection_) {
+        timersStarted_ = false;
         return;
     }
 
     auto* loop = connection_->getLoop();
     if (loop == nullptr) {
+        timersStarted_ = false;
         return;
     }
 
     if (heartbeatPingTimer_.valid()) {
         loop->cancel(heartbeatPingTimer_);
+        heartbeatPingTimer_ = novanet::net::TimerId();
     }
 
     if (heartbeatCheckTimer_.valid()) {
         loop->cancel(heartbeatCheckTimer_);
+        heartbeatCheckTimer_ = novanet::net::TimerId();
     }
 
     if (streamTimeoutTimer_.valid()) {
         loop->cancel(streamTimeoutTimer_);
+        streamTimeoutTimer_ = novanet::net::TimerId();
     }
+
+    timersStarted_ = false;
 }
 
 bool RpcChannel::sendHeartbeatPing() {
@@ -309,6 +407,7 @@ bool RpcChannel::sendHeartbeatPing() {
     const std::uint64_t requestId = nextRequestId();
 
     RpcMessage ping(FrameType::HEARTBEAT_PING, 0, requestId, std::move(payload));
+
     if (!ping.valid()) {
         return false;
     }
@@ -324,6 +423,10 @@ bool RpcChannel::checkHeartbeatTimeout() {
     }
 
     const std::int64_t lastPong = lastPongMicros_.load(std::memory_order_acquire);
+
+    if (lastPong <= 0) {
+        return false;
+    }
 
     const Timestamp now = Timestamp::now();
     const double elapsed = timeDifference(now, Timestamp(lastPong));
@@ -344,6 +447,10 @@ bool RpcChannel::checkHeartbeatTimeout() {
 }
 
 void RpcChannel::checkStreamTimeouts() {
+    if (connectionClosed_.load(std::memory_order_acquire)) {
+        return;
+    }
+
     const Timestamp now = Timestamp::now();
 
     auto expiredStreamIds = streamManager_.timeoutStreams(
@@ -351,6 +458,7 @@ void RpcChannel::checkStreamTimeouts() {
 
     for (const auto streamId : expiredStreamIds) {
         auto callbacks = takeCallbacks(streamId);
+
         if (callbacks && callbacks->onError) {
             callbacks->onError(streamId, meta::RPC_TIMEOUT,
                                "client stream idle timeout");
@@ -362,17 +470,21 @@ void RpcChannel::checkStreamTimeouts() {
 
 std::uint64_t RpcChannel::nextRequestId() {
     std::uint64_t id = nextRequestId_.fetch_add(1, std::memory_order_acq_rel);
+
     if (id == 0) {
         id = nextRequestId_.fetch_add(1, std::memory_order_acq_rel);
     }
+
     return id;
 }
 
 std::uint32_t RpcChannel::nextStreamId() {
     std::uint32_t id = nextStreamId_.fetch_add(1, std::memory_order_acq_rel);
+
     if (id == 0) {
         id = nextStreamId_.fetch_add(1, std::memory_order_acq_rel);
     }
+
     return id;
 }
 
@@ -388,6 +500,7 @@ bool RpcChannel::sendRpcMessage(RpcMessage message) {
 
     auto connection = connection_;
     auto* loop = connection->getLoop();
+
     if (loop == nullptr) {
         onConnectionClosed("connection loop is null");
         return false;
@@ -420,14 +533,17 @@ bool RpcChannel::sendRpcMessage(RpcMessage message) {
     return true;
 }
 
-bool RpcChannel::sendStreamOpenMessage(std::uint32_t streamId, std::uint64_t requestId,
+bool RpcChannel::sendStreamOpenMessage(std::uint32_t streamId,
+                                       std::uint64_t requestId,
                                        const std::string& serviceName,
                                        const std::string& methodName,
-                                       const std::string& requestPayload) {
+                                       const std::string& requestPayload,
+                                       const MetadataMap& metadata) {
     meta::StreamOpenMeta openMeta;
     openMeta.set_service_name(serviceName);
     openMeta.set_method_name(methodName);
     openMeta.set_request_payload(requestPayload);
+    fillMetadata(metadata, openMeta.mutable_metadata());
 
     std::string payload;
     if (!openMeta.SerializeToString(&payload)) {
@@ -435,6 +551,7 @@ bool RpcChannel::sendStreamOpenMessage(std::uint32_t streamId, std::uint64_t req
     }
 
     auto frame = StreamFrame::makeOpen(streamId, requestId, std::move(payload));
+
     if (!frame.valid()) {
         return false;
     }
@@ -442,7 +559,8 @@ bool RpcChannel::sendStreamOpenMessage(std::uint32_t streamId, std::uint64_t req
     return sendRpcMessage(frame.releaseMessage());
 }
 
-bool RpcChannel::sendStreamCancelMessage(std::uint32_t streamId, std::uint64_t requestId,
+bool RpcChannel::sendStreamCancelMessage(std::uint32_t streamId,
+                                         std::uint64_t requestId,
                                          std::string reason) {
     meta::StreamCancelMeta cancelMeta;
     cancelMeta.set_reason(std::move(reason));
@@ -453,6 +571,7 @@ bool RpcChannel::sendStreamCancelMessage(std::uint32_t streamId, std::uint64_t r
     }
 
     auto frame = StreamFrame::makeCancel(streamId, requestId, std::move(payload));
+
     if (!frame.valid()) {
         return false;
     }
@@ -462,6 +581,7 @@ bool RpcChannel::sendStreamCancelMessage(std::uint32_t streamId, std::uint64_t r
 
 bool RpcChannel::sendHeartbeatPong(const RpcMessage& ping) {
     RpcMessage pong(FrameType::HEARTBEAT_PONG, 0, ping.requestId(), ping.payload());
+
     if (!pong.valid()) {
         return false;
     }
@@ -474,24 +594,31 @@ void RpcChannel::handleRpcMessage(const RpcMessage& message) {
         case FrameType::UNARY_RESPONSE:
             handleUnaryResponse(message);
             break;
+
         case FrameType::STREAM_DATA:
             handleStreamData(message);
             break;
+
         case FrameType::STREAM_END:
             handleStreamEnd(message);
             break;
+
         case FrameType::STREAM_CANCEL:
             handleStreamCancel(message);
             break;
+
         case FrameType::ERROR_FRAME:
             handleErrorFrame(message);
             break;
+
         case FrameType::HEARTBEAT_PING:
             handleHeartbeatPing(message);
             break;
+
         case FrameType::HEARTBEAT_PONG:
             handleHeartbeatPong(message);
             break;
+
         default:
             LOG_WARN << "[RpcChannel] unexpected frame type";
             break;
@@ -503,24 +630,26 @@ void RpcChannel::handleUnaryResponse(const RpcMessage& message) {
 
     if (!responseMeta.ParseFromString(message.payload())) {
         static_cast<void>(pendingCalls_.fail(message.requestId(),
-                                            "parse UnaryResponseMeta failed"));
+                                             "parse UnaryResponseMeta failed"));
         return;
     }
 
     if (responseMeta.error_code() != meta::RPC_OK) {
-        static_cast<void>(pendingCalls_.fail(message.requestId(),
-                                            responseMeta.error_text()));
+        static_cast<void>(
+            pendingCalls_.fail(message.requestId(), responseMeta.error_text()));
         return;
     }
 
     static_cast<void>(pendingCalls_.complete(message.requestId(),
-                                            responseMeta.response_payload()));
+                                             responseMeta.response_payload()));
 }
 
 void RpcChannel::handleStreamData(const RpcMessage& message) {
     auto session = streamManager_.findStream(message.streamId());
+
     if (!session || !session->canReceiveData()) {
-        LOG_WARN << "[RpcChannel] drop late STREAM_DATA, streamId=" << message.streamId();
+        LOG_WARN << "[RpcChannel] drop late STREAM_DATA, streamId="
+                 << message.streamId();
         return;
     }
 
@@ -553,6 +682,7 @@ void RpcChannel::handleStreamData(const RpcMessage& message) {
 
 void RpcChannel::handleStreamEnd(const RpcMessage& message) {
     meta::StreamEndMeta endMeta;
+
     if (!endMeta.ParseFromString(message.payload())) {
         failStream(message.streamId(), meta::RPC_PARSE_RESPONSE_FAILED,
                    "parse StreamEndMeta failed");
@@ -566,7 +696,7 @@ void RpcChannel::handleStreamEnd(const RpcMessage& message) {
         return;
     }
 
-    (void)streamManager_.removeStream(message.streamId());
+    static_cast<void>(streamManager_.removeStream(message.streamId()));
 
     auto callbacks = takeCallbacks(message.streamId());
     if (!callbacks) {
@@ -577,6 +707,7 @@ void RpcChannel::handleStreamEnd(const RpcMessage& message) {
         if (callbacks->onEnd) {
             callbacks->onEnd(message.streamId(), meta::RPC_OK, "");
         }
+
         return;
     }
 
@@ -588,6 +719,7 @@ void RpcChannel::handleStreamEnd(const RpcMessage& message) {
 
 void RpcChannel::handleStreamCancel(const RpcMessage& message) {
     meta::StreamCancelMeta cancelMeta;
+
     if (!cancelMeta.ParseFromString(message.payload())) {
         failStream(message.streamId(), meta::RPC_PARSE_RESPONSE_FAILED,
                    "parse StreamCancelMeta failed");
@@ -599,27 +731,30 @@ void RpcChannel::handleStreamCancel(const RpcMessage& message) {
 
 void RpcChannel::handleErrorFrame(const RpcMessage& message) {
     meta::ErrorFrameMeta errorMeta;
+
     if (!errorMeta.ParseFromString(message.payload())) {
         return;
     }
 
     if (message.streamId() != 0) {
-        failStream(message.streamId(), errorMeta.error_code(), errorMeta.error_text());
+        failStream(message.streamId(), errorMeta.error_code(),
+                   errorMeta.error_text());
         return;
     }
 
     if (message.requestId() != 0) {
-        static_cast<void>(pendingCalls_.fail(message.requestId(),
-                                            errorMeta.error_text()));
+        static_cast<void>(
+            pendingCalls_.fail(message.requestId(), errorMeta.error_text()));
     }
 }
 
 void RpcChannel::handleHeartbeatPing(const RpcMessage& message) {
-    (void)sendHeartbeatPong(message);
+    static_cast<void>(sendHeartbeatPong(message));
 }
 
 void RpcChannel::handleHeartbeatPong(const RpcMessage& message) {
-    (void)message;
+    static_cast<void>(message);
+
     lastPongMicros_.store(Timestamp::now().microSecondsSinceEpoch(),
                           std::memory_order_release);
 }
@@ -645,6 +780,7 @@ std::optional<RpcChannel::StreamCallbacks> RpcChannel::takeCallbacks(
 
     StreamCallbacks callbacks = std::move(it->second);
     callbacks_.erase(it);
+
     return callbacks;
 }
 
@@ -663,11 +799,12 @@ std::optional<RpcChannel::StreamCallbacks> RpcChannel::findCallbacks(
 void RpcChannel::failStream(std::uint32_t streamId, meta::RpcErrorCode errorCode,
                             std::string errorText) {
     auto session = streamManager_.findStream(streamId);
+
     if (session) {
-        (void)session->markCancelled(errorText);
+        static_cast<void>(session->markCancelled(errorText));
     }
 
-    (void)streamManager_.removeStream(streamId);
+    static_cast<void>(streamManager_.removeStream(streamId));
 
     auto callbacks = takeCallbacks(streamId);
     if (callbacks && callbacks->onError) {

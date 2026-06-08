@@ -2,9 +2,11 @@
 
 #include <chrono>
 #include <condition_variable>
+#include <cstdint>
 #include <memory>
 #include <mutex>
 #include <string>
+#include <unordered_map>
 
 #include "novanet/net/EventLoopThread.h"
 #include "novanet/net/InetAddress.h"
@@ -20,6 +22,8 @@ namespace novanet::rpc {
 
 class RpcClient final {
 public:
+    using MetadataMap = std::unordered_map<std::string, std::string>;
+
     struct Options {
         RpcChannel::Options channelOptions{};
         std::chrono::milliseconds connectTimeout{3000};
@@ -27,14 +31,20 @@ public:
     };
 
     RpcClient(const novanet::net::InetAddress& serverAddr, std::string name);
+
     RpcClient(const novanet::net::InetAddress& serverAddr, std::string name,
               Options options);
+
     ~RpcClient();
 
     RpcClient(const RpcClient&) = delete;
     RpcClient& operator=(const RpcClient&) = delete;
 
+    RpcClient(RpcClient&&) = delete;
+    RpcClient& operator=(RpcClient&&) = delete;
+
     [[nodiscard]] bool connect(std::string* errorText = nullptr);
+
     void disconnect();
 
     [[nodiscard]] bool connected() const;
@@ -45,10 +55,22 @@ public:
                                       google::protobuf::Message* response,
                                       std::chrono::milliseconds timeout);
 
+    [[nodiscard]] RpcStatus callUnary(const std::string& serviceName,
+                                      const std::string& methodName,
+                                      const google::protobuf::Message& request,
+                                      google::protobuf::Message* response,
+                                      std::chrono::milliseconds timeout,
+                                      const MetadataMap& metadata);
+
     [[nodiscard]] RpcChannel::StreamHandle openStream(
         const std::string& serviceName, const std::string& methodName,
         const google::protobuf::Message& request,
         RpcChannel::StreamCallbacks callbacks);
+
+    [[nodiscard]] RpcChannel::StreamHandle openStream(
+        const std::string& serviceName, const std::string& methodName,
+        const google::protobuf::Message& request,
+        RpcChannel::StreamCallbacks callbacks, const MetadataMap& metadata);
 
     [[nodiscard]] bool cancelStream(std::uint32_t streamId,
                                     std::string reason = "client cancelled");
@@ -56,11 +78,23 @@ public:
     [[nodiscard]] bool sendHeartbeatPing();
 
 private:
+    enum class State : std::uint8_t {
+        kIdle = 0,
+        kConnecting,
+        kConnected,
+        kClosing,
+        kClosed,
+    };
+
+private:
     [[nodiscard]] std::shared_ptr<RpcChannel> channelSnapshot() const;
+
     void notifyConnected();
     void notifyClosed(std::string reason);
     void notifyCloseComplete();
     void notifyConnectError(std::string reason);
+
+    [[nodiscard]] static const char* stateToString(State state) noexcept;
 
 private:
     novanet::net::InetAddress serverAddr_;
@@ -73,11 +107,13 @@ private:
 
     mutable std::mutex mutex_;
     std::condition_variable cv_;
-    bool started_{false};
-    bool connected_{false};
-    bool connectFinished_{false};
+
+    State state_{State::kIdle};
+
     bool closeComplete_{true};
+
     std::string lastError_;
+
     std::shared_ptr<RpcChannel> channel_;
 };
 

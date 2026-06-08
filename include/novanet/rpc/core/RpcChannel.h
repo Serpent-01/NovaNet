@@ -26,9 +26,30 @@
 
 namespace novanet::rpc {
 
+/*
+ * RpcChannel 是客户端侧 RPC 协议收发通道。
+ *
+ * 职责：
+ * - 发送 UNARY_REQUEST；
+ * - 接收 UNARY_RESPONSE；
+ * - 发送 STREAM_OPEN；
+ * - 接收 STREAM_DATA / STREAM_END；
+ * - 发送 STREAM_CANCEL；
+ * - 处理 HEARTBEAT_PING / HEARTBEAT_PONG；
+ * - 管理 request_id / stream_id；
+ * - 管理 PendingCall / StreamManager；
+ * - 支持 metadata 透传到 UnaryRequestMeta / StreamOpenMeta。
+ *
+ * 不负责：
+ * - 不做服务发现；
+ * - 不做负载均衡；
+ * - 不做重试；
+ * - 不直接管理 TcpClient 生命周期。
+ */
 class RpcChannel final {
 public:
     using TcpConnectionPtr = novanet::net::TcpConnection::TcpConnectionPtr;
+    using MetadataMap = std::unordered_map<std::string, std::string>;
 
     struct Options {
         std::size_t sendHighWaterMarkBytes{8 * 1024 * 1024};
@@ -48,10 +69,12 @@ public:
                            const novanet::ai::chat::GenerateChunk&)>
             onData;
 
-        std::function<void(std::uint32_t, novanet::rpc::meta::RpcErrorCode, std::string)>
+        std::function<void(std::uint32_t, novanet::rpc::meta::RpcErrorCode,
+                           std::string)>
             onEnd;
 
-        std::function<void(std::uint32_t, novanet::rpc::meta::RpcErrorCode, std::string)>
+        std::function<void(std::uint32_t, novanet::rpc::meta::RpcErrorCode,
+                           std::string)>
             onError;
     };
 
@@ -73,16 +96,48 @@ public:
     RpcChannel(const RpcChannel&) = delete;
     RpcChannel& operator=(const RpcChannel&) = delete;
 
+    RpcChannel(RpcChannel&&) = delete;
+    RpcChannel& operator=(RpcChannel&&) = delete;
+
+    /*
+     * 旧接口：无 metadata。
+     * 内部转发到 metadata 版本。
+     */
     [[nodiscard]] RpcStatus callUnary(const std::string& serviceName,
                                       const std::string& methodName,
                                       const google::protobuf::Message& request,
                                       google::protobuf::Message* response,
                                       std::chrono::milliseconds timeout);
 
+    /*
+     * 新接口：支持 metadata。
+     * metadata 会写入 UnaryRequestMeta.metadata。
+     */
+    [[nodiscard]] RpcStatus callUnary(const std::string& serviceName,
+                                      const std::string& methodName,
+                                      const google::protobuf::Message& request,
+                                      google::protobuf::Message* response,
+                                      std::chrono::milliseconds timeout,
+                                      const MetadataMap& metadata);
+
+    /*
+     * 旧接口：无 metadata。
+     * 内部转发到 metadata 版本。
+     */
     [[nodiscard]] StreamHandle openStream(const std::string& serviceName,
                                           const std::string& methodName,
                                           const google::protobuf::Message& request,
                                           StreamCallbacks callbacks);
+
+    /*
+     * 新接口：支持 metadata。
+     * metadata 会写入 StreamOpenMeta.metadata。
+     */
+    [[nodiscard]] StreamHandle openStream(const std::string& serviceName,
+                                          const std::string& methodName,
+                                          const google::protobuf::Message& request,
+                                          StreamCallbacks callbacks,
+                                          const MetadataMap& metadata);
 
     [[nodiscard]] bool cancelStream(std::uint32_t streamId,
                                     std::string reason = "client cancelled");
@@ -108,7 +163,8 @@ private:
                                              std::uint64_t requestId,
                                              const std::string& serviceName,
                                              const std::string& methodName,
-                                             const std::string& requestPayload);
+                                             const std::string& requestPayload,
+                                             const MetadataMap& metadata);
 
     [[nodiscard]] bool sendStreamCancelMessage(std::uint32_t streamId,
                                                std::uint64_t requestId,
@@ -116,6 +172,7 @@ private:
 
     [[nodiscard]] bool sendHeartbeatPong(const RpcMessage& ping);
 
+private:
     void handleRpcMessage(const RpcMessage& message);
     void handleUnaryResponse(const RpcMessage& message);
     void handleStreamData(const RpcMessage& message);
@@ -125,12 +182,18 @@ private:
     void handleHeartbeatPing(const RpcMessage& message);
     void handleHeartbeatPong(const RpcMessage& message);
 
+private:
     void saveCallbacks(std::uint32_t streamId, StreamCallbacks callbacks);
     void eraseCallbacks(std::uint32_t streamId);
-    std::optional<StreamCallbacks> takeCallbacks(std::uint32_t streamId);
-    std::optional<StreamCallbacks> findCallbacks(std::uint32_t streamId) const;
 
-    void failStream(std::uint32_t streamId, novanet::rpc::meta::RpcErrorCode errorCode,
+    [[nodiscard]] std::optional<StreamCallbacks> takeCallbacks(
+        std::uint32_t streamId);
+
+    [[nodiscard]] std::optional<StreamCallbacks> findCallbacks(
+        std::uint32_t streamId) const;
+
+    void failStream(std::uint32_t streamId,
+                    novanet::rpc::meta::RpcErrorCode errorCode,
                     std::string errorText);
 
     [[nodiscard]] static StreamHandle makeStreamError(std::string errorText);
@@ -153,6 +216,8 @@ private:
     std::atomic<std::int64_t> lastPingMicros_{0};
     std::atomic<std::int64_t> lastPongMicros_{0};
 
+    std::mutex timersMutex_;
+    bool timersStarted_{false};
     novanet::net::TimerId heartbeatPingTimer_;
     novanet::net::TimerId heartbeatCheckTimer_;
     novanet::net::TimerId streamTimeoutTimer_;

@@ -8,13 +8,18 @@
 
 namespace novanet::rpc {
 
-RpcClient::RpcClient(const novanet::net::InetAddress& serverAddr,
-                     std::string name)
+namespace {
+
+const RpcClient::MetadataMap kEmptyMetadata{};
+
+}  // namespace
+
+RpcClient::RpcClient(const novanet::net::InetAddress& serverAddr, std::string name)
     : RpcClient(serverAddr, std::move(name), Options{}) {
 }
 
-RpcClient::RpcClient(const novanet::net::InetAddress& serverAddr,
-                     std::string name, Options options)
+RpcClient::RpcClient(const novanet::net::InetAddress& serverAddr, std::string name,
+                     Options options)
     : serverAddr_(serverAddr),
       name_(std::move(name)),
       options_(std::move(options)),
@@ -31,43 +36,113 @@ bool RpcClient::connect(std::string* errorText) {
     }
 
     {
-        std::lock_guard<std::mutex> lock(mutex_);
-        if (connected_) {
+        std::unique_lock<std::mutex> lock(mutex_);
+
+        if (state_ == State::kConnected) {
             return true;
         }
 
-        if (started_) {
+        if (state_ == State::kConnecting) {
+            cv_.wait(lock, [this]() { return state_ != State::kConnecting; });
+
+            if (state_ == State::kConnected) {
+                return true;
+            }
+
             if (errorText != nullptr) {
-                *errorText = "RpcClient already started";
+                *errorText = lastError_.empty() ? "connect failed" : lastError_;
+            }
+
+            return false;
+        }
+
+        if (state_ == State::kClosing) {
+            if (errorText != nullptr) {
+                *errorText = "RpcClient is closing";
             }
             return false;
         }
 
-        started_ = true;
-        connectFinished_ = false;
+        if (state_ == State::kClosed) {
+            if (errorText != nullptr) {
+                *errorText = "RpcClient already closed";
+            }
+            return false;
+        }
+
+        state_ = State::kConnecting;
         closeComplete_ = false;
         lastError_.clear();
     }
 
-    loop_ = loopThread_.startLoop();
-    if (loop_ == nullptr) {
+    novanet::net::EventLoop* loop = loopThread_.startLoop();
+    if (loop == nullptr) {
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            loop_ = nullptr;
+            state_ = State::kClosed;
+            closeComplete_ = true;
+            lastError_ = "failed to start client EventLoop";
+        }
+
+        cv_.notify_all();
+
         if (errorText != nullptr) {
             *errorText = "failed to start client EventLoop";
         }
+
+        LOG_ERROR << "[RpcClient] failed to start client EventLoop, name=" << name_;
+
         return false;
     }
 
-    tcpClient_ = std::make_unique<novanet::net::TcpClient>(loop_, serverAddr_,
-                                                           name_);
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
 
-    tcpClient_->setConnectionCallback(
+        if (state_ != State::kConnecting) {
+            lastError_ = "connect cancelled before TcpClient creation";
+
+            cv_.notify_all();
+
+            if (errorText != nullptr) {
+                *errorText = lastError_;
+            }
+
+            return false;
+        }
+
+        loop_ = loop;
+    }
+
+    auto tcpClient =
+        std::make_unique<novanet::net::TcpClient>(loop, serverAddr_, name_);
+
+    tcpClient->setConnectionCallback(
         [this](const novanet::net::TcpConnection::TcpConnectionPtr& conn) {
             if (conn && conn->connected()) {
                 auto channel =
                     std::make_shared<RpcChannel>(conn, options_.channelOptions);
+
+                bool accepted = false;
+
                 {
                     std::lock_guard<std::mutex> lock(mutex_);
-                    channel_ = channel;
+
+                    if (state_ == State::kConnecting) {
+                        channel_ = channel;
+                        accepted = true;
+                    }
+                }
+
+                if (!accepted) {
+                    channel->onConnectionClosed(
+                        "RpcClient not accepting connection");
+
+                    if (conn->connected()) {
+                        conn->shutdown();
+                    }
+
+                    return;
                 }
 
                 if (options_.startHeartbeatTimers) {
@@ -79,6 +154,7 @@ bool RpcClient::connect(std::string* errorText) {
             }
 
             std::shared_ptr<RpcChannel> channel;
+
             {
                 std::lock_guard<std::mutex> lock(mutex_);
                 channel = channel_;
@@ -92,66 +168,158 @@ bool RpcClient::connect(std::string* errorText) {
             notifyClosed("tcp connection closed");
         });
 
-    tcpClient_->setMessageCallback(
+    tcpClient->setMessageCallback(
         [this](const novanet::net::TcpConnection::TcpConnectionPtr& conn,
                novanet::net::Buffer* buffer) {
             auto channel = channelSnapshot();
+
             if (channel) {
                 channel->onMessage(conn, buffer);
-            } else if (buffer != nullptr) {
+                return;
+            }
+
+            if (buffer != nullptr) {
                 buffer->retrieveAll();
             }
         });
 
-    tcpClient_->setConnectErrorCallback(
+    tcpClient->setConnectErrorCallback(
         [this](int, std::string error) { notifyConnectError(std::move(error)); });
-    tcpClient_->setCloseCompleteCallback(
-        [this]() { notifyCloseComplete(); });
 
-    tcpClient_->connect();
+    tcpClient->setCloseCompleteCallback([this]() { notifyCloseComplete(); });
+
+    novanet::net::TcpClient* clientToConnect = nullptr;
+
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+
+        if (state_ != State::kConnecting) {
+            lastError_ = "connect cancelled before tcp connect";
+
+            cv_.notify_all();
+
+            if (errorText != nullptr) {
+                *errorText = lastError_;
+            }
+
+            return false;
+        }
+
+        tcpClient_ = std::move(tcpClient);
+        clientToConnect = tcpClient_.get();
+    }
+
+    clientToConnect->connect();
 
     std::unique_lock<std::mutex> lock(mutex_);
+
     const bool done = cv_.wait_for(lock, options_.connectTimeout, [this]() {
-        return connectFinished_;
+        return state_ != State::kConnecting;
     });
 
     if (!done) {
         lastError_ = "connect timeout";
+        state_ = State::kClosing;
+
         lock.unlock();
+
+        LOG_ERROR << "[RpcClient] connect timeout, name=" << name_;
+
         disconnect();
+
         if (errorText != nullptr) {
             *errorText = "connect timeout";
         }
+
         return false;
     }
 
-    if (!connected_) {
-        if (errorText != nullptr) {
-            *errorText = lastError_.empty() ? "connect failed" : lastError_;
-        }
-        return false;
+    if (state_ == State::kConnected) {
+        LOG_INFO << "[RpcClient] connected, name=" << name_;
+        return true;
     }
 
-    return true;
+    const std::string error = lastError_.empty() ? "connect failed" : lastError_;
+
+    const bool shouldCleanup = state_ == State::kClosed || state_ == State::kClosing;
+
+    lock.unlock();
+
+    if (shouldCleanup) {
+        disconnect();
+    }
+
+    if (errorText != nullptr) {
+        *errorText = error;
+    }
+
+    LOG_ERROR << "[RpcClient] connect failed, name=" << name_ << ", error=" << error;
+
+    return false;
 }
 
 void RpcClient::disconnect() {
-    if (tcpClient_) {
-        tcpClient_->stop();
+    novanet::net::TcpClient* clientToStop = nullptr;
+    bool shouldWaitClose = false;
+
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+
+        if (state_ == State::kIdle) {
+            state_ = State::kClosed;
+            closeComplete_ = true;
+            channel_.reset();
+            lastError_ = "RpcClient disconnected";
+            cv_.notify_all();
+            return;
+        }
+
+        if (state_ != State::kClosed) {
+            state_ = State::kClosing;
+        }
+
+        if (tcpClient_ != nullptr) {
+            clientToStop = tcpClient_.get();
+            shouldWaitClose = true;
+        } else {
+            closeComplete_ = true;
+        }
     }
 
-    std::unique_lock<std::mutex> lock(mutex_);
-    cv_.wait_for(lock, std::chrono::milliseconds(1000), [this]() {
-        return !connected_ && closeComplete_;
-    });
+    cv_.notify_all();
 
-    channel_.reset();
-    connected_ = false;
+    if (clientToStop != nullptr) {
+        clientToStop->stop();
+    }
+
+    {
+        std::unique_lock<std::mutex> lock(mutex_);
+
+        if (shouldWaitClose) {
+            cv_.wait_for(lock, std::chrono::milliseconds(1000),
+                         [this]() { return closeComplete_; });
+        }
+
+        if (channel_) {
+            channel_->onConnectionClosed("RpcClient disconnected");
+        }
+
+        channel_.reset();
+
+        state_ = State::kClosed;
+        closeComplete_ = true;
+        lastError_ = "RpcClient disconnected";
+    }
+
+    cv_.notify_all();
+
+    LOG_INFO << "[RpcClient] disconnected, name=" << name_;
 }
 
 bool RpcClient::connected() const {
     std::lock_guard<std::mutex> lock(mutex_);
-    return connected_;
+
+    return state_ == State::kConnected && channel_ != nullptr;
 }
 
 RpcStatus RpcClient::callUnary(const std::string& serviceName,
@@ -159,32 +327,52 @@ RpcStatus RpcClient::callUnary(const std::string& serviceName,
                                const google::protobuf::Message& request,
                                google::protobuf::Message* response,
                                std::chrono::milliseconds timeout) {
+    return callUnary(serviceName, methodName, request, response, timeout,
+                     kEmptyMetadata);
+}
+
+RpcStatus RpcClient::callUnary(const std::string& serviceName,
+                               const std::string& methodName,
+                               const google::protobuf::Message& request,
+                               google::protobuf::Message* response,
+                               std::chrono::milliseconds timeout,
+                               const MetadataMap& metadata) {
     auto channel = channelSnapshot();
+
     if (!channel) {
         return RpcStatus::failure(meta::RPC_CONNECTION_CLOSED,
                                   "RpcClient is not connected");
     }
 
-    return channel->callUnary(serviceName, methodName, request, response,
-                              timeout);
+    return channel->callUnary(serviceName, methodName, request, response, timeout,
+                              metadata);
 }
 
 RpcChannel::StreamHandle RpcClient::openStream(
     const std::string& serviceName, const std::string& methodName,
     const google::protobuf::Message& request,
     RpcChannel::StreamCallbacks callbacks) {
+    return openStream(serviceName, methodName, request, std::move(callbacks),
+                      kEmptyMetadata);
+}
+
+RpcChannel::StreamHandle RpcClient::openStream(
+    const std::string& serviceName, const std::string& methodName,
+    const google::protobuf::Message& request, RpcChannel::StreamCallbacks callbacks,
+    const MetadataMap& metadata) {
     auto channel = channelSnapshot();
+
     if (!channel) {
-        return RpcChannel::StreamHandle{0, 0, false,
-                                        "RpcClient is not connected"};
+        return RpcChannel::StreamHandle{0, 0, false, "RpcClient is not connected"};
     }
 
     return channel->openStream(serviceName, methodName, request,
-                               std::move(callbacks));
+                               std::move(callbacks), metadata);
 }
 
 bool RpcClient::cancelStream(std::uint32_t streamId, std::string reason) {
     auto channel = channelSnapshot();
+
     if (!channel) {
         return false;
     }
@@ -194,6 +382,7 @@ bool RpcClient::cancelStream(std::uint32_t streamId, std::string reason) {
 
 bool RpcClient::sendHeartbeatPing() {
     auto channel = channelSnapshot();
+
     if (!channel) {
         return false;
     }
@@ -209,21 +398,32 @@ std::shared_ptr<RpcChannel> RpcClient::channelSnapshot() const {
 void RpcClient::notifyConnected() {
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        connected_ = true;
-        connectFinished_ = true;
+
+        if (state_ == State::kClosing || state_ == State::kClosed) {
+            lastError_ = "connected after closing";
+            return;
+        }
+
+        state_ = State::kConnected;
         closeComplete_ = false;
         lastError_.clear();
     }
+
     cv_.notify_all();
 }
 
 void RpcClient::notifyClosed(std::string reason) {
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        connected_ = false;
+
+        if (state_ == State::kConnected || state_ == State::kConnecting ||
+            state_ == State::kClosing) {
+            state_ = State::kClosed;
+        }
+
         lastError_ = std::move(reason);
-        connectFinished_ = true;
     }
+
     cv_.notify_all();
 }
 
@@ -231,19 +431,46 @@ void RpcClient::notifyCloseComplete() {
     {
         std::lock_guard<std::mutex> lock(mutex_);
         closeComplete_ = true;
+
+        if (state_ == State::kClosing) {
+            state_ = State::kClosed;
+        }
     }
+
     cv_.notify_all();
 }
 
 void RpcClient::notifyConnectError(std::string reason) {
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        connected_ = false;
+
+        if (reason.empty()) {
+            reason = "connect error";
+        }
+
+        state_ = State::kClosed;
         closeComplete_ = true;
         lastError_ = std::move(reason);
-        connectFinished_ = true;
     }
+
     cv_.notify_all();
+}
+
+const char* RpcClient::stateToString(State state) noexcept {
+    switch (state) {
+        case State::kIdle:
+            return "Idle";
+        case State::kConnecting:
+            return "Connecting";
+        case State::kConnected:
+            return "Connected";
+        case State::kClosing:
+            return "Closing";
+        case State::kClosed:
+            return "Closed";
+        default:
+            return "Unknown";
+    }
 }
 
 }  // namespace novanet::rpc
