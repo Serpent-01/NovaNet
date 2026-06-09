@@ -124,6 +124,7 @@ void RpcServer::stop() {
         contexts.reserve(contexts_.size());
 
         for (auto& item : contexts_) {
+            cancelConnectionTimers(item.second);
             contexts.push_back(item.second);
         }
 
@@ -258,10 +259,9 @@ void RpcServer::removeConnectionContext(const TcpConnectionPtr& connection) {
         }
 
         context = it->second;
+        cancelConnectionTimers(context);
         contexts_.erase(it);
     }
-
-    cancelConnectionTimers(connection, context);
 
     if (context && context->responder) {
         context->responder->markConnectionClosed("connection closed");
@@ -337,55 +337,53 @@ void RpcServer::startConnectionTimers(const TcpConnectionPtr& connection,
 
     std::weak_ptr<ConnectionContext> weakContext = context;
     std::weak_ptr<novanet::net::TcpConnection> weakConnection = connection;
+    const double streamIdleTimeoutSeconds = options_.streamIdleTimeoutSeconds;
 
+    context->timerLoop = loop;
     context->streamTimeoutTimer = loop->runEvery(
-        options_.streamTimeoutScanIntervalSeconds, [this, weakContext, weakConnection]() {
-            this->checkConnectionStreamTimeouts(weakContext, weakConnection);
+        options_.streamTimeoutScanIntervalSeconds,
+        [weakContext, weakConnection, streamIdleTimeoutSeconds]() {
+            auto context = weakContext.lock();
+            auto connection = weakConnection.lock();
+
+            if (!context || !connection || !connection->connected()) {
+                return;
+            }
+
+            const Timestamp now = Timestamp::now();
+
+            auto expiredStreams = context->streamManager->timeoutStreamsWithInfo(
+                now, streamIdleTimeoutSeconds, "server stream idle timeout");
+
+            for (const auto& stream : expiredStreams) {
+                LOG_WARN << "[RpcServer] stream timeout, connection="
+                         << connection->name() << ", streamId=" << stream.streamId;
+
+                if (context->responder) {
+                    (void)context->responder->sendEnd(
+                        stream.streamId, stream.requestId, meta::RPC_TIMEOUT,
+                        "server stream idle timeout");
+                }
+            }
         });
 }
 
 void RpcServer::cancelConnectionTimers(
-    const TcpConnectionPtr& connection,
     const std::shared_ptr<ConnectionContext>& context) {
-    if (!connection || !context) {
+    if (!context) {
         return;
     }
 
-    auto* loop = connection->getLoop();
+    auto* loop = context->timerLoop;
     if (loop == nullptr) {
         return;
     }
 
     if (context->streamTimeoutTimer.valid()) {
         loop->cancel(context->streamTimeoutTimer);
+        context->streamTimeoutTimer = novanet::net::TimerId{};
     }
-}
-
-void RpcServer::checkConnectionStreamTimeouts(
-    const std::weak_ptr<ConnectionContext>& weakContext,
-    const std::weak_ptr<novanet::net::TcpConnection>& weakConnection) {
-    auto context = weakContext.lock();
-    auto connection = weakConnection.lock();
-
-    if (!context || !connection || !connection->connected()) {
-        return;
-    }
-
-    const Timestamp now = Timestamp::now();
-
-    auto expiredStreams = context->streamManager->timeoutStreamsWithInfo(
-        now, options_.streamIdleTimeoutSeconds, "server stream idle timeout");
-
-    for (const auto& stream : expiredStreams) {
-        LOG_WARN << "[RpcServer] stream timeout, connection=" << connection->name()
-                 << ", streamId=" << stream.streamId;
-
-        if (context->responder) {
-            (void)context->responder->sendEnd(
-                stream.streamId, stream.requestId, meta::RPC_TIMEOUT,
-                "server stream idle timeout");
-        }
-    }
+    context->timerLoop = nullptr;
 }
 
 RpcServer::ConnectionKey RpcServer::connectionKey(

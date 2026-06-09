@@ -1,7 +1,7 @@
 #include "novanet/rpc/core/RpcChannel.h"
 
-#include <chrono>
-#include <thread>
+#include <google/protobuf/map.h>
+
 #include <utility>
 #include <vector>
 
@@ -21,7 +21,6 @@ using novanet::base::Timestamp;
 namespace {
 
 const RpcChannel::MetadataMap kEmptyMetadata{};
-constexpr auto kUnaryCancelPollInterval = std::chrono::milliseconds(10);
 
 void fillMetadata(const RpcChannel::MetadataMap& metadata,
                   google::protobuf::Map<std::string, std::string>* out) {
@@ -34,18 +33,6 @@ void fillMetadata(const RpcChannel::MetadataMap& metadata,
             (*out)[item.first] = item.second;
         }
     }
-}
-
-std::string unaryCancelReason(
-    const RpcChannel::UnaryCancelReasonProvider& cancelReasonProvider) {
-    std::string reason;
-    if (cancelReasonProvider) {
-        reason = cancelReasonProvider();
-    }
-    if (reason.empty()) {
-        reason = "rpc call cancelled";
-    }
-    return reason;
 }
 
 }  // namespace
@@ -92,17 +79,6 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
                                 std::chrono::milliseconds timeout,
                                 const MetadataMap& metadata,
                                 std::uint64_t* requestIdOut) {
-    return callUnary(serviceName, methodName, request, response, timeout, metadata,
-                     requestIdOut, UnaryCancelChecker{},
-                     UnaryCancelReasonProvider{});
-}
-
-RpcStatus RpcChannel::callUnary(
-    const std::string& serviceName, const std::string& methodName,
-    const google::protobuf::Message& request, google::protobuf::Message* response,
-    std::chrono::milliseconds timeout, const MetadataMap& metadata,
-    std::uint64_t* requestIdOut, UnaryCancelChecker cancelChecker,
-    UnaryCancelReasonProvider cancelReasonProvider) {
     if (connectionClosed_.load(std::memory_order_acquire)) {
         return RpcStatus::failure(meta::RPC_CONNECTION_CLOSED,
                                   "connection already closed");
@@ -124,6 +100,7 @@ RpcStatus RpcChannel::callUnary(
     }
 
     const std::uint64_t requestId = nextRequestId();
+
     if (requestIdOut != nullptr) {
         *requestIdOut = requestId;
     }
@@ -162,58 +139,7 @@ RpcStatus RpcChannel::callUnary(
                                   "send unary request failed");
     }
 
-    PendingCall::State state = PendingCall::State::kPending;
-
-    if (!cancelChecker) {
-        state = pendingCall->waitFor(timeout);
-    } else {
-        if (timeout <= std::chrono::milliseconds::zero()) {
-            static_cast<void>(pendingCall->markTimeout("rpc call timeout"));
-            state = pendingCall->state();
-        } else {
-            const auto deadline = std::chrono::steady_clock::now() + timeout;
-
-            while (true) {
-                state = pendingCall->state();
-                if (state != PendingCall::State::kPending) {
-                    break;
-                }
-
-                if (cancelChecker()) {
-                    state = pendingCall->state();
-                    if (state != PendingCall::State::kPending) {
-                        break;
-                    }
-
-                    const std::string reason =
-                        unaryCancelReason(cancelReasonProvider);
-
-                    static_cast<void>(pendingCalls_.remove(requestId));
-
-                    return RpcStatus::failure(meta::RPC_CANCELLED, reason);
-                }
-
-                const auto now = std::chrono::steady_clock::now();
-                if (now >= deadline) {
-                    static_cast<void>(pendingCall->markTimeout("rpc call timeout"));
-                    state = pendingCall->state();
-                    break;
-                }
-
-                auto sleepDuration =
-                    std::chrono::duration_cast<std::chrono::milliseconds>(
-                        deadline - now);
-                if (sleepDuration > kUnaryCancelPollInterval) {
-                    sleepDuration = kUnaryCancelPollInterval;
-                }
-                if (sleepDuration <= std::chrono::milliseconds::zero()) {
-                    continue;
-                }
-
-                std::this_thread::sleep_for(sleepDuration);
-            }
-        }
-    }
+    const PendingCall::State state = pendingCall->waitFor(timeout);
 
     if (state == PendingCall::State::kTimeout) {
         static_cast<void>(pendingCalls_.remove(requestId));
@@ -237,17 +163,20 @@ RpcStatus RpcChannel::callUnary(
 
     if (state != PendingCall::State::kDone) {
         static_cast<void>(pendingCalls_.remove(requestId));
+
         return RpcStatus::failure(meta::RPC_UNKNOWN_ERROR,
                                   "unary call finished with unexpected state");
     }
 
     if (!response->ParseFromString(pendingCall->responseBytes())) {
         static_cast<void>(pendingCalls_.remove(requestId));
+
         return RpcStatus::failure(meta::RPC_PARSE_RESPONSE_FAILED,
                                   "parse unary response payload failed");
     }
 
     static_cast<void>(pendingCalls_.remove(requestId));
+
     return RpcStatus::success();
 }
 
@@ -427,16 +356,41 @@ void RpcChannel::startTimers() {
         return;
     }
 
+    auto weakSelf = weak_from_this();
+    if (weakSelf.expired()) {
+        LOG_ERROR << "[RpcChannel] startTimers requires shared ownership";
+        return;
+    }
+
     heartbeatPingTimer_ =
-        loop->runEvery(options_.heartbeatIntervalSeconds,
-                       [this]() { static_cast<void>(this->sendHeartbeatPing()); });
+        loop->runEvery(options_.heartbeatIntervalSeconds, [weakSelf]() {
+            auto self = weakSelf.lock();
+            if (!self) {
+                return;
+            }
 
-    heartbeatCheckTimer_ = loop->runEvery(
-        options_.heartbeatCheckIntervalSeconds,
-        [this]() { static_cast<void>(this->checkHeartbeatTimeout()); });
+            static_cast<void>(self->sendHeartbeatPing());
+        });
 
-    streamTimeoutTimer_ = loop->runEvery(options_.streamTimeoutScanIntervalSeconds,
-                                         [this]() { this->checkStreamTimeouts(); });
+    heartbeatCheckTimer_ =
+        loop->runEvery(options_.heartbeatCheckIntervalSeconds, [weakSelf]() {
+            auto self = weakSelf.lock();
+            if (!self) {
+                return;
+            }
+
+            static_cast<void>(self->checkHeartbeatTimeout());
+        });
+
+    streamTimeoutTimer_ =
+        loop->runEvery(options_.streamTimeoutScanIntervalSeconds, [weakSelf]() {
+            auto self = weakSelf.lock();
+            if (!self) {
+                return;
+            }
+
+            self->checkStreamTimeouts();
+        });
 
     timersStarted_ = true;
 
@@ -597,29 +551,31 @@ bool RpcChannel::sendRpcMessage(RpcMessage message) {
         return false;
     }
 
-    loop->queueInLoop([connection, message = std::move(message),
-                       highWater = options_.sendHighWaterMarkBytes]() mutable {
-        if (!connection || !connection->connected()) {
-            return;
-        }
+    const std::size_t highWater = options_.sendHighWaterMarkBytes;
 
-        if (highWater != 0 && connection->outputBufferSize() >= highWater) {
-            LOG_WARN << "[RpcChannel] send high water, shutdown connection";
-            connection->shutdown();
-            return;
-        }
+    loop->queueInLoop(
+        [connection, message = std::move(message), highWater]() mutable {
+            if (!connection || !connection->connected()) {
+                return;
+            }
 
-        RpcCodec codec;
-        novanet::net::Buffer out;
+            if (highWater != 0 && connection->outputBufferSize() >= highWater) {
+                LOG_WARN << "[RpcChannel] send high water, shutdown connection";
+                connection->shutdown();
+                return;
+            }
 
-        if (!codec.encode(message, out)) {
-            LOG_ERROR << "[RpcChannel] encode failed";
-            connection->shutdown();
-            return;
-        }
+            RpcCodec codec;
+            novanet::net::Buffer out;
 
-        connection->send(out.retrieveAllAsString());
-    });
+            if (!codec.encode(message, out)) {
+                LOG_ERROR << "[RpcChannel] encode failed";
+                connection->shutdown();
+                return;
+            }
+
+            connection->send(out.retrieveAllAsString());
+        });
 
     return true;
 }

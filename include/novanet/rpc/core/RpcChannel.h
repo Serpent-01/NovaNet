@@ -46,12 +46,10 @@ namespace novanet::rpc {
  * - 不做重试；
  * - 不直接管理 TcpClient 生命周期。
  */
-class RpcChannel final {
+class RpcChannel final : public std::enable_shared_from_this<RpcChannel> {
 public:
     using TcpConnectionPtr = novanet::net::TcpConnection::TcpConnectionPtr;
     using MetadataMap = std::unordered_map<std::string, std::string>;
-    using UnaryCancelChecker = std::function<bool()>;
-    using UnaryCancelReasonProvider = std::function<std::string()>;
 
     struct Options {
         std::size_t sendHighWaterMarkBytes{8 * 1024 * 1024};
@@ -122,6 +120,13 @@ public:
                                       std::chrono::milliseconds timeout,
                                       const MetadataMap& metadata);
 
+    /*
+     * 新接口：支持 metadata + requestId 回填。
+     *
+     * requestIdOut:
+     * - 可以为 nullptr；
+     * - 非 nullptr 时，在生成 request_id 后写回，方便 SDK ClientContext 记录。
+     */
     [[nodiscard]] RpcStatus callUnary(const std::string& serviceName,
                                       const std::string& methodName,
                                       const google::protobuf::Message& request,
@@ -129,14 +134,6 @@ public:
                                       std::chrono::milliseconds timeout,
                                       const MetadataMap& metadata,
                                       std::uint64_t* requestIdOut);
-
-    [[nodiscard]] RpcStatus callUnary(
-        const std::string& serviceName, const std::string& methodName,
-        const google::protobuf::Message& request,
-        google::protobuf::Message* response, std::chrono::milliseconds timeout,
-        const MetadataMap& metadata, std::uint64_t* requestIdOut,
-        UnaryCancelChecker cancelChecker,
-        UnaryCancelReasonProvider cancelReasonProvider);
 
     /*
      * 旧接口：无 metadata。

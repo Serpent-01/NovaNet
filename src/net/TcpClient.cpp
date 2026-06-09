@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "novanet/base/Logger.h"
+#include "novanet/net/Buffer.h"
 #include "novanet/net/Channel.h"
 #include "novanet/net/EventLoop.h"
 #include "novanet/net/SocketsOps.h"
@@ -15,12 +16,15 @@ namespace novanet::net {
 namespace {
 
 void defaultConnectionCallback(const TcpConnection::TcpConnectionPtr& conn) {
+    if (!conn) {
+        return;
+    }
+
     LOG_INFO << "TcpClient connection " << conn->name() << " is "
              << (conn->connected() ? "UP" : "DOWN");
 }
 
-void defaultMessageCallback(const TcpConnection::TcpConnectionPtr&,
-                            Buffer* buffer) {
+void defaultMessageCallback(const TcpConnection::TcpConnectionPtr&, Buffer* buffer) {
     if (buffer != nullptr) {
         buffer->retrieveAll();
     }
@@ -39,27 +43,79 @@ TcpClient::TcpClient(EventLoop* loop, const InetAddress& serverAddr,
 }
 
 TcpClient::~TcpClient() {
-    if (state_.load(std::memory_order_acquire) == State::kDisconnected) {
-        return;
+    /*
+     * 析构函数不再投递 stopInLoop。
+     *
+     * 原因：
+     * - 析构阶段 shared_ptr 生命周期已经结束；
+     * - 再投递异步任务即使捕获 weak_ptr，也无法保证优雅关闭；
+     * - 正确做法是上层 RpcClient::disconnect() 先调用 stop()，
+     *   等 closeCompleteCallback 后再 reset TcpClient。
+     */
+    if (state_.load(std::memory_order_acquire) != State::kDisconnected) {
+        LOG_WARN << "[TcpClient] destroyed while not disconnected, name=" << name_
+                 << ", state="
+                 << stateToString(state_.load(std::memory_order_acquire));
     }
+}
 
-    stop();
+std::weak_ptr<TcpClient> TcpClient::weakSelf() noexcept {
+    return weak_from_this();
 }
 
 void TcpClient::connect() {
-    loop_->runInLoop([this]() { this->connectInLoop(); });
-}
+    auto weak = weakSelf();
 
-void TcpClient::disconnect() {
-    loop_->runInLoop([this]() { this->disconnectInLoop(); });
-}
-
-void TcpClient::stop() {
-    if (state_.load(std::memory_order_acquire) == State::kDisconnected) {
+    if (weak.expired()) {
+        LOG_ERROR << "[TcpClient] connect requires shared ownership, name=" << name_;
         return;
     }
 
-    loop_->runInLoop([this]() { this->stopInLoop(); });
+    loop_->runInLoop([weak]() {
+        auto self = weak.lock();
+        if (!self) {
+            return;
+        }
+
+        self->connectInLoop();
+    });
+}
+
+void TcpClient::disconnect() {
+    auto weak = weakSelf();
+
+    if (weak.expired()) {
+        LOG_ERROR << "[TcpClient] disconnect requires shared ownership, name="
+                  << name_;
+        return;
+    }
+
+    loop_->runInLoop([weak]() {
+        auto self = weak.lock();
+        if (!self) {
+            return;
+        }
+
+        self->disconnectInLoop();
+    });
+}
+
+void TcpClient::stop() {
+    auto weak = weakSelf();
+
+    if (weak.expired()) {
+        LOG_ERROR << "[TcpClient] stop requires shared ownership, name=" << name_;
+        return;
+    }
+
+    loop_->runInLoop([weak]() {
+        auto self = weak.lock();
+        if (!self) {
+            return;
+        }
+
+        self->stopInLoop();
+    });
 }
 
 bool TcpClient::connected() const noexcept {
@@ -94,7 +150,10 @@ void TcpClient::setCloseCompleteCallback(CloseCompleteCallback cb) {
 void TcpClient::connectInLoop() {
     loop_->assertInLoopThread();
 
-    if (state_.load(std::memory_order_acquire) != State::kDisconnected) {
+    const State current = state_.load(std::memory_order_acquire);
+    if (current != State::kDisconnected) {
+        LOG_WARN << "[TcpClient] connect ignored, name=" << name_
+                 << ", state=" << stateToString(current);
         return;
     }
 
@@ -113,20 +172,53 @@ void TcpClient::connectInLoop() {
     switch (savedErrno) {
         case EINPROGRESS:
         case EINTR:
-        case EISCONN:
+        case EISCONN: {
             state_.store(State::kConnecting, std::memory_order_release);
+
             connectorChannel_ = std::make_shared<Channel>(loop_, connectorFd_);
-            connectorChannel_->setWriteCallback(
-                [this]() { this->handleConnectWrite(); });
-            connectorChannel_->setErrorCallback(
-                [this]() { this->handleConnectError(); });
+
+            auto weak = weak_from_this();
+
+            connectorChannel_->setWriteCallback([weak]() {
+                auto self = weak.lock();
+                if (!self) {
+                    return;
+                }
+
+                self->handleConnectWrite();
+            });
+
+            connectorChannel_->setErrorCallback([weak]() {
+                auto self = weak.lock();
+                if (!self) {
+                    return;
+                }
+
+                self->handleConnectError();
+            });
+
+            connectorChannel_->setCloseCallback([weak]() {
+                auto self = weak.lock();
+                if (!self) {
+                    return;
+                }
+
+                self->handleConnectError();
+            });
+
             connectorChannel_->enableWriting();
             break;
+        }
 
         default:
             reportConnectError(savedErrno, std::strerror(savedErrno));
             closeConnectorFd();
             state_.store(State::kDisconnected, std::memory_order_release);
+
+            if (closeCompleteCallback_) {
+                closeCompleteCallback_();
+            }
+
             break;
     }
 }
@@ -134,17 +226,32 @@ void TcpClient::connectInLoop() {
 void TcpClient::disconnectInLoop() {
     loop_->assertInLoopThread();
 
-    if (state_.load(std::memory_order_acquire) == State::kConnecting) {
-        resetConnectorChannel();
-        closeConnectorFd();
-        state_.store(State::kDisconnected, std::memory_order_release);
+    const State current = state_.load(std::memory_order_acquire);
+
+    if (current == State::kDisconnected) {
         if (closeCompleteCallback_) {
             closeCompleteCallback_();
         }
         return;
     }
 
+    if (current == State::kConnecting) {
+        resetConnectorChannel();
+        closeConnectorFd();
+
+        state_.store(State::kDisconnected, std::memory_order_release);
+
+        if (closeCompleteCallback_) {
+            closeCompleteCallback_();
+        }
+
+        return;
+    }
+
+    state_.store(State::kDisconnecting, std::memory_order_release);
+
     TcpConnectionPtr conn;
+
     {
         std::lock_guard<std::mutex> lock(mutex_);
         conn = connection_;
@@ -152,23 +259,45 @@ void TcpClient::disconnectInLoop() {
 
     if (conn && conn->connected()) {
         conn->shutdown();
+        return;
+    }
+
+    state_.store(State::kDisconnected, std::memory_order_release);
+
+    if (closeCompleteCallback_) {
+        closeCompleteCallback_();
     }
 }
 
 void TcpClient::stopInLoop() {
     loop_->assertInLoopThread();
 
-    if (state_.load(std::memory_order_acquire) == State::kConnecting) {
-        resetConnectorChannel();
-        closeConnectorFd();
-        state_.store(State::kDisconnected, std::memory_order_release);
+    const State current = state_.load(std::memory_order_acquire);
+
+    if (current == State::kDisconnected) {
         if (closeCompleteCallback_) {
             closeCompleteCallback_();
         }
         return;
     }
 
+    if (current == State::kConnecting) {
+        resetConnectorChannel();
+        closeConnectorFd();
+
+        state_.store(State::kDisconnected, std::memory_order_release);
+
+        if (closeCompleteCallback_) {
+            closeCompleteCallback_();
+        }
+
+        return;
+    }
+
+    state_.store(State::kDisconnecting, std::memory_order_release);
+
     TcpConnectionPtr conn;
+
     {
         std::lock_guard<std::mutex> lock(mutex_);
         conn = connection_;
@@ -176,6 +305,13 @@ void TcpClient::stopInLoop() {
 
     if (conn && conn->connected()) {
         conn->forceClose();
+        return;
+    }
+
+    state_.store(State::kDisconnected, std::memory_order_release);
+
+    if (closeCompleteCallback_) {
+        closeCompleteCallback_();
     }
 }
 
@@ -187,13 +323,21 @@ void TcpClient::handleConnectWrite() {
     }
 
     const int sockfd = connectorFd_;
+
     resetConnectorChannel();
 
     const int errorCode = sockets::getSocketError(sockfd);
+
     if (errorCode != 0) {
         reportConnectError(errorCode, std::strerror(errorCode));
         closeConnectorFd();
+
         state_.store(State::kDisconnected, std::memory_order_release);
+
+        if (closeCompleteCallback_) {
+            closeCompleteCallback_();
+        }
+
         return;
     }
 
@@ -211,7 +355,12 @@ void TcpClient::handleConnectError() {
 
     resetConnectorChannel();
     closeConnectorFd();
+
     state_.store(State::kDisconnected, std::memory_order_release);
+
+    if (closeCompleteCallback_) {
+        closeCompleteCallback_();
+    }
 }
 
 void TcpClient::establishConnection(int sockfd) {
@@ -219,15 +368,33 @@ void TcpClient::establishConnection(int sockfd) {
 
     InetAddress localAddr(sockets::getLocalAddr(sockfd));
     InetAddress peerAddr(sockets::getPeerAddr(sockfd));
+
     std::string connName = name_ + "-" + peerAddr.toIpPort();
 
     auto conn = std::make_shared<TcpConnection>(loop_, std::move(connName), sockfd,
                                                 localAddr, peerAddr);
+
     conn->setConnectionCallback(connectionCallback_);
     conn->setMessageCallback(messageCallback_);
     conn->setWriteCompleteCallback(writeCompleteCallback_);
-    conn->setCloseCallback([this](const TcpConnectionPtr& c) {
-        this->removeConnection(c);
+
+    auto weak = weak_from_this();
+
+    conn->setCloseCallback([weak](const TcpConnectionPtr& c) {
+        auto self = weak.lock();
+
+        if (self) {
+            self->removeConnection(c);
+            return;
+        }
+
+        /*
+         * TcpClient 已经销毁时，不能访问 TcpClient。
+         * 但 TcpConnection 仍然需要释放自己的 Channel/Poller 状态。
+         */
+        if (c) {
+            c->connectDestroyed();
+        }
     });
 
     {
@@ -236,12 +403,27 @@ void TcpClient::establishConnection(int sockfd) {
     }
 
     state_.store(State::kConnected, std::memory_order_release);
+
     conn->connectEstablished();
 }
 
 void TcpClient::removeConnection(const TcpConnectionPtr& connection) {
-    loop_->queueInLoop([this, connection]() {
-        this->removeConnectionInLoop(connection);
+    auto weak = weak_from_this();
+
+    loop_->queueInLoop([weak, connection]() {
+        auto self = weak.lock();
+
+        if (self) {
+            self->removeConnectionInLoop(connection);
+            return;
+        }
+
+        /*
+         * TcpClient 已经销毁时，也必须清理 TcpConnection。
+         */
+        if (connection) {
+            connection->connectDestroyed();
+        }
     });
 }
 
@@ -250,6 +432,7 @@ void TcpClient::removeConnectionInLoop(const TcpConnectionPtr& connection) {
 
     {
         std::lock_guard<std::mutex> lock(mutex_);
+
         if (connection_ == connection) {
             connection_.reset();
         }
@@ -277,9 +460,10 @@ void TcpClient::resetConnectorChannel() {
     channel->disableAll();
     channel->remove();
 
-    loop_->queueInLoop([channel]() {
-        (void)channel;
-    });
+    /*
+     * 延迟释放 Channel，保证当前事件回调退出后再析构。
+     */
+    loop_->queueInLoop([channel]() { (void)channel; });
 }
 
 void TcpClient::closeConnectorFd() {
@@ -295,6 +479,21 @@ void TcpClient::reportConnectError(int errorCode, std::string message) {
 
     if (connectErrorCallback_) {
         connectErrorCallback_(errorCode, std::move(message));
+    }
+}
+
+const char* TcpClient::stateToString(State state) noexcept {
+    switch (state) {
+        case State::kDisconnected:
+            return "Disconnected";
+        case State::kConnecting:
+            return "Connecting";
+        case State::kConnected:
+            return "Connected";
+        case State::kDisconnecting:
+            return "Disconnecting";
+        default:
+            return "Unknown";
     }
 }
 

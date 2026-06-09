@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <exception>
 #include <iostream>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -32,7 +33,7 @@ void printUsage(const char* program) {
         << "Defaults: command=all host=127.0.0.1 port=" << kDefaultPort << "\n";
 }
 
-int runAdd(novanet::rpc::RpcClient& client, int argc, char** argv, int argIndex) {
+int runAdd(novanet::rpc::RpcClient* client, int argc, char** argv, int argIndex) {
     const std::int64_t lhs = argc > argIndex ? std::stoll(argv[argIndex]) : 1;
     const std::int64_t rhs =
         argc > argIndex + 1 ? std::stoll(argv[argIndex + 1]) : 2;
@@ -42,8 +43,8 @@ int runAdd(novanet::rpc::RpcClient& client, int argc, char** argv, int argIndex)
     request.set_rhs(rhs);
 
     novanet::example::calculator::AddResponse response;
-    const auto status = client.callUnary(kCalculatorService, "Add", request,
-                                         &response, std::chrono::seconds(3));
+    const auto status = client->callUnary(kCalculatorService, "Add", request,
+                                          &response, std::chrono::seconds(3));
 
     if (status.failed()) {
         std::cerr << "ADD failed: " << status.toString() << "\n";
@@ -54,8 +55,8 @@ int runAdd(novanet::rpc::RpcClient& client, int argc, char** argv, int argIndex)
     return 0;
 }
 
-int runHeartbeat(novanet::rpc::RpcClient& client) {
-    if (!client.sendHeartbeatPing()) {
+int runHeartbeat(novanet::rpc::RpcClient* client) {
+    if (!client->sendHeartbeatPing()) {
         std::cerr << "HEARTBEAT_PING failed\n";
         return 1;
     }
@@ -65,7 +66,7 @@ int runHeartbeat(novanet::rpc::RpcClient& client) {
     return 0;
 }
 
-int runStream(novanet::rpc::RpcClient& client, std::string prompt, std::string model,
+int runStream(novanet::rpc::RpcClient* client, std::string prompt, std::string model,
               bool cancelAfterFirstData, bool expectBackpressure,
               std::chrono::seconds waitTimeout) {
     using novanet::rpc::meta::RPC_BACKPRESSURE;
@@ -133,7 +134,7 @@ int runStream(novanet::rpc::RpcClient& client, std::string prompt, std::string m
     };
 
     auto handle =
-        client.openStream(kChatService, "Generate", request, std::move(callbacks));
+        client->openStream(kChatService, "Generate", request, std::move(callbacks));
     if (!handle) {
         std::cerr << "STREAM_OPEN failed: " << handle.errorText << "\n";
         return 1;
@@ -151,7 +152,7 @@ int runStream(novanet::rpc::RpcClient& client, std::string prompt, std::string m
 
         const std::uint32_t streamId =
             observedStreamId == 0 ? handle.streamId : observedStreamId;
-        if (!client.cancelStream(streamId, "client cancels after first chunk")) {
+        if (!client->cancelStream(streamId, "client cancels after first chunk")) {
             std::cerr << "STREAM_CANCEL failed\n";
             return 1;
         }
@@ -170,7 +171,7 @@ int runStream(novanet::rpc::RpcClient& client, std::string prompt, std::string m
     return exitCode;
 }
 
-int runCommand(novanet::rpc::RpcClient& client, const std::string& command, int argc,
+int runCommand(novanet::rpc::RpcClient* client, const std::string& command, int argc,
                char** argv, int argIndex) {
     if (command == "add") {
         return runAdd(client, argc, argv, argIndex);
@@ -243,16 +244,16 @@ int main(int argc, char** argv) {
         const std::uint16_t port = parsePort(argc, argv, 3, kDefaultPort);
         constexpr int kFirstCommandArg = 4;
 
-        novanet::rpc::RpcClient client(novanet::net::InetAddress(host, port),
-                                       "novanet_client");
+        auto client = std::make_shared<novanet::rpc::RpcClient>(
+            novanet::net::InetAddress(host, port), "novanet_client");
 
         std::string errorText;
-        if (!client.connect(&errorText)) {
+        if (!client->connect(&errorText)) {
             std::cerr << "connect failed: " << errorText << "\n";
             return 1;
         }
 
-        return runCommand(client, command, argc, argv, kFirstCommandArg);
+        return runCommand(client.get(), command, argc, argv, kFirstCommandArg);
     } catch (const std::exception& ex) {
         std::cerr << "novanet_client failed: " << ex.what() << "\n";
         return 1;

@@ -177,20 +177,20 @@ target_link_libraries(novanet
 # ==========================================================
 # final main
 # ==========================================================
-add_executable(novanet_server_demo
+add_executable(server_main
     examples/server_main.cpp
 )
 
-target_link_libraries(novanet_server_demo
+target_link_libraries(server_main
     novanet
     protobuf::libprotobuf
 )
 
-add_executable(novanet_client_demo
+add_executable(client_main
     examples/client_main.cpp
 )
 
-target_link_libraries(novanet_client_demo
+target_link_libraries(client_main
     novanet
     protobuf::libprotobuf
 )

@@ -75,6 +75,7 @@ private:
         std::shared_ptr<StreamManager> streamManager;
         std::shared_ptr<RpcServerStreamResponder> responder;
 
+        novanet::net::EventLoop* timerLoop{nullptr};
         novanet::net::TimerId streamTimeoutTimer;
         novanet::base::Timestamp lastSeen{novanet::base::Timestamp::now()};
     };
@@ -110,12 +111,7 @@ private:
     void startConnectionTimers(const TcpConnectionPtr& connection,
                                const std::shared_ptr<ConnectionContext>& context);
 
-    void cancelConnectionTimers(const TcpConnectionPtr& connection,
-                                const std::shared_ptr<ConnectionContext>& context);
-
-    void checkConnectionStreamTimeouts(
-        const std::weak_ptr<ConnectionContext>& weakContext,
-        const std::weak_ptr<novanet::net::TcpConnection>& weakConnection);
+    void cancelConnectionTimers(const std::shared_ptr<ConnectionContext>& context);
 
     [[nodiscard]] static ConnectionKey connectionKey(
         const TcpConnectionPtr& connection) noexcept;

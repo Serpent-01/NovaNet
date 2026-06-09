@@ -2,6 +2,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <iostream>
+#include <memory>
 #include <mutex>
 #include <string>
 
@@ -16,16 +17,16 @@ int main(int argc, char** argv) {
     const std::uint16_t port = parsePort(argc, argv, 2, kChatPort);
     const std::string prompt = argOr(argc, argv, 3, "hello phase4");
 
-    novanet::rpc::RpcClient client(novanet::net::InetAddress(host, port),
-                                   "phase4_chat_client");
+    auto client = std::make_shared<novanet::rpc::RpcClient>(
+        novanet::net::InetAddress(host, port), "phase4_chat_client");
 
     std::string errorText;
-    if (!client.connect(&errorText)) {
+    if (!client->connect(&errorText)) {
         std::cerr << "connect failed: " << errorText << "\n";
         return 1;
     }
 
-    if (!client.sendHeartbeatPing()) {
+    if (!client->sendHeartbeatPing()) {
         std::cerr << "send HEARTBEAT_PING failed\n";
         return 1;
     }
@@ -66,8 +67,8 @@ int main(int argc, char** argv) {
         cv.notify_one();
     };
 
-    auto handle = client.openStream("novanet.ai.chat.ChatService", "Generate",
-                                    request, std::move(callbacks));
+    auto handle = client->openStream("novanet.ai.chat.ChatService", "Generate",
+                                     request, std::move(callbacks));
     if (!handle) {
         std::cerr << "open stream failed: " << handle.errorText << "\n";
         return 1;
@@ -79,6 +80,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    client.disconnect();
+    client->disconnect();
     return exitCode;
 }

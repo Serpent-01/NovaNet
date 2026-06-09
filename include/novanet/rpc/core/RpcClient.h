@@ -20,11 +20,27 @@ class Message;
 
 namespace novanet::rpc {
 
-class RpcClient final {
+/*
+ * RpcClient 是客户端底层连接对象。
+ *
+ * 职责：
+ * - 持有客户端 EventLoopThread；
+ * - 持有 TcpClient；
+ * - 连接建立后创建 RpcChannel；
+ * - 对上层 ClientChannel 提供 callUnary / openStream / cancelStream；
+ * - 不做服务发现；
+ * - 不做负载均衡；
+ * - 不做重试；
+ * - 不做认证 / 拦截器。
+ *
+ * 生命周期要求：
+ * - RpcClient 必须由 std::shared_ptr 管理；
+ * - 因为它注册给 TcpClient 的异步回调使用 weak_from_this() 防止 UAF；
+ * - ClientChannel 里应该使用 std::make_shared<RpcClient>(...) 创建。
+ */
+class RpcClient final : public std::enable_shared_from_this<RpcClient> {
 public:
     using MetadataMap = std::unordered_map<std::string, std::string>;
-    using UnaryCancelChecker = RpcChannel::UnaryCancelChecker;
-    using UnaryCancelReasonProvider = RpcChannel::UnaryCancelReasonProvider;
 
     struct Options {
         RpcChannel::Options channelOptions{};
@@ -72,14 +88,6 @@ public:
                                       const MetadataMap& metadata,
                                       std::uint64_t* requestIdOut);
 
-    [[nodiscard]] RpcStatus callUnary(
-        const std::string& serviceName, const std::string& methodName,
-        const google::protobuf::Message& request,
-        google::protobuf::Message* response, std::chrono::milliseconds timeout,
-        const MetadataMap& metadata, std::uint64_t* requestIdOut,
-        UnaryCancelChecker cancelChecker,
-        UnaryCancelReasonProvider cancelReasonProvider);
-
     [[nodiscard]] RpcChannel::StreamHandle openStream(
         const std::string& serviceName, const std::string& methodName,
         const google::protobuf::Message& request,
@@ -106,6 +114,16 @@ private:
 
 private:
     [[nodiscard]] std::shared_ptr<RpcChannel> channelSnapshot() const;
+    [[nodiscard]] std::weak_ptr<RpcClient> weakSelfOrDie();
+
+    void handleTcpConnection(
+        const novanet::net::TcpConnection::TcpConnectionPtr& conn);
+
+    void handleTcpMessage(const novanet::net::TcpConnection::TcpConnectionPtr& conn,
+                          novanet::net::Buffer* buffer);
+
+    void handleTcpConnectError(int errorCode, std::string error);
+    void handleTcpCloseComplete();
 
     void notifyConnected();
     void notifyClosed(std::string reason);
@@ -121,17 +139,15 @@ private:
 
     novanet::net::EventLoopThread loopThread_;
     novanet::net::EventLoop* loop_{nullptr};
-    std::unique_ptr<novanet::net::TcpClient> tcpClient_;
+    std::shared_ptr<novanet::net::TcpClient> tcpClient_;
 
     mutable std::mutex mutex_;
     std::condition_variable cv_;
 
     State state_{State::kIdle};
-
     bool closeComplete_{true};
 
     std::string lastError_;
-
     std::shared_ptr<RpcChannel> channel_;
 };
 

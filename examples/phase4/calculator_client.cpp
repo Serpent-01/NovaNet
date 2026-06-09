@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include "Phase4ExampleSupport.h"
@@ -15,11 +16,11 @@ int main(int argc, char** argv) {
     const std::int64_t lhs = argc > 3 ? std::stoll(argv[3]) : 1;
     const std::int64_t rhs = argc > 4 ? std::stoll(argv[4]) : 2;
 
-    novanet::rpc::RpcClient client(novanet::net::InetAddress(host, port),
-                                   "phase4_calculator_client");
+    auto client = std::make_shared<novanet::rpc::RpcClient>(
+        novanet::net::InetAddress(host, port), "phase4_calculator_client");
 
     std::string errorText;
-    if (!client.connect(&errorText)) {
+    if (!client->connect(&errorText)) {
         std::cerr << "connect failed: " << errorText << "\n";
         return 1;
     }
@@ -29,7 +30,7 @@ int main(int argc, char** argv) {
     request.set_rhs(rhs);
 
     novanet::example::calculator::AddResponse response;
-    const auto status = client.callUnary(
+    const auto status = client->callUnary(
         "novanet.example.calculator.CalculatorService", "Add", request,
         &response, std::chrono::seconds(3));
 
@@ -39,6 +40,6 @@ int main(int argc, char** argv) {
     }
 
     std::cout << lhs << " + " << rhs << " = " << response.result() << "\n";
-    client.disconnect();
+    client->disconnect();
     return 0;
 }

@@ -2,6 +2,7 @@
 #include <condition_variable>
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -17,11 +18,11 @@ int main(int argc, char** argv) {
     const std::uint16_t port = parsePort(argc, argv, 2, kChatPort);
     const std::string prompt = argOr(argc, argv, 3, "cancel this stream");
 
-    novanet::rpc::RpcClient client(novanet::net::InetAddress(host, port),
-                                   "phase4_cancel_client");
+    auto client = std::make_shared<novanet::rpc::RpcClient>(
+        novanet::net::InetAddress(host, port), "phase4_cancel_client");
 
     std::string errorText;
-    if (!client.connect(&errorText)) {
+    if (!client->connect(&errorText)) {
         std::cerr << "connect failed: " << errorText << "\n";
         return 1;
     }
@@ -67,8 +68,8 @@ int main(int argc, char** argv) {
         cv.notify_one();
     };
 
-    auto handle = client.openStream("novanet.ai.chat.ChatService", "Generate",
-                                    request, std::move(callbacks));
+    auto handle = client->openStream("novanet.ai.chat.ChatService", "Generate",
+                                     request, std::move(callbacks));
     if (!handle) {
         std::cerr << "open stream failed: " << handle.errorText << "\n";
         return 1;
@@ -84,13 +85,13 @@ int main(int argc, char** argv) {
     }
 
     const std::uint32_t id = streamId == 0 ? handle.streamId : streamId;
-    if (!client.cancelStream(id, "client cancels after first chunk")) {
+    if (!client->cancelStream(id, "client cancels after first chunk")) {
         std::cerr << "cancel stream failed\n";
         return 1;
     }
 
     std::cout << "sent STREAM_CANCEL stream=" << id << "\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
-    client.disconnect();
+    client->disconnect();
     return 0;
 }

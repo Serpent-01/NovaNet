@@ -23,7 +23,6 @@ std::chrono::milliseconds toMilliseconds(double seconds) {
     }
 
     const auto millis = static_cast<std::int64_t>(seconds * 1000.0);
-
     return std::chrono::milliseconds(std::max<std::int64_t>(1, millis));
 }
 
@@ -58,6 +57,11 @@ novanet::rpc::RpcClient::Options makeRpcClientOptions(
     return clientOptions;
 }
 
+std::string normalizedCancelReason(const ClientContext& ctx) {
+    return ctx.cancelReason().empty() ? std::string{"rpc call cancelled"}
+                                      : ctx.cancelReason();
+}
+
 }  // namespace
 
 std::shared_ptr<ClientChannel> ClientChannel::create(Endpoint endpoint,
@@ -81,8 +85,10 @@ ClientChannel::~ClientChannel() {
 
 novanet::rpc::RpcStatus ClientChannel::connect() {
     std::shared_ptr<novanet::rpc::RpcClient> client;
+
     {
         std::unique_lock<std::mutex> lock(mutex_);
+
         if (state_ == State::kShutdown) {
             return makeErrorStatus(meta::RPC_CONNECTION_CLOSED,
                                    "ClientChannel already shutdown");
@@ -92,6 +98,7 @@ novanet::rpc::RpcStatus ClientChannel::connect() {
             if (rpcClient_ != nullptr && rpcClient_->connected()) {
                 return makeOkStatus();
             }
+
             LOG_WARN << "[ClientChannel] state connected but RpcClient is not "
                         "connected, target="
                      << endpoint_.toString();
@@ -101,28 +108,32 @@ novanet::rpc::RpcStatus ClientChannel::connect() {
         }
 
         if (state_ == State::kConnecting) {
-            //如果已经有线程在连接，当前线程不再创建新的
-            // RpcClient，而是等待连接结果。
+            /*
+             * 已经有线程在连接，当前线程不再创建新的 RpcClient，
+             * 而是等待连接结果。
+             */
             stateCv_.wait(lock, [this]() { return state_ != State::kConnecting; });
 
             if (state_ == State::kConnected && rpcClient_ != nullptr &&
                 rpcClient_->connected()) {
                 return makeOkStatus();
             }
+
             if (state_ == State::kShutdown) {
                 return makeErrorStatus(meta::RPC_CONNECTION_CLOSED,
                                        "ClientChannel shutdown during connect");
             }
+
             /*
              * 连接线程已经失败。
-             * 作为并发等待者，直接返回同一个失败结果，不再立刻发起第二次连接。
-             * 后续用户再次显式调用 connect()，才会重新尝试。
+             * 并发等待者直接返回同一个失败结果，不立刻发起第二次连接。
              */
             const std::string error =
                 lastConnectError_.empty() ? "connect failed" : lastConnectError_;
 
             return makeErrorStatus(meta::RPC_CONNECTION_CLOSED, error);
         }
+
         /*
          * State::kIdle:
          * 当前线程成为唯一连接线程。
@@ -142,10 +153,8 @@ novanet::rpc::RpcStatus ClientChannel::connect() {
 
     /*
      * 不持有 ClientChannel::mutex_ 执行真正连接。
-     * RpcClient::connect() 内部会等待 TcpClient 连接完成。
      */
     std::string errorText;
-
     const bool ok = client->connect(&errorText);
 
     if (!ok) {
@@ -155,28 +164,24 @@ novanet::rpc::RpcStatus ClientChannel::connect() {
 
         {
             std::lock_guard<std::mutex> lock(mutex_);
+
             if (state_ == State::kShutdown) {
-                /*
-                 * shutdown 期间 connect 失败。
-                 * 状态保持 shutdown。
-                 */
                 if (rpcClient_ == client) {
                     rpcClient_.reset();
                 }
+
                 lastConnectError_ = "ClientChannel shutdown during connect";
             } else if (rpcClient_ == client) {
                 rpcClient_.reset();
                 state_ = State::kIdle;
                 lastConnectError_ = errorText;
             } else {
-                /*
-                 * 理论上不会发生。
-                 * 但防御：不要误改别的 client。
-                 */
                 lastConnectError_ = errorText;
             }
         }
+
         stateCv_.notify_all();
+
         LOG_ERROR << "[ClientChannel] connect failed, target="
                   << endpoint_.toString() << ", error=" << errorText;
 
@@ -185,20 +190,14 @@ novanet::rpc::RpcStatus ClientChannel::connect() {
 
     {
         std::lock_guard<std::mutex> lock(mutex_);
+
         if (state_ == State::kShutdown) {
-            /*
-             * 极端情况：
-             * connect 成功返回前，另一个线程已经 shutdown。
-             * 不能把状态改回 connected。
-             */
             if (rpcClient_ == client) {
                 rpcClient_.reset();
             }
+
             lastConnectError_ = "ClientChannel shutdown during connect";
             stateCv_.notify_all();
-            /*
-             * 不在锁内 disconnect。
-             */
         } else if (rpcClient_ == client) {
             state_ = State::kConnected;
             lastConnectError_.clear();
@@ -213,6 +212,7 @@ novanet::rpc::RpcStatus ClientChannel::connect() {
             stateCv_.notify_all();
         }
     }
+
     /*
      * 走到这里说明 connect 期间被 shutdown 或 active client 变化。
      */
@@ -224,6 +224,7 @@ novanet::rpc::RpcStatus ClientChannel::connect() {
 
 void ClientChannel::shutdown() {
     std::shared_ptr<novanet::rpc::RpcClient> client;
+
     {
         std::lock_guard<std::mutex> lock(mutex_);
 
@@ -237,6 +238,7 @@ void ClientChannel::shutdown() {
         client = std::move(rpcClient_);
         rpcClient_.reset();
     }
+
     stateCv_.notify_all();
 
     /*
@@ -245,6 +247,7 @@ void ClientChannel::shutdown() {
     if (client) {
         client->disconnect();
     }
+
     LOG_INFO << "[ClientChannel] shutdown, target=" << endpoint_.toString();
 }
 
@@ -267,19 +270,25 @@ novanet::rpc::RpcStatus ClientChannel::callUnary(
         ctx.setError(meta::RPC_BAD_REQUEST, error);
         return makeErrorStatus(meta::RPC_BAD_REQUEST, error);
     }
+
     if (methodName.empty()) {
         const std::string error = "methodName is empty";
         ctx.setError(meta::RPC_BAD_REQUEST, error);
         return makeErrorStatus(meta::RPC_BAD_REQUEST, error);
     }
+
     if (response == nullptr) {
         const std::string error = "response is null";
         ctx.setError(meta::RPC_BAD_REQUEST, error);
         return makeErrorStatus(meta::RPC_BAD_REQUEST, error);
     }
 
+    /*
+     * 当前收敛版本：unary cancel 只支持发送前检查。
+     * 等待响应过程中的 cancel 暂不做，避免重新引入 sleep_for 轮询。
+     */
     if (ctx.cancelled()) {
-        const std::string reason = ctx.cancelReason();
+        const std::string reason = normalizedCancelReason(ctx);
         ctx.setError(meta::RPC_CANCELLED, reason);
         return makeErrorStatus(meta::RPC_CANCELLED, reason);
     }
@@ -314,6 +323,7 @@ novanet::rpc::RpcStatus ClientChannel::callUnary(
 
         client = rpcClient_;
     }
+
     if (!client || !client->connected()) {
         const std::string error = "RpcClient is not connected";
         ctx.setError(meta::RPC_CONNECTION_CLOSED, error);
@@ -323,20 +333,19 @@ novanet::rpc::RpcStatus ClientChannel::callUnary(
     const double remainingSeconds = ctx.remainingTimeoutSeconds();
     const auto timeout = toMilliseconds(remainingSeconds);
     const auto metadata = ctx.metadata();
+
     std::uint64_t requestId = 0;
 
-    novanet::rpc::RpcStatus status;
-    if (context != nullptr) {
-        auto cancelChecker = [&ctx]() { return ctx.cancelled(); };
-        auto cancelReasonProvider = [&ctx]() { return ctx.cancelReason(); };
-
-        status = client->callUnary(
-            serviceName, methodName, request, response, timeout, metadata, &requestId,
-            std::move(cancelChecker), std::move(cancelReasonProvider));
-    } else {
-        status = client->callUnary(serviceName, methodName, request, response, timeout,
-                                   metadata, &requestId);
-    }
+    /*
+     * 注意：
+     * 这里只能调用 7 参数版本：
+     *
+     *   callUnary(..., timeout, metadata, &requestId)
+     *
+     * 9 参数 cancelChecker/cancelReasonProvider 版本已经删除。
+     */
+    auto status = client->callUnary(serviceName, methodName, request, response,
+                                    timeout, metadata, &requestId);
 
     if (requestId != 0) {
         ctx.setRequestId(requestId);
@@ -371,7 +380,7 @@ ClientChannel::StreamHandle ClientChannel::openStream(
     }
 
     if (ctx.cancelled()) {
-        const std::string reason = ctx.cancelReason();
+        const std::string reason = normalizedCancelReason(ctx);
         ctx.setError(meta::RPC_CANCELLED, reason);
         return StreamHandle{0, 0, false, reason};
     }
