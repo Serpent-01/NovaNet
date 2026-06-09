@@ -50,6 +50,8 @@ class RpcChannel final {
 public:
     using TcpConnectionPtr = novanet::net::TcpConnection::TcpConnectionPtr;
     using MetadataMap = std::unordered_map<std::string, std::string>;
+    using UnaryCancelChecker = std::function<bool()>;
+    using UnaryCancelReasonProvider = std::function<std::string()>;
 
     struct Options {
         std::size_t sendHighWaterMarkBytes{8 * 1024 * 1024};
@@ -119,6 +121,22 @@ public:
                                       google::protobuf::Message* response,
                                       std::chrono::milliseconds timeout,
                                       const MetadataMap& metadata);
+
+    [[nodiscard]] RpcStatus callUnary(const std::string& serviceName,
+                                      const std::string& methodName,
+                                      const google::protobuf::Message& request,
+                                      google::protobuf::Message* response,
+                                      std::chrono::milliseconds timeout,
+                                      const MetadataMap& metadata,
+                                      std::uint64_t* requestIdOut);
+
+    [[nodiscard]] RpcStatus callUnary(
+        const std::string& serviceName, const std::string& methodName,
+        const google::protobuf::Message& request,
+        google::protobuf::Message* response, std::chrono::milliseconds timeout,
+        const MetadataMap& metadata, std::uint64_t* requestIdOut,
+        UnaryCancelChecker cancelChecker,
+        UnaryCancelReasonProvider cancelReasonProvider);
 
     /*
      * 旧接口：无 metadata。

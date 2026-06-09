@@ -322,19 +322,25 @@ novanet::rpc::RpcStatus ClientChannel::callUnary(
 
     const double remainingSeconds = ctx.remainingTimeoutSeconds();
     const auto timeout = toMilliseconds(remainingSeconds);
+    const auto metadata = ctx.metadata();
+    std::uint64_t requestId = 0;
 
-    /*
-     * 当前 RpcClient::callUnary() 接口没有 metadata 参数。
-     * 如果要把 metadata 写入 UnaryRequestMeta.metadata，
-     * 需要后续给 RpcClient / RpcChannel 增加 metadata overload。
-     */
-    if (!ctx.metadata().empty()) {
-        LOG_WARN << "[ClientChannel] metadata is set but current RpcClient "
-                 << "callUnary API does not transmit metadata";
+    novanet::rpc::RpcStatus status;
+    if (context != nullptr) {
+        auto cancelChecker = [&ctx]() { return ctx.cancelled(); };
+        auto cancelReasonProvider = [&ctx]() { return ctx.cancelReason(); };
+
+        status = client->callUnary(
+            serviceName, methodName, request, response, timeout, metadata, &requestId,
+            std::move(cancelChecker), std::move(cancelReasonProvider));
+    } else {
+        status = client->callUnary(serviceName, methodName, request, response, timeout,
+                                   metadata, &requestId);
     }
 
-    novanet::rpc::RpcStatus status =
-        client->callUnary(serviceName, methodName, request, response, timeout);
+    if (requestId != 0) {
+        ctx.setRequestId(requestId);
+    }
 
     if (!status.ok()) {
         fillContextError(&ctx, status.errorCode(), status.errorText());
@@ -411,18 +417,10 @@ ClientChannel::StreamHandle ClientChannel::openStream(
         return StreamHandle{0, 0, false, error};
     }
 
-    /*
-     * 当前 RpcClient::openStream() 接口没有 metadata 参数。
-     * 如果要把 metadata 写入 StreamOpenMeta.metadata，
-     * 需要后续给 RpcClient / RpcChannel 增加 metadata overload。
-     */
-    if (!ctx.metadata().empty()) {
-        LOG_WARN << "[ClientChannel] metadata is set but current RpcClient "
-                 << "openStream API does not transmit metadata";
-    }
+    const auto metadata = ctx.metadata();
 
-    StreamHandle handle =
-        client->openStream(serviceName, methodName, request, std::move(callbacks));
+    StreamHandle handle = client->openStream(serviceName, methodName, request,
+                                             std::move(callbacks), metadata);
 
     if (!handle.ok) {
         ctx.setError(meta::RPC_UNKNOWN_ERROR, handle.errorText);

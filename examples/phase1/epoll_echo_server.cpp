@@ -49,8 +49,8 @@ public:
             LOG_SYSFATAL << "epoll_create1 failed";
         }
 
-        updateEpoll(listenSock_.fd(), EPOLLIN | EPOLLET, EPOLL_CTL_ADD);
-        LOG_INFO << "Phase1Server is listening on port " << port << " (ET Mode)";
+        updateEpoll(listenSock_.fd(), EPOLLIN, EPOLL_CTL_ADD);
+        LOG_INFO << "Phase1Server is listening on port " << port << " (LT Mode)";
     }
 
     ~Phase1Server() {
@@ -141,9 +141,9 @@ private:
                 LOG_INFO << "New connection from " << peerAddr.toIpPort() << " accepted, fd=" << connfd;
                 sockets::setTcpNoDelay(connfd, true);
                 connections_[connfd] = ConnectionContext{connfd, "", 0, false};
-                updateEpoll(connfd, EPOLLIN | EPOLLET, EPOLL_CTL_ADD);
+                updateEpoll(connfd, EPOLLIN, EPOLL_CTL_ADD);
             } else {
-                // TODO F1: 修正 accept 错误分类，符合 ET 模式吃尽 backlog 的契约
+                // TODO F1: 修正 accept 错误分类，LT 模式下仍循环 accept 到 EAGAIN 提升吞吐
                 if (errno == EAGAIN || errno == EWOULDBLOCK) {
                     break;
                 } else if (errno == EINTR || errno == ECONNABORTED || errno == EPROTO) {
@@ -205,7 +205,7 @@ private:
 
                 // 一旦有积压，注册 EPOLLOUT
                 if (!ctx.outBuffer.empty() && !ctx.writing) {
-                    updateEpoll(fd, EPOLLIN | EPOLLOUT | EPOLLET, EPOLL_CTL_MOD);
+                    updateEpoll(fd, EPOLLIN | EPOLLOUT, EPOLL_CTL_MOD);
                     ctx.writing = true;
                 }
             } else if (n == 0) {
@@ -230,7 +230,7 @@ private:
     }
 
     void handleWrite(int fd, ConnectionContext& ctx) {
-        // TODO F2 & F3: ET 模式核心准则——不断 Write 直到 EAGAIN 或写空。
+        // TODO F2 & F3: LT 模式下仍尽量 write 到 EAGAIN 或写空。
         // 同时利用 writeIndex，彻底消除 string::erase(0, n) 带来的内存拷贝。
         while (ctx.writeIndex < ctx.outBuffer.size()) {
             const char* dataPtr = ctx.outBuffer.data() + ctx.writeIndex;
@@ -256,7 +256,7 @@ private:
             ctx.outBuffer.clear();
             ctx.writeIndex = 0;
             if (ctx.writing) {
-                updateEpoll(fd, EPOLLIN | EPOLLET, EPOLL_CTL_MOD);
+                updateEpoll(fd, EPOLLIN, EPOLL_CTL_MOD);
                 ctx.writing = false;
             }
         }

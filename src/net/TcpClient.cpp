@@ -39,6 +39,10 @@ TcpClient::TcpClient(EventLoop* loop, const InetAddress& serverAddr,
 }
 
 TcpClient::~TcpClient() {
+    if (state_.load(std::memory_order_acquire) == State::kDisconnected) {
+        return;
+    }
+
     stop();
 }
 
@@ -51,6 +55,10 @@ void TcpClient::disconnect() {
 }
 
 void TcpClient::stop() {
+    if (state_.load(std::memory_order_acquire) == State::kDisconnected) {
+        return;
+    }
+
     loop_->runInLoop([this]() { this->stopInLoop(); });
 }
 

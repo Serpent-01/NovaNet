@@ -1,5 +1,7 @@
 #include "novanet/rpc/core/RpcChannel.h"
 
+#include <chrono>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -19,6 +21,7 @@ using novanet::base::Timestamp;
 namespace {
 
 const RpcChannel::MetadataMap kEmptyMetadata{};
+constexpr auto kUnaryCancelPollInterval = std::chrono::milliseconds(10);
 
 void fillMetadata(const RpcChannel::MetadataMap& metadata,
                   google::protobuf::Map<std::string, std::string>* out) {
@@ -31,6 +34,18 @@ void fillMetadata(const RpcChannel::MetadataMap& metadata,
             (*out)[item.first] = item.second;
         }
     }
+}
+
+std::string unaryCancelReason(
+    const RpcChannel::UnaryCancelReasonProvider& cancelReasonProvider) {
+    std::string reason;
+    if (cancelReasonProvider) {
+        reason = cancelReasonProvider();
+    }
+    if (reason.empty()) {
+        reason = "rpc call cancelled";
+    }
+    return reason;
 }
 
 }  // namespace
@@ -66,6 +81,28 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
                                 google::protobuf::Message* response,
                                 std::chrono::milliseconds timeout,
                                 const MetadataMap& metadata) {
+    return callUnary(serviceName, methodName, request, response, timeout, metadata,
+                     nullptr);
+}
+
+RpcStatus RpcChannel::callUnary(const std::string& serviceName,
+                                const std::string& methodName,
+                                const google::protobuf::Message& request,
+                                google::protobuf::Message* response,
+                                std::chrono::milliseconds timeout,
+                                const MetadataMap& metadata,
+                                std::uint64_t* requestIdOut) {
+    return callUnary(serviceName, methodName, request, response, timeout, metadata,
+                     requestIdOut, UnaryCancelChecker{},
+                     UnaryCancelReasonProvider{});
+}
+
+RpcStatus RpcChannel::callUnary(
+    const std::string& serviceName, const std::string& methodName,
+    const google::protobuf::Message& request, google::protobuf::Message* response,
+    std::chrono::milliseconds timeout, const MetadataMap& metadata,
+    std::uint64_t* requestIdOut, UnaryCancelChecker cancelChecker,
+    UnaryCancelReasonProvider cancelReasonProvider) {
     if (connectionClosed_.load(std::memory_order_acquire)) {
         return RpcStatus::failure(meta::RPC_CONNECTION_CLOSED,
                                   "connection already closed");
@@ -87,6 +124,9 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
     }
 
     const std::uint64_t requestId = nextRequestId();
+    if (requestIdOut != nullptr) {
+        *requestIdOut = requestId;
+    }
 
     auto pendingCall = pendingCalls_.create(requestId);
     if (!pendingCall) {
@@ -122,7 +162,58 @@ RpcStatus RpcChannel::callUnary(const std::string& serviceName,
                                   "send unary request failed");
     }
 
-    const PendingCall::State state = pendingCall->waitFor(timeout);
+    PendingCall::State state = PendingCall::State::kPending;
+
+    if (!cancelChecker) {
+        state = pendingCall->waitFor(timeout);
+    } else {
+        if (timeout <= std::chrono::milliseconds::zero()) {
+            static_cast<void>(pendingCall->markTimeout("rpc call timeout"));
+            state = pendingCall->state();
+        } else {
+            const auto deadline = std::chrono::steady_clock::now() + timeout;
+
+            while (true) {
+                state = pendingCall->state();
+                if (state != PendingCall::State::kPending) {
+                    break;
+                }
+
+                if (cancelChecker()) {
+                    state = pendingCall->state();
+                    if (state != PendingCall::State::kPending) {
+                        break;
+                    }
+
+                    const std::string reason =
+                        unaryCancelReason(cancelReasonProvider);
+
+                    static_cast<void>(pendingCalls_.remove(requestId));
+
+                    return RpcStatus::failure(meta::RPC_CANCELLED, reason);
+                }
+
+                const auto now = std::chrono::steady_clock::now();
+                if (now >= deadline) {
+                    static_cast<void>(pendingCall->markTimeout("rpc call timeout"));
+                    state = pendingCall->state();
+                    break;
+                }
+
+                auto sleepDuration =
+                    std::chrono::duration_cast<std::chrono::milliseconds>(
+                        deadline - now);
+                if (sleepDuration > kUnaryCancelPollInterval) {
+                    sleepDuration = kUnaryCancelPollInterval;
+                }
+                if (sleepDuration <= std::chrono::milliseconds::zero()) {
+                    continue;
+                }
+
+                std::this_thread::sleep_for(sleepDuration);
+            }
+        }
+    }
 
     if (state == PendingCall::State::kTimeout) {
         static_cast<void>(pendingCalls_.remove(requestId));

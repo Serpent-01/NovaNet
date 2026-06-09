@@ -23,6 +23,8 @@ namespace novanet::rpc {
 class RpcClient final {
 public:
     using MetadataMap = std::unordered_map<std::string, std::string>;
+    using UnaryCancelChecker = RpcChannel::UnaryCancelChecker;
+    using UnaryCancelReasonProvider = RpcChannel::UnaryCancelReasonProvider;
 
     struct Options {
         RpcChannel::Options channelOptions{};
@@ -61,6 +63,22 @@ public:
                                       google::protobuf::Message* response,
                                       std::chrono::milliseconds timeout,
                                       const MetadataMap& metadata);
+
+    [[nodiscard]] RpcStatus callUnary(const std::string& serviceName,
+                                      const std::string& methodName,
+                                      const google::protobuf::Message& request,
+                                      google::protobuf::Message* response,
+                                      std::chrono::milliseconds timeout,
+                                      const MetadataMap& metadata,
+                                      std::uint64_t* requestIdOut);
+
+    [[nodiscard]] RpcStatus callUnary(
+        const std::string& serviceName, const std::string& methodName,
+        const google::protobuf::Message& request,
+        google::protobuf::Message* response, std::chrono::milliseconds timeout,
+        const MetadataMap& metadata, std::uint64_t* requestIdOut,
+        UnaryCancelChecker cancelChecker,
+        UnaryCancelReasonProvider cancelReasonProvider);
 
     [[nodiscard]] RpcChannel::StreamHandle openStream(
         const std::string& serviceName, const std::string& methodName,

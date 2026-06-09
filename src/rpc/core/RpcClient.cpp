@@ -265,6 +265,13 @@ void RpcClient::disconnect() {
     {
         std::lock_guard<std::mutex> lock(mutex_);
 
+        if (state_ == State::kClosed && closeComplete_) {
+            channel_.reset();
+            lastError_ = "RpcClient disconnected";
+            cv_.notify_all();
+            return;
+        }
+
         if (state_ == State::kIdle) {
             state_ = State::kClosed;
             closeComplete_ = true;
@@ -337,6 +344,28 @@ RpcStatus RpcClient::callUnary(const std::string& serviceName,
                                google::protobuf::Message* response,
                                std::chrono::milliseconds timeout,
                                const MetadataMap& metadata) {
+    return callUnary(serviceName, methodName, request, response, timeout, metadata,
+                     nullptr);
+}
+
+RpcStatus RpcClient::callUnary(const std::string& serviceName,
+                               const std::string& methodName,
+                               const google::protobuf::Message& request,
+                               google::protobuf::Message* response,
+                               std::chrono::milliseconds timeout,
+                               const MetadataMap& metadata,
+                               std::uint64_t* requestIdOut) {
+    return callUnary(serviceName, methodName, request, response, timeout, metadata,
+                     requestIdOut, UnaryCancelChecker{},
+                     UnaryCancelReasonProvider{});
+}
+
+RpcStatus RpcClient::callUnary(
+    const std::string& serviceName, const std::string& methodName,
+    const google::protobuf::Message& request, google::protobuf::Message* response,
+    std::chrono::milliseconds timeout, const MetadataMap& metadata,
+    std::uint64_t* requestIdOut, UnaryCancelChecker cancelChecker,
+    UnaryCancelReasonProvider cancelReasonProvider) {
     auto channel = channelSnapshot();
 
     if (!channel) {
@@ -345,7 +374,8 @@ RpcStatus RpcClient::callUnary(const std::string& serviceName,
     }
 
     return channel->callUnary(serviceName, methodName, request, response, timeout,
-                              metadata);
+                              metadata, requestIdOut, std::move(cancelChecker),
+                              std::move(cancelReasonProvider));
 }
 
 RpcChannel::StreamHandle RpcClient::openStream(
