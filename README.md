@@ -77,3 +77,5 @@ i5-9300H 作为一个移动端平台，在 WSL2 的多层抽象下，NovaNet 依
 
 **测试负责人：** Ryan
 **存档日期：** 2026-04-24
+
+https://0q0xc.no-mad-sub.one/link/NWuROJnjMIIWzCYW?clash=3&extend=1

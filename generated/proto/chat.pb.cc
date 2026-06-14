@@ -14,167 +14,160 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
-extern PROTOBUF_INTERNAL_EXPORT_chat_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ChatMessage_chat_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_chat_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TokenUsage_chat_2eproto;
+
+PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace novanet {
 namespace ai {
 namespace chat {
-class ChatMessageDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ChatMessage> _instance;
-} _ChatMessage_default_instance_;
-class GenerateRequestDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GenerateRequest> _instance;
-} _GenerateRequest_default_instance_;
-class GenerateChunkDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GenerateChunk> _instance;
-} _GenerateChunk_default_instance_;
-class TokenUsageDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<TokenUsage> _instance;
-} _TokenUsage_default_instance_;
-class GenerateResponseDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GenerateResponse> _instance;
-} _GenerateResponse_default_instance_;
+PROTOBUF_CONSTEXPR ChatMessage::ChatMessage(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.role_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.content_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct ChatMessageDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ChatMessageDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ChatMessageDefaultTypeInternal() {}
+  union {
+    ChatMessage _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
+PROTOBUF_CONSTEXPR GenerateRequest::GenerateRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.messages_)*/{}
+  , /*decltype(_impl_.stop_)*/{}
+  , /*decltype(_impl_.model_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.max_tokens_)*/0u
+  , /*decltype(_impl_.temperature_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct GenerateRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GenerateRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GenerateRequestDefaultTypeInternal() {}
+  union {
+    GenerateRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GenerateRequestDefaultTypeInternal _GenerateRequest_default_instance_;
+PROTOBUF_CONSTEXPR GenerateChunk::GenerateChunk(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.delta_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.finish_reason_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.index_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct GenerateChunkDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GenerateChunkDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GenerateChunkDefaultTypeInternal() {}
+  union {
+    GenerateChunk _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GenerateChunkDefaultTypeInternal _GenerateChunk_default_instance_;
+PROTOBUF_CONSTEXPR TokenUsage::TokenUsage(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.prompt_tokens_)*/0u
+  , /*decltype(_impl_.completion_tokens_)*/0u
+  , /*decltype(_impl_.total_tokens_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct TokenUsageDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TokenUsageDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TokenUsageDefaultTypeInternal() {}
+  union {
+    TokenUsage _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TokenUsageDefaultTypeInternal _TokenUsage_default_instance_;
+PROTOBUF_CONSTEXPR GenerateResponse::GenerateResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.full_text_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.finish_reason_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.usage_)*/nullptr
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct GenerateResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GenerateResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GenerateResponseDefaultTypeInternal() {}
+  union {
+    GenerateResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GenerateResponseDefaultTypeInternal _GenerateResponse_default_instance_;
 }  // namespace chat
 }  // namespace ai
 }  // namespace novanet
-static void InitDefaultsscc_info_ChatMessage_chat_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
+static ::_pb::Metadata file_level_metadata_chat_2eproto[5];
+static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_chat_2eproto = nullptr;
+static const ::_pb::ServiceDescriptor* file_level_service_descriptors_chat_2eproto[1];
 
-  {
-    void* ptr = &::novanet::ai::chat::_ChatMessage_default_instance_;
-    new (ptr) ::novanet::ai::chat::ChatMessage();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::novanet::ai::chat::ChatMessage::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ChatMessage_chat_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ChatMessage_chat_2eproto}, {}};
-
-static void InitDefaultsscc_info_GenerateChunk_chat_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::novanet::ai::chat::_GenerateChunk_default_instance_;
-    new (ptr) ::novanet::ai::chat::GenerateChunk();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::novanet::ai::chat::GenerateChunk::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GenerateChunk_chat_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_GenerateChunk_chat_2eproto}, {}};
-
-static void InitDefaultsscc_info_GenerateRequest_chat_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::novanet::ai::chat::_GenerateRequest_default_instance_;
-    new (ptr) ::novanet::ai::chat::GenerateRequest();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::novanet::ai::chat::GenerateRequest::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_GenerateRequest_chat_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_GenerateRequest_chat_2eproto}, {
-      &scc_info_ChatMessage_chat_2eproto.base,}};
-
-static void InitDefaultsscc_info_GenerateResponse_chat_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::novanet::ai::chat::_GenerateResponse_default_instance_;
-    new (ptr) ::novanet::ai::chat::GenerateResponse();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::novanet::ai::chat::GenerateResponse::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_GenerateResponse_chat_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_GenerateResponse_chat_2eproto}, {
-      &scc_info_TokenUsage_chat_2eproto.base,}};
-
-static void InitDefaultsscc_info_TokenUsage_chat_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::novanet::ai::chat::_TokenUsage_default_instance_;
-    new (ptr) ::novanet::ai::chat::TokenUsage();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::novanet::ai::chat::TokenUsage::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TokenUsage_chat_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_TokenUsage_chat_2eproto}, {}};
-
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_chat_2eproto[5];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_chat_2eproto = nullptr;
-static const ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor* file_level_service_descriptors_chat_2eproto[1];
-
-const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chat_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+const uint32_t TableStruct_chat_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::ChatMessage, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::ChatMessage, role_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::ChatMessage, content_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::ChatMessage, _impl_.role_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::ChatMessage, _impl_.content_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, messages_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, model_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, max_tokens_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, temperature_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, stop_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, _impl_.messages_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, _impl_.model_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, _impl_.max_tokens_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, _impl_.temperature_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateRequest, _impl_.stop_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateChunk, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateChunk, index_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateChunk, delta_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateChunk, finish_reason_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateChunk, _impl_.index_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateChunk, _impl_.delta_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateChunk, _impl_.finish_reason_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::TokenUsage, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::TokenUsage, prompt_tokens_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::TokenUsage, completion_tokens_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::TokenUsage, total_tokens_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::TokenUsage, _impl_.prompt_tokens_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::TokenUsage, _impl_.completion_tokens_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::TokenUsage, _impl_.total_tokens_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateResponse, full_text_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateResponse, usage_),
-  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateResponse, finish_reason_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateResponse, _impl_.full_text_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateResponse, _impl_.usage_),
+  PROTOBUF_FIELD_OFFSET(::novanet::ai::chat::GenerateResponse, _impl_.finish_reason_),
 };
-static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::novanet::ai::chat::ChatMessage)},
-  { 7, -1, sizeof(::novanet::ai::chat::GenerateRequest)},
-  { 17, -1, sizeof(::novanet::ai::chat::GenerateChunk)},
-  { 25, -1, sizeof(::novanet::ai::chat::TokenUsage)},
-  { 33, -1, sizeof(::novanet::ai::chat::GenerateResponse)},
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, -1, sizeof(::novanet::ai::chat::ChatMessage)},
+  { 8, -1, -1, sizeof(::novanet::ai::chat::GenerateRequest)},
+  { 19, -1, -1, sizeof(::novanet::ai::chat::GenerateChunk)},
+  { 28, -1, -1, sizeof(::novanet::ai::chat::TokenUsage)},
+  { 37, -1, -1, sizeof(::novanet::ai::chat::GenerateResponse)},
 };
 
-static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::ai::chat::_ChatMessage_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::ai::chat::_GenerateRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::ai::chat::_GenerateChunk_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::ai::chat::_TokenUsage_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::novanet::ai::chat::_GenerateResponse_default_instance_),
+static const ::_pb::Message* const file_default_instances[] = {
+  &::novanet::ai::chat::_ChatMessage_default_instance_._instance,
+  &::novanet::ai::chat::_GenerateRequest_default_instance_._instance,
+  &::novanet::ai::chat::_GenerateChunk_default_instance_._instance,
+  &::novanet::ai::chat::_TokenUsage_default_instance_._instance,
+  &::novanet::ai::chat::_GenerateResponse_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -194,159 +187,171 @@ const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   ".GenerateRequest\032!.novanet.ai.chat.Gener"
   "ateResponseB\010H\001\200\001\001\370\001\001b\006proto3"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_chat_2eproto_deps[1] = {
+static ::_pbi::once_flag descriptor_table_chat_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_chat_2eproto = {
+    false, false, 589, descriptor_table_protodef_chat_2eproto,
+    "chat.proto",
+    &descriptor_table_chat_2eproto_once, nullptr, 0, 5,
+    schemas, file_default_instances, TableStruct_chat_2eproto::offsets,
+    file_level_metadata_chat_2eproto, file_level_enum_descriptors_chat_2eproto,
+    file_level_service_descriptors_chat_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_chat_2eproto_sccs[5] = {
-  &scc_info_ChatMessage_chat_2eproto.base,
-  &scc_info_GenerateChunk_chat_2eproto.base,
-  &scc_info_GenerateRequest_chat_2eproto.base,
-  &scc_info_GenerateResponse_chat_2eproto.base,
-  &scc_info_TokenUsage_chat_2eproto.base,
-};
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_chat_2eproto_once;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chat_2eproto = {
-  false, false, descriptor_table_protodef_chat_2eproto, "chat.proto", 589,
-  &descriptor_table_chat_2eproto_once, descriptor_table_chat_2eproto_sccs, descriptor_table_chat_2eproto_deps, 5, 0,
-  schemas, file_default_instances, TableStruct_chat_2eproto::offsets,
-  file_level_metadata_chat_2eproto, 5, file_level_enum_descriptors_chat_2eproto, file_level_service_descriptors_chat_2eproto,
-};
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_chat_2eproto_getter() {
+  return &descriptor_table_chat_2eproto;
+}
 
 // Force running AddDescriptors() at dynamic initialization time.
-static bool dynamic_init_dummy_chat_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_chat_2eproto)), true);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_chat_2eproto(&descriptor_table_chat_2eproto);
 namespace novanet {
 namespace ai {
 namespace chat {
 
 // ===================================================================
 
-void ChatMessage::InitAsDefaultInstance() {
-}
 class ChatMessage::_Internal {
  public:
 };
 
-ChatMessage::ChatMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
+ChatMessage::ChatMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:novanet.ai.chat.ChatMessage)
 }
 ChatMessage::ChatMessage(const ChatMessage& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  ChatMessage* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.role_){}
+    , decltype(_impl_.content_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  role_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.role_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.role_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_role().empty()) {
-    role_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_role(),
-      GetArena());
+    _this->_impl_.role_.Set(from._internal_role(), 
+      _this->GetArenaForAllocation());
   }
-  content_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.content_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_content().empty()) {
-    content_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_content(),
-      GetArena());
+    _this->_impl_.content_.Set(from._internal_content(), 
+      _this->GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:novanet.ai.chat.ChatMessage)
 }
 
-void ChatMessage::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ChatMessage_chat_2eproto.base);
-  role_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  content_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void ChatMessage::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.role_){}
+    , decltype(_impl_.content_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.role_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.role_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.content_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.content_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 ChatMessage::~ChatMessage() {
   // @@protoc_insertion_point(destructor:novanet.ai.chat.ChatMessage)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void ChatMessage::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
-  role_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  content_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void ChatMessage::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.role_.Destroy();
+  _impl_.content_.Destroy();
 }
 
-void ChatMessage::ArenaDtor(void* object) {
-  ChatMessage* _this = reinterpret_cast< ChatMessage* >(object);
-  (void)_this;
-}
-void ChatMessage::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void ChatMessage::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const ChatMessage& ChatMessage::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ChatMessage_chat_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void ChatMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:novanet.ai.chat.ChatMessage)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  role_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  content_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _impl_.role_.ClearToEmpty();
+  _impl_.content_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* ChatMessage::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* ChatMessage::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // string role = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           auto str = _internal_mutable_role();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.ChatMessage.role"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.ChatMessage.role"));
+        } else
+          goto handle_unusual;
         continue;
       // string content = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_content();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.ChatMessage.content"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.ChatMessage.content"));
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* ChatMessage::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* ChatMessage::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:novanet.ai.chat.ChatMessage)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // string role = 1;
-  if (this->role().size() > 0) {
+  if (!this->_internal_role().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_role().data(), static_cast<int>(this->_internal_role().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -356,7 +361,7 @@ failure:
   }
 
   // string content = 2;
-  if (this->content().size() > 0) {
+  if (!this->_internal_content().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_content().data(), static_cast<int>(this->_internal_content().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -366,7 +371,7 @@ failure:
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:novanet.ai.chat.ChatMessage)
@@ -377,68 +382,49 @@ size_t ChatMessage::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:novanet.ai.chat.ChatMessage)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string role = 1;
-  if (this->role().size() > 0) {
+  if (!this->_internal_role().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_role());
   }
 
   // string content = 2;
-  if (this->content().size() > 0) {
+  if (!this->_internal_content().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_content());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void ChatMessage::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.ai.chat.ChatMessage)
-  GOOGLE_DCHECK_NE(&from, this);
-  const ChatMessage* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ChatMessage>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.ai.chat.ChatMessage)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.ai.chat.ChatMessage)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ChatMessage::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    ChatMessage::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ChatMessage::GetClassData() const { return &_class_data_; }
 
-void ChatMessage::MergeFrom(const ChatMessage& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.ChatMessage)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void ChatMessage::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ChatMessage*>(&to_msg);
+  auto& from = static_cast<const ChatMessage&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.ChatMessage)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.role().size() > 0) {
-    _internal_set_role(from._internal_role());
+  if (!from._internal_role().empty()) {
+    _this->_internal_set_role(from._internal_role());
   }
-  if (from.content().size() > 0) {
-    _internal_set_content(from._internal_content());
+  if (!from._internal_content().empty()) {
+    _this->_internal_set_content(from._internal_content());
   }
-}
-
-void ChatMessage::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.ai.chat.ChatMessage)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void ChatMessage::CopyFrom(const ChatMessage& from) {
@@ -454,108 +440,125 @@ bool ChatMessage::IsInitialized() const {
 
 void ChatMessage::InternalSwap(ChatMessage* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  role_.Swap(&other->role_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  content_.Swap(&other->content_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.role_, lhs_arena,
+      &other->_impl_.role_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.content_, lhs_arena,
+      &other->_impl_.content_, rhs_arena
+  );
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ChatMessage::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[0]);
 }
-
 
 // ===================================================================
 
-void GenerateRequest::InitAsDefaultInstance() {
-}
 class GenerateRequest::_Internal {
  public:
 };
 
-GenerateRequest::GenerateRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  messages_(arena),
-  stop_(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
+GenerateRequest::GenerateRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:novanet.ai.chat.GenerateRequest)
 }
 GenerateRequest::GenerateRequest(const GenerateRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      messages_(from.messages_),
-      stop_(from.stop_) {
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  GenerateRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.messages_){from._impl_.messages_}
+    , decltype(_impl_.stop_){from._impl_.stop_}
+    , decltype(_impl_.model_){}
+    , decltype(_impl_.max_tokens_){}
+    , decltype(_impl_.temperature_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  model_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.model_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.model_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_model().empty()) {
-    model_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_model(),
-      GetArena());
+    _this->_impl_.model_.Set(from._internal_model(), 
+      _this->GetArenaForAllocation());
   }
-  ::memcpy(&max_tokens_, &from.max_tokens_,
-    static_cast<size_t>(reinterpret_cast<char*>(&temperature_) -
-    reinterpret_cast<char*>(&max_tokens_)) + sizeof(temperature_));
+  ::memcpy(&_impl_.max_tokens_, &from._impl_.max_tokens_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.temperature_) -
+    reinterpret_cast<char*>(&_impl_.max_tokens_)) + sizeof(_impl_.temperature_));
   // @@protoc_insertion_point(copy_constructor:novanet.ai.chat.GenerateRequest)
 }
 
-void GenerateRequest::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GenerateRequest_chat_2eproto.base);
-  model_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&max_tokens_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&temperature_) -
-      reinterpret_cast<char*>(&max_tokens_)) + sizeof(temperature_));
+inline void GenerateRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.messages_){arena}
+    , decltype(_impl_.stop_){arena}
+    , decltype(_impl_.model_){}
+    , decltype(_impl_.max_tokens_){0u}
+    , decltype(_impl_.temperature_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.model_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.model_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 GenerateRequest::~GenerateRequest() {
   // @@protoc_insertion_point(destructor:novanet.ai.chat.GenerateRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void GenerateRequest::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
-  model_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void GenerateRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.messages_.~RepeatedPtrField();
+  _impl_.stop_.~RepeatedPtrField();
+  _impl_.model_.Destroy();
 }
 
-void GenerateRequest::ArenaDtor(void* object) {
-  GenerateRequest* _this = reinterpret_cast< GenerateRequest* >(object);
-  (void)_this;
-}
-void GenerateRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void GenerateRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const GenerateRequest& GenerateRequest::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GenerateRequest_chat_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void GenerateRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:novanet.ai.chat.GenerateRequest)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  messages_.Clear();
-  stop_.Clear();
-  model_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  ::memset(&max_tokens_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&temperature_) -
-      reinterpret_cast<char*>(&max_tokens_)) + sizeof(temperature_));
+  _impl_.messages_.Clear();
+  _impl_.stop_.Clear();
+  _impl_.model_.ClearToEmpty();
+  ::memset(&_impl_.max_tokens_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.temperature_) -
+      reinterpret_cast<char*>(&_impl_.max_tokens_)) + sizeof(_impl_.temperature_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* GenerateRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* GenerateRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // repeated .novanet.ai.chat.ChatMessage messages = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -563,83 +566,89 @@ const char* GenerateRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string model = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_model();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.GenerateRequest.model"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.GenerateRequest.model"));
+        } else
+          goto handle_unusual;
         continue;
       // uint32 max_tokens = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          max_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.max_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // float temperature = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 37)) {
-          temperature_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
+          _impl_.temperature_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // repeated string stop = 5;
       case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
           ptr -= 1;
           do {
             ptr += 1;
             auto str = _internal_add_stop();
-            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.GenerateRequest.stop"));
+            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
             CHK_(ptr);
+            CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.GenerateRequest.stop"));
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* GenerateRequest::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* GenerateRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:novanet.ai.chat.GenerateRequest)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // repeated .novanet.ai.chat.ChatMessage messages = 1;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_messages_size()); i < n; i++) {
-    target = stream->EnsureSpace(target);
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_messages_size()); i < n; i++) {
+    const auto& repfield = this->_internal_messages(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, this->_internal_messages(i), target, stream);
+        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   // string model = 2;
-  if (this->model().size() > 0) {
+  if (!this->_internal_model().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_model().data(), static_cast<int>(this->_internal_model().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -649,15 +658,19 @@ failure:
   }
 
   // uint32 max_tokens = 3;
-  if (this->max_tokens() != 0) {
+  if (this->_internal_max_tokens() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_max_tokens(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(3, this->_internal_max_tokens(), target);
   }
 
   // float temperature = 4;
-  if (!(this->temperature() <= 0 && this->temperature() >= 0)) {
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_temperature = this->_internal_temperature();
+  uint32_t raw_temperature;
+  memcpy(&raw_temperature, &tmp_temperature, sizeof(tmp_temperature));
+  if (raw_temperature != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(4, this->_internal_temperature(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(4, this->_internal_temperature(), target);
   }
 
   // repeated string stop = 5;
@@ -671,7 +684,7 @@ failure:
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:novanet.ai.chat.GenerateRequest)
@@ -682,93 +695,80 @@ size_t GenerateRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:novanet.ai.chat.GenerateRequest)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated .novanet.ai.chat.ChatMessage messages = 1;
   total_size += 1UL * this->_internal_messages_size();
-  for (const auto& msg : this->messages_) {
+  for (const auto& msg : this->_impl_.messages_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // repeated string stop = 5;
   total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(stop_.size());
-  for (int i = 0, n = stop_.size(); i < n; i++) {
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.stop_.size());
+  for (int i = 0, n = _impl_.stop_.size(); i < n; i++) {
     total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      stop_.Get(i));
+      _impl_.stop_.Get(i));
   }
 
   // string model = 2;
-  if (this->model().size() > 0) {
+  if (!this->_internal_model().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_model());
   }
 
   // uint32 max_tokens = 3;
-  if (this->max_tokens() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_max_tokens());
+  if (this->_internal_max_tokens() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_max_tokens());
   }
 
   // float temperature = 4;
-  if (!(this->temperature() <= 0 && this->temperature() >= 0)) {
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_temperature = this->_internal_temperature();
+  uint32_t raw_temperature;
+  memcpy(&raw_temperature, &tmp_temperature, sizeof(tmp_temperature));
+  if (raw_temperature != 0) {
     total_size += 1 + 4;
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void GenerateRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.ai.chat.GenerateRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  const GenerateRequest* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GenerateRequest>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.ai.chat.GenerateRequest)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.ai.chat.GenerateRequest)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GenerateRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    GenerateRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GenerateRequest::GetClassData() const { return &_class_data_; }
 
-void GenerateRequest::MergeFrom(const GenerateRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.GenerateRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void GenerateRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<GenerateRequest*>(&to_msg);
+  auto& from = static_cast<const GenerateRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.GenerateRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  messages_.MergeFrom(from.messages_);
-  stop_.MergeFrom(from.stop_);
-  if (from.model().size() > 0) {
-    _internal_set_model(from._internal_model());
+  _this->_impl_.messages_.MergeFrom(from._impl_.messages_);
+  _this->_impl_.stop_.MergeFrom(from._impl_.stop_);
+  if (!from._internal_model().empty()) {
+    _this->_internal_set_model(from._internal_model());
   }
-  if (from.max_tokens() != 0) {
-    _internal_set_max_tokens(from._internal_max_tokens());
+  if (from._internal_max_tokens() != 0) {
+    _this->_internal_set_max_tokens(from._internal_max_tokens());
   }
-  if (!(from.temperature() <= 0 && from.temperature() >= 0)) {
-    _internal_set_temperature(from._internal_temperature());
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_temperature = from._internal_temperature();
+  uint32_t raw_temperature;
+  memcpy(&raw_temperature, &tmp_temperature, sizeof(tmp_temperature));
+  if (raw_temperature != 0) {
+    _this->_internal_set_temperature(from._internal_temperature());
   }
-}
-
-void GenerateRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.ai.chat.GenerateRequest)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void GenerateRequest::CopyFrom(const GenerateRequest& from) {
@@ -784,169 +784,193 @@ bool GenerateRequest::IsInitialized() const {
 
 void GenerateRequest::InternalSwap(GenerateRequest* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  messages_.InternalSwap(&other->messages_);
-  stop_.InternalSwap(&other->stop_);
-  model_.Swap(&other->model_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.messages_.InternalSwap(&other->_impl_.messages_);
+  _impl_.stop_.InternalSwap(&other->_impl_.stop_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.model_, lhs_arena,
+      &other->_impl_.model_, rhs_arena
+  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(GenerateRequest, temperature_)
-      + sizeof(GenerateRequest::temperature_)
-      - PROTOBUF_FIELD_OFFSET(GenerateRequest, max_tokens_)>(
-          reinterpret_cast<char*>(&max_tokens_),
-          reinterpret_cast<char*>(&other->max_tokens_));
+      PROTOBUF_FIELD_OFFSET(GenerateRequest, _impl_.temperature_)
+      + sizeof(GenerateRequest::_impl_.temperature_)
+      - PROTOBUF_FIELD_OFFSET(GenerateRequest, _impl_.max_tokens_)>(
+          reinterpret_cast<char*>(&_impl_.max_tokens_),
+          reinterpret_cast<char*>(&other->_impl_.max_tokens_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata GenerateRequest::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[1]);
 }
-
 
 // ===================================================================
 
-void GenerateChunk::InitAsDefaultInstance() {
-}
 class GenerateChunk::_Internal {
  public:
 };
 
-GenerateChunk::GenerateChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
+GenerateChunk::GenerateChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:novanet.ai.chat.GenerateChunk)
 }
 GenerateChunk::GenerateChunk(const GenerateChunk& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  GenerateChunk* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.delta_){}
+    , decltype(_impl_.finish_reason_){}
+    , decltype(_impl_.index_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  delta_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.delta_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.delta_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_delta().empty()) {
-    delta_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_delta(),
-      GetArena());
+    _this->_impl_.delta_.Set(from._internal_delta(), 
+      _this->GetArenaForAllocation());
   }
-  finish_reason_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.finish_reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.finish_reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_finish_reason().empty()) {
-    finish_reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_finish_reason(),
-      GetArena());
+    _this->_impl_.finish_reason_.Set(from._internal_finish_reason(), 
+      _this->GetArenaForAllocation());
   }
-  index_ = from.index_;
+  _this->_impl_.index_ = from._impl_.index_;
   // @@protoc_insertion_point(copy_constructor:novanet.ai.chat.GenerateChunk)
 }
 
-void GenerateChunk::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GenerateChunk_chat_2eproto.base);
-  delta_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  finish_reason_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  index_ = 0u;
+inline void GenerateChunk::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.delta_){}
+    , decltype(_impl_.finish_reason_){}
+    , decltype(_impl_.index_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.delta_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.delta_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.finish_reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.finish_reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 GenerateChunk::~GenerateChunk() {
   // @@protoc_insertion_point(destructor:novanet.ai.chat.GenerateChunk)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void GenerateChunk::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
-  delta_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  finish_reason_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void GenerateChunk::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.delta_.Destroy();
+  _impl_.finish_reason_.Destroy();
 }
 
-void GenerateChunk::ArenaDtor(void* object) {
-  GenerateChunk* _this = reinterpret_cast< GenerateChunk* >(object);
-  (void)_this;
-}
-void GenerateChunk::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void GenerateChunk::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const GenerateChunk& GenerateChunk::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GenerateChunk_chat_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void GenerateChunk::Clear() {
 // @@protoc_insertion_point(message_clear_start:novanet.ai.chat.GenerateChunk)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  delta_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  finish_reason_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  index_ = 0u;
+  _impl_.delta_.ClearToEmpty();
+  _impl_.finish_reason_.ClearToEmpty();
+  _impl_.index_ = 0u;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* GenerateChunk::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* GenerateChunk::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint32 index = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string delta = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_delta();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.GenerateChunk.delta"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.GenerateChunk.delta"));
+        } else
+          goto handle_unusual;
         continue;
       // string finish_reason = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_finish_reason();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.GenerateChunk.finish_reason"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.GenerateChunk.finish_reason"));
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* GenerateChunk::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* GenerateChunk::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:novanet.ai.chat.GenerateChunk)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // uint32 index = 1;
-  if (this->index() != 0) {
+  if (this->_internal_index() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_index(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_index(), target);
   }
 
   // string delta = 2;
-  if (this->delta().size() > 0) {
+  if (!this->_internal_delta().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_delta().data(), static_cast<int>(this->_internal_delta().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -956,7 +980,7 @@ failure:
   }
 
   // string finish_reason = 3;
-  if (this->finish_reason().size() > 0) {
+  if (!this->_internal_finish_reason().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_finish_reason().data(), static_cast<int>(this->_internal_finish_reason().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -966,7 +990,7 @@ failure:
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:novanet.ai.chat.GenerateChunk)
@@ -977,78 +1001,57 @@ size_t GenerateChunk::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:novanet.ai.chat.GenerateChunk)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string delta = 2;
-  if (this->delta().size() > 0) {
+  if (!this->_internal_delta().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_delta());
   }
 
   // string finish_reason = 3;
-  if (this->finish_reason().size() > 0) {
+  if (!this->_internal_finish_reason().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_finish_reason());
   }
 
   // uint32 index = 1;
-  if (this->index() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_index());
+  if (this->_internal_index() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_index());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void GenerateChunk::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.ai.chat.GenerateChunk)
-  GOOGLE_DCHECK_NE(&from, this);
-  const GenerateChunk* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GenerateChunk>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.ai.chat.GenerateChunk)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.ai.chat.GenerateChunk)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GenerateChunk::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    GenerateChunk::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GenerateChunk::GetClassData() const { return &_class_data_; }
 
-void GenerateChunk::MergeFrom(const GenerateChunk& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.GenerateChunk)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void GenerateChunk::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<GenerateChunk*>(&to_msg);
+  auto& from = static_cast<const GenerateChunk&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.GenerateChunk)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.delta().size() > 0) {
-    _internal_set_delta(from._internal_delta());
+  if (!from._internal_delta().empty()) {
+    _this->_internal_set_delta(from._internal_delta());
   }
-  if (from.finish_reason().size() > 0) {
-    _internal_set_finish_reason(from._internal_finish_reason());
+  if (!from._internal_finish_reason().empty()) {
+    _this->_internal_set_finish_reason(from._internal_finish_reason());
   }
-  if (from.index() != 0) {
-    _internal_set_index(from._internal_index());
+  if (from._internal_index() != 0) {
+    _this->_internal_set_index(from._internal_index());
   }
-}
-
-void GenerateChunk::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.ai.chat.GenerateChunk)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void GenerateChunk::CopyFrom(const GenerateChunk& from) {
@@ -1064,160 +1067,174 @@ bool GenerateChunk::IsInitialized() const {
 
 void GenerateChunk::InternalSwap(GenerateChunk* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  delta_.Swap(&other->delta_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  finish_reason_.Swap(&other->finish_reason_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(index_, other->index_);
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.delta_, lhs_arena,
+      &other->_impl_.delta_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.finish_reason_, lhs_arena,
+      &other->_impl_.finish_reason_, rhs_arena
+  );
+  swap(_impl_.index_, other->_impl_.index_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata GenerateChunk::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[2]);
 }
-
 
 // ===================================================================
 
-void TokenUsage::InitAsDefaultInstance() {
-}
 class TokenUsage::_Internal {
  public:
 };
 
-TokenUsage::TokenUsage(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
+TokenUsage::TokenUsage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:novanet.ai.chat.TokenUsage)
 }
 TokenUsage::TokenUsage(const TokenUsage& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  TokenUsage* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.prompt_tokens_){}
+    , decltype(_impl_.completion_tokens_){}
+    , decltype(_impl_.total_tokens_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&prompt_tokens_, &from.prompt_tokens_,
-    static_cast<size_t>(reinterpret_cast<char*>(&total_tokens_) -
-    reinterpret_cast<char*>(&prompt_tokens_)) + sizeof(total_tokens_));
+  ::memcpy(&_impl_.prompt_tokens_, &from._impl_.prompt_tokens_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.total_tokens_) -
+    reinterpret_cast<char*>(&_impl_.prompt_tokens_)) + sizeof(_impl_.total_tokens_));
   // @@protoc_insertion_point(copy_constructor:novanet.ai.chat.TokenUsage)
 }
 
-void TokenUsage::SharedCtor() {
-  ::memset(&prompt_tokens_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&total_tokens_) -
-      reinterpret_cast<char*>(&prompt_tokens_)) + sizeof(total_tokens_));
+inline void TokenUsage::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.prompt_tokens_){0u}
+    , decltype(_impl_.completion_tokens_){0u}
+    , decltype(_impl_.total_tokens_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 TokenUsage::~TokenUsage() {
   // @@protoc_insertion_point(destructor:novanet.ai.chat.TokenUsage)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void TokenUsage::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
+inline void TokenUsage::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void TokenUsage::ArenaDtor(void* object) {
-  TokenUsage* _this = reinterpret_cast< TokenUsage* >(object);
-  (void)_this;
-}
-void TokenUsage::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void TokenUsage::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const TokenUsage& TokenUsage::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_TokenUsage_chat_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void TokenUsage::Clear() {
 // @@protoc_insertion_point(message_clear_start:novanet.ai.chat.TokenUsage)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&prompt_tokens_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&total_tokens_) -
-      reinterpret_cast<char*>(&prompt_tokens_)) + sizeof(total_tokens_));
+  ::memset(&_impl_.prompt_tokens_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.total_tokens_) -
+      reinterpret_cast<char*>(&_impl_.prompt_tokens_)) + sizeof(_impl_.total_tokens_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* TokenUsage::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* TokenUsage::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint32 prompt_tokens = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          prompt_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.prompt_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 completion_tokens = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          completion_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.completion_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 total_tokens = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          total_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.total_tokens_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* TokenUsage::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* TokenUsage::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:novanet.ai.chat.TokenUsage)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // uint32 prompt_tokens = 1;
-  if (this->prompt_tokens() != 0) {
+  if (this->_internal_prompt_tokens() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_prompt_tokens(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_prompt_tokens(), target);
   }
 
   // uint32 completion_tokens = 2;
-  if (this->completion_tokens() != 0) {
+  if (this->_internal_completion_tokens() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_completion_tokens(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_completion_tokens(), target);
   }
 
   // uint32 total_tokens = 3;
-  if (this->total_tokens() != 0) {
+  if (this->_internal_total_tokens() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_total_tokens(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(3, this->_internal_total_tokens(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:novanet.ai.chat.TokenUsage)
@@ -1228,78 +1245,53 @@ size_t TokenUsage::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:novanet.ai.chat.TokenUsage)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // uint32 prompt_tokens = 1;
-  if (this->prompt_tokens() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_prompt_tokens());
+  if (this->_internal_prompt_tokens() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_prompt_tokens());
   }
 
   // uint32 completion_tokens = 2;
-  if (this->completion_tokens() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_completion_tokens());
+  if (this->_internal_completion_tokens() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_completion_tokens());
   }
 
   // uint32 total_tokens = 3;
-  if (this->total_tokens() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_total_tokens());
+  if (this->_internal_total_tokens() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_total_tokens());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void TokenUsage::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.ai.chat.TokenUsage)
-  GOOGLE_DCHECK_NE(&from, this);
-  const TokenUsage* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<TokenUsage>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.ai.chat.TokenUsage)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.ai.chat.TokenUsage)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TokenUsage::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    TokenUsage::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TokenUsage::GetClassData() const { return &_class_data_; }
 
-void TokenUsage::MergeFrom(const TokenUsage& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.TokenUsage)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void TokenUsage::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<TokenUsage*>(&to_msg);
+  auto& from = static_cast<const TokenUsage&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.TokenUsage)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.prompt_tokens() != 0) {
-    _internal_set_prompt_tokens(from._internal_prompt_tokens());
+  if (from._internal_prompt_tokens() != 0) {
+    _this->_internal_set_prompt_tokens(from._internal_prompt_tokens());
   }
-  if (from.completion_tokens() != 0) {
-    _internal_set_completion_tokens(from._internal_completion_tokens());
+  if (from._internal_completion_tokens() != 0) {
+    _this->_internal_set_completion_tokens(from._internal_completion_tokens());
   }
-  if (from.total_tokens() != 0) {
-    _internal_set_total_tokens(from._internal_total_tokens());
+  if (from._internal_total_tokens() != 0) {
+    _this->_internal_set_total_tokens(from._internal_total_tokens());
   }
-}
-
-void TokenUsage::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.ai.chat.TokenUsage)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void TokenUsage::CopyFrom(const TokenUsage& from) {
@@ -1315,26 +1307,23 @@ bool TokenUsage::IsInitialized() const {
 
 void TokenUsage::InternalSwap(TokenUsage* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TokenUsage, total_tokens_)
-      + sizeof(TokenUsage::total_tokens_)
-      - PROTOBUF_FIELD_OFFSET(TokenUsage, prompt_tokens_)>(
-          reinterpret_cast<char*>(&prompt_tokens_),
-          reinterpret_cast<char*>(&other->prompt_tokens_));
+      PROTOBUF_FIELD_OFFSET(TokenUsage, _impl_.total_tokens_)
+      + sizeof(TokenUsage::_impl_.total_tokens_)
+      - PROTOBUF_FIELD_OFFSET(TokenUsage, _impl_.prompt_tokens_)>(
+          reinterpret_cast<char*>(&_impl_.prompt_tokens_),
+          reinterpret_cast<char*>(&other->_impl_.prompt_tokens_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata TokenUsage::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[3]);
 }
-
 
 // ===================================================================
 
-void GenerateResponse::InitAsDefaultInstance() {
-  ::novanet::ai::chat::_GenerateResponse_default_instance_._instance.get_mutable()->usage_ = const_cast< ::novanet::ai::chat::TokenUsage*>(
-      ::novanet::ai::chat::TokenUsage::internal_default_instance());
-}
 class GenerateResponse::_Internal {
  public:
   static const ::novanet::ai::chat::TokenUsage& usage(const GenerateResponse* msg);
@@ -1342,148 +1331,166 @@ class GenerateResponse::_Internal {
 
 const ::novanet::ai::chat::TokenUsage&
 GenerateResponse::_Internal::usage(const GenerateResponse* msg) {
-  return *msg->usage_;
+  return *msg->_impl_.usage_;
 }
-GenerateResponse::GenerateResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
+GenerateResponse::GenerateResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:novanet.ai.chat.GenerateResponse)
 }
 GenerateResponse::GenerateResponse(const GenerateResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  GenerateResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.full_text_){}
+    , decltype(_impl_.finish_reason_){}
+    , decltype(_impl_.usage_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  full_text_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.full_text_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.full_text_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_full_text().empty()) {
-    full_text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_full_text(),
-      GetArena());
+    _this->_impl_.full_text_.Set(from._internal_full_text(), 
+      _this->GetArenaForAllocation());
   }
-  finish_reason_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.finish_reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.finish_reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_finish_reason().empty()) {
-    finish_reason_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_finish_reason(),
-      GetArena());
+    _this->_impl_.finish_reason_.Set(from._internal_finish_reason(), 
+      _this->GetArenaForAllocation());
   }
   if (from._internal_has_usage()) {
-    usage_ = new ::novanet::ai::chat::TokenUsage(*from.usage_);
-  } else {
-    usage_ = nullptr;
+    _this->_impl_.usage_ = new ::novanet::ai::chat::TokenUsage(*from._impl_.usage_);
   }
   // @@protoc_insertion_point(copy_constructor:novanet.ai.chat.GenerateResponse)
 }
 
-void GenerateResponse::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GenerateResponse_chat_2eproto.base);
-  full_text_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  finish_reason_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  usage_ = nullptr;
+inline void GenerateResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.full_text_){}
+    , decltype(_impl_.finish_reason_){}
+    , decltype(_impl_.usage_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.full_text_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.full_text_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.finish_reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.finish_reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 GenerateResponse::~GenerateResponse() {
   // @@protoc_insertion_point(destructor:novanet.ai.chat.GenerateResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void GenerateResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
-  full_text_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  finish_reason_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (this != internal_default_instance()) delete usage_;
+inline void GenerateResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.full_text_.Destroy();
+  _impl_.finish_reason_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.usage_;
 }
 
-void GenerateResponse::ArenaDtor(void* object) {
-  GenerateResponse* _this = reinterpret_cast< GenerateResponse* >(object);
-  (void)_this;
-}
-void GenerateResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void GenerateResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const GenerateResponse& GenerateResponse::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GenerateResponse_chat_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void GenerateResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:novanet.ai.chat.GenerateResponse)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  full_text_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  finish_reason_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  if (GetArena() == nullptr && usage_ != nullptr) {
-    delete usage_;
+  _impl_.full_text_.ClearToEmpty();
+  _impl_.finish_reason_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.usage_ != nullptr) {
+    delete _impl_.usage_;
   }
-  usage_ = nullptr;
+  _impl_.usage_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* GenerateResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* GenerateResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // string full_text = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           auto str = _internal_mutable_full_text();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.GenerateResponse.full_text"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.GenerateResponse.full_text"));
+        } else
+          goto handle_unusual;
         continue;
       // .novanet.ai.chat.TokenUsage usage = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_usage(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string finish_reason = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_finish_reason();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "novanet.ai.chat.GenerateResponse.finish_reason"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "novanet.ai.chat.GenerateResponse.finish_reason"));
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* GenerateResponse::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* GenerateResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:novanet.ai.chat.GenerateResponse)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // string full_text = 1;
-  if (this->full_text().size() > 0) {
+  if (!this->_internal_full_text().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_full_text().data(), static_cast<int>(this->_internal_full_text().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -1493,15 +1500,14 @@ failure:
   }
 
   // .novanet.ai.chat.TokenUsage usage = 2;
-  if (this->has_usage()) {
-    target = stream->EnsureSpace(target);
+  if (this->_internal_has_usage()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        2, _Internal::usage(this), target, stream);
+      InternalWriteMessage(2, _Internal::usage(this),
+        _Internal::usage(this).GetCachedSize(), target, stream);
   }
 
   // string finish_reason = 3;
-  if (this->finish_reason().size() > 0) {
+  if (!this->_internal_finish_reason().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_finish_reason().data(), static_cast<int>(this->_internal_finish_reason().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -1511,7 +1517,7 @@ failure:
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:novanet.ai.chat.GenerateResponse)
@@ -1522,78 +1528,60 @@ size_t GenerateResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:novanet.ai.chat.GenerateResponse)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string full_text = 1;
-  if (this->full_text().size() > 0) {
+  if (!this->_internal_full_text().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_full_text());
   }
 
   // string finish_reason = 3;
-  if (this->finish_reason().size() > 0) {
+  if (!this->_internal_finish_reason().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_finish_reason());
   }
 
   // .novanet.ai.chat.TokenUsage usage = 2;
-  if (this->has_usage()) {
+  if (this->_internal_has_usage()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *usage_);
+        *_impl_.usage_);
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void GenerateResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:novanet.ai.chat.GenerateResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  const GenerateResponse* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GenerateResponse>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:novanet.ai.chat.GenerateResponse)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:novanet.ai.chat.GenerateResponse)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GenerateResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    GenerateResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GenerateResponse::GetClassData() const { return &_class_data_; }
 
-void GenerateResponse::MergeFrom(const GenerateResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.GenerateResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void GenerateResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<GenerateResponse*>(&to_msg);
+  auto& from = static_cast<const GenerateResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:novanet.ai.chat.GenerateResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.full_text().size() > 0) {
-    _internal_set_full_text(from._internal_full_text());
+  if (!from._internal_full_text().empty()) {
+    _this->_internal_set_full_text(from._internal_full_text());
   }
-  if (from.finish_reason().size() > 0) {
-    _internal_set_finish_reason(from._internal_finish_reason());
+  if (!from._internal_finish_reason().empty()) {
+    _this->_internal_set_finish_reason(from._internal_finish_reason());
   }
-  if (from.has_usage()) {
-    _internal_mutable_usage()->::novanet::ai::chat::TokenUsage::MergeFrom(from._internal_usage());
+  if (from._internal_has_usage()) {
+    _this->_internal_mutable_usage()->::novanet::ai::chat::TokenUsage::MergeFrom(
+        from._internal_usage());
   }
-}
-
-void GenerateResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:novanet.ai.chat.GenerateResponse)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void GenerateResponse::CopyFrom(const GenerateResponse& from) {
@@ -1609,16 +1597,25 @@ bool GenerateResponse::IsInitialized() const {
 
 void GenerateResponse::InternalSwap(GenerateResponse* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  full_text_.Swap(&other->full_text_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  finish_reason_.Swap(&other->finish_reason_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(usage_, other->usage_);
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.full_text_, lhs_arena,
+      &other->_impl_.full_text_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.finish_reason_, lhs_arena,
+      &other->_impl_.finish_reason_, rhs_arena
+  );
+  swap(_impl_.usage_, other->_impl_.usage_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata GenerateResponse::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_chat_2eproto_getter, &descriptor_table_chat_2eproto_once,
+      file_level_metadata_chat_2eproto[4]);
 }
-
 
 // ===================================================================
 
@@ -1712,19 +1709,24 @@ void ChatService_Stub::Generate(::PROTOBUF_NAMESPACE_ID::RpcController* controll
 }  // namespace ai
 }  // namespace novanet
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::novanet::ai::chat::ChatMessage* Arena::CreateMaybeMessage< ::novanet::ai::chat::ChatMessage >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::novanet::ai::chat::ChatMessage*
+Arena::CreateMaybeMessage< ::novanet::ai::chat::ChatMessage >(Arena* arena) {
   return Arena::CreateMessageInternal< ::novanet::ai::chat::ChatMessage >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::ai::chat::GenerateRequest* Arena::CreateMaybeMessage< ::novanet::ai::chat::GenerateRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::novanet::ai::chat::GenerateRequest*
+Arena::CreateMaybeMessage< ::novanet::ai::chat::GenerateRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::novanet::ai::chat::GenerateRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::ai::chat::GenerateChunk* Arena::CreateMaybeMessage< ::novanet::ai::chat::GenerateChunk >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::novanet::ai::chat::GenerateChunk*
+Arena::CreateMaybeMessage< ::novanet::ai::chat::GenerateChunk >(Arena* arena) {
   return Arena::CreateMessageInternal< ::novanet::ai::chat::GenerateChunk >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::ai::chat::TokenUsage* Arena::CreateMaybeMessage< ::novanet::ai::chat::TokenUsage >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::novanet::ai::chat::TokenUsage*
+Arena::CreateMaybeMessage< ::novanet::ai::chat::TokenUsage >(Arena* arena) {
   return Arena::CreateMessageInternal< ::novanet::ai::chat::TokenUsage >(arena);
 }
-template<> PROTOBUF_NOINLINE ::novanet::ai::chat::GenerateResponse* Arena::CreateMaybeMessage< ::novanet::ai::chat::GenerateResponse >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::novanet::ai::chat::GenerateResponse*
+Arena::CreateMaybeMessage< ::novanet::ai::chat::GenerateResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::novanet::ai::chat::GenerateResponse >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE

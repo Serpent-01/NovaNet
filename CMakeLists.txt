@@ -26,11 +26,15 @@ endif()
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 option(NOVANET_ENABLE_ASAN "Enable AddressSanitizer" OFF)
+option(NOVANET_BUILD_TESTS "Build NovaNet tests" ON)
 
 if (NOVANET_ENABLE_ASAN)
     add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
     add_link_options(-fsanitize=address)
 endif()
+
+
+
 
 # ==========================================================
 # 依赖
@@ -518,3 +522,21 @@ add_test(
     NAME EndpointTest
     COMMAND EndpointTest
 )
+
+
+
+# ==========================================================
+# Unit tests
+# ==========================================================
+
+if(NOVANET_BUILD_TESTS)
+    add_executable(rpc_header_test
+        tests/unit/protocol/rpc_header_test.cpp
+    )
+    target_link_libraries(rpc_header_test
+        PRIVATE
+            novanet
+            GTest::gtest_main
+    )
+    add_test(NAME rpcheader_test COMMON rpc_header_test)
+endif()
