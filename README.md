@@ -1,5 +1,3 @@
-全程仅进行了只读检查，没有修改、删除或添加任何代码和文件。以下内容可作为项目 `README.md` 的主体。
-
 # NovaNet
 
 > 基于 C++17、Linux epoll LT 与 Multi-Reactor 架构实现的 Streaming RPC 框架。
@@ -233,8 +231,6 @@ add_timeout_client
 add_benchmark_client
 ```
 
-Phase 1～4 的独立示例源码仍保留在 `examples/` 中，但对应 CMake Target 当前被注释，不属于默认构建目标。
-
 ## 快速运行
 
 启动 NovaNet 服务端：
@@ -323,6 +319,3 @@ NovaNet 当前已经覆盖：
 | Phase 4 | Unary、Streaming、SDK、心跳、超时、取消、背压 |
 | Phase 5 | 服务发现、负载均衡与重试，暂未实现 |
 
----
-
-还有一个必须在公开 GitHub 仓库前处理的安全问题：当前 `ai_bridge/.env` 和 `ai_bridge/.env.example` 都是 Git 已跟踪文件，其中 API Key 看起来不是普通占位符，同时 `.gitignore` 没有忽略 `.env`。应立即撤销或轮换该 Key，并在发布前清理 Git 历史。本文没有复述该 Key，也没有修改这些文件。
