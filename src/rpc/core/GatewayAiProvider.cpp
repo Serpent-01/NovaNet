@@ -137,7 +137,8 @@ bool processNdjsonLine(CurlStreamContext& ctx, std::string line) {
     if (type == "error") {
         const std::string code = obj.value("code", "provider_error");
         const std::string message = obj.value("message", "");
-        ctx.finalStatus = AiProvider::Status::providerError(statusMessage(code, message));
+        ctx.finalStatus =
+            AiProvider::Status::providerError(statusMessage(code, message));
         return false;
     }
     ctx.finalStatus =
@@ -203,13 +204,16 @@ size_t curlWriteCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
 GatewayAiProvider::GatewayAiProvider() : GatewayAiProvider(Options{}) {
 }
 
-GatewayAiProvider::GatewayAiProvider(Options options) : options_(std::move(options)) {
+GatewayAiProvider::GatewayAiProvider(Options options)
+    : options_(std::move(options)) {
     initCurlGlobalOnce();
 }
 
 AiProvider::Status GatewayAiProvider::generateStreaming(
     const novanet::ai::chat::GenerateRequest& request, ChunkSink onChunk,
     StopChecker shouldStop) {
+    LOG_INFO << "[GatewayAiProvider] endpoint=" << options_.endpoint
+             << ", model=" << options_.model;
     if (!onChunk) {
         return AiProvider::Status::invalidRequest("ChunkSink is empty");
     }
@@ -241,7 +245,8 @@ AiProvider::Status GatewayAiProvider::generateStreaming(
 
     curl_easy_setopt(curl, CURLOPT_POST, 1L);
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, requestJson.c_str());
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, static_cast<long>(requestJson.size()));
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE,
+                     static_cast<long>(requestJson.size()));
 
     // 设置流式响应回调
     // 服务端每返回一批数据，就调用 curlWriteCallback。
@@ -257,7 +262,8 @@ AiProvider::Status GatewayAiProvider::generateStreaming(
     }
 
     //设置 low speed 超时
-    if (options_.lowSpeedTimeSeconds > 0 && options_.lowSpeedLimitBytesPerSecond > 0) {
+    if (options_.lowSpeedTimeSeconds > 0 &&
+        options_.lowSpeedLimitBytesPerSecond > 0) {
         curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, options_.lowSpeedTimeSeconds);
         curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT,
                          options_.lowSpeedLimitBytesPerSecond);

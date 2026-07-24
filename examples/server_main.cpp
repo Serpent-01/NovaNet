@@ -10,7 +10,7 @@
 #include "novanet/base/Logger.h"
 #include "novanet/net/EventLoop.h"
 #include "novanet/net/InetAddress.h"
-#include "novanet/rpc/core/FakeAiProvider.h"
+#include "novanet/rpc/core/GatewayAiProvider.h"
 #include "novanet/rpc/core/RpcServer.h"
 
 namespace calculator = novanet::example::calculator;
@@ -48,7 +48,8 @@ public:
 
             return;
         }
-
+        //超时测试
+        // std::this_thread::sleep_for(std::chrono::seconds(5));
         response->set_result(request->lhs() + request->rhs());
 
         if (done != nullptr) {
@@ -133,7 +134,7 @@ int main(int argc, char* argv[]) {
      * 当前 Phase 4 不改服务端 gRPC 风格封装。
      * Streaming 业务仍由 AiProvider 提供。
      */
-    novanet::rpc::FakeAiProvider aiProvider;
+    novanet::rpc::GatewayAiProvider aiProvider;
 
     novanet::rpc::RpcServer::Options options;
 

@@ -21,6 +21,9 @@ public:
     // 启动线程，阻塞等待直到 EventLoop 在子线程内部创建完毕
     EventLoop* startLoop();
 
+    // 请求 EventLoop 退出，并等待底层线程结束。
+    void stopAndJoin();
+
 private: 
     
     void threadFunc();
@@ -29,6 +32,7 @@ private:
     bool exiting_ {false};
     
     std::thread thread_;
+    std::mutex joinMutex_;
     std::mutex mutex_;
     std::condition_variable cond_;
 

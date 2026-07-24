@@ -24,7 +24,9 @@ Channel::Channel(EventLoop* loop, int fd)
     assert(loop != nullptr);
 }
 
-Channel::~Channel() { assert(!eventHandling_); }
+Channel::~Channel() {
+    assert(!eventHandling_);
+}
 
 void Channel::tie(const std::shared_ptr<void>& obj) {
     tie_ = obj;
@@ -32,7 +34,9 @@ void Channel::tie(const std::shared_ptr<void>& obj) {
     LOG_INFO << "Channel (fd: " << fd_ << ") lifecycle tied.";
 }
 
-void Channel::update() { loop_->updateChannel(this); }
+void Channel::update() {
+    loop_->updateChannel(this);
+}
 
 void Channel::remove() {
     // 移除前必须确保自己不再关注任何事件
@@ -53,9 +57,8 @@ void Channel::handleEvent() {
         } else {
             // 提升失败：说明宿主对象已经在其他线程被释放。
             // 此时绝对不能执行回调，直接丢弃事件！
-            LOG_WARN
-                << "Channel (fd: " << fd_
-                << ") owner object has been destroyed, drop event handling.";
+            LOG_WARN << "Channel (fd: " << fd_
+                     << ") owner object has been destroyed, drop event handling.";
         }
     } else {
         // 未绑定 tie 的 Channel（例如 Acceptor 监听新连接的
@@ -78,8 +81,7 @@ void Channel::handleEventWithGuard() {
     // 2. 处理错误事件 (EPOLLERR)
 
     if (revents_ & EPOLLERR) {
-        LOG_ERROR << "fd = " << fd_
-                  << " Channel::handleEventWithGuard() EPOLLERR";
+        LOG_ERROR << "fd = " << fd_ << " Channel::handleEventWithGuard() EPOLLERR";
         if (errorCallback_) {
             errorCallback_();
         }
@@ -100,39 +102,3 @@ void Channel::handleEventWithGuard() {
         }
     }
 }
-
-// void Channel::handleEvent(){
-//     eventHandling_ = true;
-
-//     if((revents_ & EPOLLHUP) && !(revents_ & EPOLLIN)){
-
-//         LOG_WARN << "fd = " << fd_ << " Channel::handleEvent() EPOLLHUP";
-
-//         if(closeCallback_){
-//             closeCallback_();
-//         }
-
-//         eventHandling_ = false;
-//         return;
-//     }
-
-//     if(revents_ & EPOLLERR){
-//         LOG_ERROR << "fd = " << fd_ << " Channel::handleEvent() EPOLLERR";
-//         if(errorCallback_){
-//             errorCallback_();
-//         }
-//     }
-
-//     if(revents_ & (EPOLLIN | EPOLLPRI | EPOLLRDHUP)){
-//         if(readCallback_){
-//             readCallback_();
-//         }
-//     }
-
-//     if(revents_ & EPOLLOUT){
-//         if(writeCallback_){
-//             writeCallback_();
-//         }
-//     }
-//     eventHandling_ = false;
-// }

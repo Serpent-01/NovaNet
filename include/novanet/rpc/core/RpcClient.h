@@ -35,7 +35,8 @@ namespace novanet::rpc {
  *
  * 生命周期要求：
  * - RpcClient 必须由 std::shared_ptr 管理；
- * - 因为它注册给 TcpClient 的异步回调使用 weak_from_this() 防止 UAF；
+ * - 普通异步回调使用 weak_from_this() 防止 UAF；
+ * - 关闭完成回调由 disconnect() 等待，并在 EventLoop 线程 join 前完成；
  * - ClientChannel 里应该使用 std::make_shared<RpcClient>(...) 创建。
  */
 class RpcClient final : public std::enable_shared_from_this<RpcClient> {
@@ -141,11 +142,13 @@ private:
     novanet::net::EventLoop* loop_{nullptr};
     std::shared_ptr<novanet::net::TcpClient> tcpClient_;
 
+    std::mutex disconnectMutex_;
     mutable std::mutex mutex_;
     std::condition_variable cv_;
 
     State state_{State::kIdle};
     bool closeComplete_{true};
+    bool disconnectComplete_{true};
 
     std::string lastError_;
     std::shared_ptr<RpcChannel> channel_;

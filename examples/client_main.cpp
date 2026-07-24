@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
 
     auto* userMessage = genReq.add_messages();
     userMessage->set_role("user");
-    userMessage->set_content("Hello NovaNet, please stream a short response.");
+    userMessage->set_content("什么是Reactor?");
 
     auto reader = chatStub.Generate(&chatCtx, genReq);
 

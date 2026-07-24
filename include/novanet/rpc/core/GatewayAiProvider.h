@@ -29,7 +29,7 @@ namespace novanet::rpc {
 class GatewayAiProvider final : public AiProvider {
 public:
     struct Options {
-        std::string endpoint{"http://127.0.0.1:8000/chat/stream"};
+        std::string endpoint{"http://127.0.0.1:18080/chat/stream"};
         std::string model{"deepseek-chat"};
 
         long connectTimeoutMs{3000};

@@ -83,6 +83,7 @@ bool RpcClient::connect(std::string* errorText) {
 
         state_ = State::kConnecting;
         closeComplete_ = false;
+        disconnectComplete_ = false;
         lastError_.clear();
     }
 
@@ -93,6 +94,7 @@ bool RpcClient::connect(std::string* errorText) {
             loop_ = nullptr;
             state_ = State::kClosed;
             closeComplete_ = true;
+            disconnectComplete_ = true;
             lastError_ = "failed to start client EventLoop";
         }
 
@@ -163,13 +165,8 @@ bool RpcClient::connect(std::string* errorText) {
         self->handleTcpConnectError(errorCode, std::move(error));
     });
 
-    tcpClient->setCloseCompleteCallback([weakSelf]() {
-        auto self = weakSelf.lock();
-        if (!self) {
-            return;
-        }
-
-        self->handleTcpCloseComplete();
+    tcpClient->setCloseCompleteCallback([this]() {
+        handleTcpCloseComplete();
     });
 
     std::shared_ptr<novanet::net::TcpClient> clientToConnect;
@@ -243,18 +240,35 @@ bool RpcClient::connect(std::string* errorText) {
 }
 
 void RpcClient::disconnect() {
+    std::lock_guard<std::mutex> disconnectLock(disconnectMutex_);
+
     std::shared_ptr<novanet::net::TcpClient> clientToStop;
     std::shared_ptr<novanet::net::TcpClient> clientToRelease;
     std::shared_ptr<RpcChannel> channelToClose;
 
     bool shouldWaitClose = false;
+    novanet::net::EventLoop* loop = nullptr;
 
     {
         std::lock_guard<std::mutex> lock(mutex_);
 
-        if (state_ == State::kIdle || (state_ == State::kClosed && closeComplete_)) {
+        if (state_ == State::kClosed && disconnectComplete_) {
+            return;
+        }
+
+        loop = loop_;
+
+        if (loop != nullptr && loop->isInLoopThread()) {
+            LOG_FATAL << "[RpcClient] synchronous disconnect called from EventLoop "
+                         "thread, name="
+                      << name_;
+            return;
+        }
+
+        if (state_ == State::kIdle) {
             state_ = State::kClosed;
             closeComplete_ = true;
+            disconnectComplete_ = true;
 
             channelToClose = std::move(channel_);
             clientToRelease = std::move(tcpClient_);
@@ -262,9 +276,8 @@ void RpcClient::disconnect() {
             lastError_ = "RpcClient disconnected";
             cv_.notify_all();
         } else {
-            if (state_ != State::kClosed) {
-                state_ = State::kClosing;
-            }
+            state_ = State::kClosing;
+            disconnectComplete_ = false;
 
             if (tcpClient_ != nullptr) {
                 clientToStop = tcpClient_;
@@ -281,21 +294,11 @@ void RpcClient::disconnect() {
         clientToStop->stop();
     }
 
-    const bool skipCloseWait =
-        shouldWaitClose && loop_ != nullptr && loop_->isInLoopThread();
-
     {
         std::unique_lock<std::mutex> lock(mutex_);
 
         if (shouldWaitClose) {
-            if (skipCloseWait) {
-                LOG_WARN << "[RpcClient] disconnect called in EventLoop thread, "
-                            "skip blocking close wait, name="
-                         << name_;
-            } else {
-                static_cast<void>(cv_.wait_for(lock, std::chrono::milliseconds(1000),
-                                               [this]() { return closeComplete_; }));
-            }
+            cv_.wait(lock, [this]() { return closeComplete_; });
         }
 
         if (!channelToClose) {
@@ -306,17 +309,26 @@ void RpcClient::disconnect() {
             clientToRelease = std::move(tcpClient_);
         }
 
-        state_ = State::kClosed;
-        closeComplete_ = true;
-        lastError_ = "RpcClient disconnected";
     }
 
     if (channelToClose) {
         channelToClose->onConnectionClosed("RpcClient disconnected");
     }
 
+    loopThread_.stopAndJoin();
+
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        loop_ = nullptr;
+        state_ = State::kClosed;
+        closeComplete_ = true;
+        disconnectComplete_ = true;
+        lastError_ = "RpcClient disconnected";
+    }
+
     clientToRelease.reset();
     clientToStop.reset();
+    channelToClose.reset();
 
     cv_.notify_all();
 
@@ -507,8 +519,7 @@ void RpcClient::notifyClosed(std::string reason) {
     {
         std::lock_guard<std::mutex> lock(mutex_);
 
-        if (state_ == State::kConnected || state_ == State::kConnecting ||
-            state_ == State::kClosing) {
+        if (state_ == State::kConnected || state_ == State::kConnecting) {
             state_ = State::kClosed;
         }
 
@@ -523,10 +534,6 @@ void RpcClient::notifyCloseComplete() {
         std::lock_guard<std::mutex> lock(mutex_);
 
         closeComplete_ = true;
-
-        if (state_ == State::kClosing) {
-            state_ = State::kClosed;
-        }
     }
 
     cv_.notify_all();

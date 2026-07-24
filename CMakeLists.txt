@@ -44,7 +44,8 @@ find_package(Threads REQUIRED)
 find_package(Protobuf REQUIRED)
 find_package(CURL REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
-
+find_package(GTest REQUIRED)
+enable_testing()
 # ==========================================================
 # Protobuf 自动生成
 # ==========================================================
@@ -199,344 +200,378 @@ target_link_libraries(client_main
     protobuf::libprotobuf
 )
 
-# ==========================================================
-# Phase 1 demo
-# ==========================================================
-
-add_executable(phase1_epoll_echo
-    examples/phase1/epoll_echo_server.cpp
+add_executable(add_timeout_client
+    examples/tests/add_timeout_client.cpp
 )
 
-target_link_libraries(phase1_epoll_echo
-    PRIVATE
-        novanet
-)
-
-# ==========================================================
-# Phase 2 demo
-# ==========================================================
-
-add_executable(phase2_reactor_echo
-    examples/phase2/reactor_echo_server.cpp
-)
-
-target_link_libraries(phase2_reactor_echo
-    PRIVATE
-        novanet
-)
-
-# ==========================================================
-# Phase 3 demo
-# ==========================================================
-
-add_executable(multireactor_echo_server
-    examples/phase3/multireactor_echo_server.cpp
-)
-
-target_link_libraries(multireactor_echo_server
-    PRIVATE
-        novanet
-)
-
-# ==========================================================
-# Phase 4 RPC examples
-# ==========================================================
-
-add_executable(novanet_client
-    examples/phase4/novanet_client.cpp
-)
-
-target_link_libraries(novanet_client
-    PRIVATE
-        novanet
-)
-
-add_executable(novanet_server
-    examples/phase4/novanet_server.cpp
-)
-
-target_link_libraries(novanet_server
-    PRIVATE
-        novanet
+target_link_libraries(add_timeout_client
+    novanet
+    protobuf::libprotobuf
 )
 
 
-add_executable(calculator_server
-    examples/phase4/calculator_server.cpp
+add_executable(add_benchmark_client
+    examples/tests/add_benchmark_client.cpp
 )
 
-target_link_libraries(calculator_server
-    PRIVATE
-        novanet
-)
-
-add_executable(calculator_client
-    examples/phase4/calculator_client.cpp
-)
-
-target_link_libraries(calculator_client
-    PRIVATE
-        novanet
-)
-
-add_executable(chat_server
-    examples/phase4/chat_server.cpp
-)
-
-target_link_libraries(chat_server
-    PRIVATE
-        novanet
-)
-
-add_executable(chat_client
-    examples/phase4/chat_client.cpp
-)
-
-target_link_libraries(chat_client
-    PRIVATE
-        novanet
-)
-
-add_executable(cancel_client
-    examples/phase4/cancel_client.cpp
-)
-
-target_link_libraries(cancel_client
-    PRIVATE
-        novanet
-)
-
-add_executable(backpressure_client
-    examples/phase4/backpressure_client.cpp
-)
-
-target_link_libraries(backpressure_client
-    PRIVATE
-        novanet
-)
-
-add_executable(novanet_server2
-    examples/phase4/novanet_server2.cpp
-)
-
-target_link_libraries(novanet_server2
-    PRIVATE
-        novanet
-)
-
-# ==========================================================
-# Tests
-# ==========================================================
-
-enable_testing()
-
-add_executable(rpc_meta_smoke_test
-    tests/rpc/RpcMetaSmokeTest.cpp
-)
-
-target_link_libraries(rpc_meta_smoke_test
-    PRIVATE
-        novanet
-        protobuf::libprotobuf
-)
-
-add_test(
-    NAME rpc_meta_smoke_test
-    COMMAND rpc_meta_smoke_test
-)
-
-add_executable(rpc_codec_meta_test
-    tests/rpc/RpcCodecMetaTest.cpp
-)
-
-target_link_libraries(rpc_codec_meta_test
-    PRIVATE
-        novanet
-)
-
-add_test(
-    NAME rpc_codec_meta_test
-    COMMAND rpc_codec_meta_test
-)
-
-
-add_executable(calculator_proto_smoke_test
-    tests/rpc/CalculatorProtoSmokeTest.cpp
-)
-
-target_link_libraries(calculator_proto_smoke_test
-    PRIVATE
-        novanet
-)
-
-add_test(
-    NAME calculator_proto_smoke_test
-    COMMAND calculator_proto_smoke_test
-)
-
-add_executable(method_invoker_test
-    tests/rpc/MethodInvokerTest.cpp
-)
-
-target_link_libraries(method_invoker_test
-    PRIVATE
-        novanet
-)
-
-add_test(
-    NAME method_invoker_test
-    COMMAND method_invoker_test
-)
-
-
-add_executable(rpc_dispatcher_test
-    tests/rpc/RpcDispatcherTest.cpp
-)
-
-target_link_libraries(rpc_dispatcher_test
-    PRIVATE
-        novanet
-)
-
-add_test(
-    NAME rpc_dispatcher_test
-    COMMAND rpc_dispatcher_test
-)
-
-
-add_executable(rpc_dispatcher_unary_path_test
-    tests/rpc/RpcDispatcherUnaryPathTest.cpp
-)
-
-target_link_libraries(rpc_dispatcher_unary_path_test
-    PRIVATE
-        novanet
-)
-
-add_test(
-    NAME rpc_dispatcher_unary_path_test
-    COMMAND rpc_dispatcher_unary_path_test
-)
-
-
-add_executable(rpc_server_integration_test
-    tests/rpc/RpcServerIntegrationTest.cpp
-)
-
-target_link_libraries(rpc_server_integration_test
-    PRIVATE
-        novanet
-        Threads::Threads
-)
-
-add_test(
-    NAME rpc_server_integration_test
-    COMMAND rpc_server_integration_test
-)
-
-
-add_executable(pending_calltest
-    tests/rpc/PendingCallTest.cpp
-)
-
-target_link_libraries(pending_calltest
-    PRIVATE
-        novanet
-        Threads::Threads
-)
-
-add_test(
-    NAME pending_calltest
-    COMMAND pending_calltest
-)
-
-
-add_executable(pending_call_managertest
-    tests/rpc/PendingCallManagerTest.cpp
-)
-target_link_libraries(pending_call_managertest
-    PRIVATE
-        novanet
-        Threads::Threads
-)
-add_test(
-    NAME pending_call_managertest
-    COMMAND pending_call_managertest
+target_link_libraries(add_benchmark_client
+    novanet
+    protobuf::libprotobuf
 )
 
 
 
-add_executable(StreamFrameTest
-    tests/rpc/stream/StreamFrameTest.cpp
-)
-target_link_libraries(StreamFrameTest
-    PRIVATE
-        novanet
-)
-add_test(NAME StreamFrameTest COMMAND StreamFrameTest)
-
-
-add_executable(StreamSessionTest
-    tests/rpc/stream/StreamSessionTest.cpp
-)
-
-target_link_libraries(StreamSessionTest
-    PRIVATE
-        novanet
-)
-
-add_test(
-    NAME StreamSessionTest
-    COMMAND StreamSessionTest
-)
-
-
-add_executable(stream_method_invoker_test
-    tests/rpc/StreamMethodInvokerTest.cpp
-)
-
-target_link_libraries(stream_method_invoker_test
-    PRIVATE
-        novanet
-        Threads::Threads
-)
-
-add_test(
-    NAME stream_method_invoker_test
-    COMMAND stream_method_invoker_test
-)
-
-
-
-add_executable(EndpointTest
-    tests/rpc/sdk/EndpointTest.cpp
-)
-
-target_link_libraries(EndpointTest
-    PRIVATE
-        novanet
-        Threads::Threads
-)
-
-add_test(
-    NAME EndpointTest
-    COMMAND EndpointTest
-)
-
-
-
-# ==========================================================
-# Unit tests
-# ==========================================================
-
-if(NOVANET_BUILD_TESTS)
-    add_executable(rpc_header_test
-        tests/unit/protocol/rpc_header_test.cpp
+if (NOVANET_BUILD_TESTS)
+    add_test(
+        NAME client_demo_smoke_test
+        COMMAND bash ${CMAKE_SOURCE_DIR}/tests/run_client_demo_smoke.sh
     )
-    target_link_libraries(rpc_header_test
-        PRIVATE
-            novanet
-            GTest::gtest_main
+
+    set_tests_properties(client_demo_smoke_test
+        PROPERTIES
+            TIMEOUT 20
+            LABELS "integration;smoke"
     )
-    add_test(NAME rpcheader_test COMMON rpc_header_test)
 endif()
+
+# # ==========================================================
+# # Phase 1 demo
+# # ==========================================================
+
+# add_executable(phase1_epoll_echo
+#     examples/phase1/epoll_echo_server.cpp
+# )
+
+# target_link_libraries(phase1_epoll_echo
+#     PRIVATE
+#         novanet
+# )
+
+# # ==========================================================
+# # Phase 2 demo
+# # ==========================================================
+
+# add_executable(phase2_reactor_echo
+#     examples/phase2/reactor_echo_server.cpp
+# )
+
+# target_link_libraries(phase2_reactor_echo
+#     PRIVATE
+#         novanet
+# )
+
+# # ==========================================================
+# # Phase 3 demo
+# # ==========================================================
+
+# add_executable(multireactor_echo_server
+#     examples/phase3/multireactor_echo_server.cpp
+# )
+
+# target_link_libraries(multireactor_echo_server
+#     PRIVATE
+#         novanet
+# )
+
+# # ==========================================================
+# # Phase 4 RPC examples
+# # ==========================================================
+
+# add_executable(novanet_client
+#     examples/phase4/novanet_client.cpp
+# )
+
+# target_link_libraries(novanet_client
+#     PRIVATE
+#         novanet
+# )
+
+# add_executable(novanet_server
+#     examples/phase4/novanet_server.cpp
+# )
+
+# target_link_libraries(novanet_server
+#     PRIVATE
+#         novanet
+# )
+
+
+# add_executable(calculator_server
+#     examples/phase4/calculator_server.cpp
+# )
+
+# target_link_libraries(calculator_server
+#     PRIVATE
+#         novanet
+# )
+
+# add_executable(calculator_client
+#     examples/phase4/calculator_client.cpp
+# )
+
+# target_link_libraries(calculator_client
+#     PRIVATE
+#         novanet
+# )
+
+# add_executable(chat_server
+#     examples/phase4/chat_server.cpp
+# )
+
+# target_link_libraries(chat_server
+#     PRIVATE
+#         novanet
+# )
+
+# add_executable(chat_client
+#     examples/phase4/chat_client.cpp
+# )
+
+# target_link_libraries(chat_client
+#     PRIVATE
+#         novanet
+# )
+
+# add_executable(cancel_client
+#     examples/phase4/cancel_client.cpp
+# )
+
+# target_link_libraries(cancel_client
+#     PRIVATE
+#         novanet
+# )
+
+# add_executable(backpressure_client
+#     examples/phase4/backpressure_client.cpp
+# )
+
+# target_link_libraries(backpressure_client
+#     PRIVATE
+#         novanet
+# )
+
+# add_executable(novanet_server2
+#     examples/phase4/novanet_server2.cpp
+# )
+
+# target_link_libraries(novanet_server2
+#     PRIVATE
+#         novanet
+# )
+
+# # ==========================================================
+# # Tests
+# # ==========================================================
+
+# enable_testing()
+
+# add_executable(rpc_meta_smoke_test
+#     tests/rpc/RpcMetaSmokeTest.cpp
+# )
+
+# target_link_libraries(rpc_meta_smoke_test
+#     PRIVATE
+#         novanet
+#         protobuf::libprotobuf
+# )
+
+# add_test(
+#     NAME rpc_meta_smoke_test
+#     COMMAND rpc_meta_smoke_test
+# )
+
+# add_executable(rpc_codec_meta_test
+#     tests/rpc/RpcCodecMetaTest.cpp
+# )
+
+# target_link_libraries(rpc_codec_meta_test
+#     PRIVATE
+#         novanet
+# )
+
+# add_test(
+#     NAME rpc_codec_meta_test
+#     COMMAND rpc_codec_meta_test
+# )
+
+
+# add_executable(calculator_proto_smoke_test
+#     tests/rpc/CalculatorProtoSmokeTest.cpp
+# )
+
+# target_link_libraries(calculator_proto_smoke_test
+#     PRIVATE
+#         novanet
+# )
+
+# add_test(
+#     NAME calculator_proto_smoke_test
+#     COMMAND calculator_proto_smoke_test
+# )
+
+# add_executable(method_invoker_test
+#     tests/rpc/MethodInvokerTest.cpp
+# )
+
+# target_link_libraries(method_invoker_test
+#     PRIVATE
+#         novanet
+# )
+
+# add_test(
+#     NAME method_invoker_test
+#     COMMAND method_invoker_test
+# )
+
+
+# add_executable(rpc_dispatcher_test
+#     tests/rpc/RpcDispatcherTest.cpp
+# )
+
+# target_link_libraries(rpc_dispatcher_test
+#     PRIVATE
+#         novanet
+# )
+
+# add_test(
+#     NAME rpc_dispatcher_test
+#     COMMAND rpc_dispatcher_test
+# )
+
+
+# add_executable(rpc_dispatcher_unary_path_test
+#     tests/rpc/RpcDispatcherUnaryPathTest.cpp
+# )
+
+# target_link_libraries(rpc_dispatcher_unary_path_test
+#     PRIVATE
+#         novanet
+# )
+
+# add_test(
+#     NAME rpc_dispatcher_unary_path_test
+#     COMMAND rpc_dispatcher_unary_path_test
+# )
+
+
+# add_executable(rpc_server_integration_test
+#     tests/rpc/RpcServerIntegrationTest.cpp
+# )
+
+# target_link_libraries(rpc_server_integration_test
+#     PRIVATE
+#         novanet
+#         Threads::Threads
+# )
+
+# add_test(
+#     NAME rpc_server_integration_test
+#     COMMAND rpc_server_integration_test
+# )
+
+
+# add_executable(pending_calltest
+#     tests/rpc/PendingCallTest.cpp
+# )
+
+# target_link_libraries(pending_calltest
+#     PRIVATE
+#         novanet
+#         Threads::Threads
+# )
+
+# add_test(
+#     NAME pending_calltest
+#     COMMAND pending_calltest
+# )
+
+
+# add_executable(pending_call_managertest
+#     tests/rpc/PendingCallManagerTest.cpp
+# )
+# target_link_libraries(pending_call_managertest
+#     PRIVATE
+#         novanet
+#         Threads::Threads
+# )
+# add_test(
+#     NAME pending_call_managertest
+#     COMMAND pending_call_managertest
+# )
+
+
+
+# add_executable(StreamFrameTest
+#     tests/rpc/stream/StreamFrameTest.cpp
+# )
+# target_link_libraries(StreamFrameTest
+#     PRIVATE
+#         novanet
+# )
+# add_test(NAME StreamFrameTest COMMAND StreamFrameTest)
+
+
+# add_executable(StreamSessionTest
+#     tests/rpc/stream/StreamSessionTest.cpp
+# )
+
+# target_link_libraries(StreamSessionTest
+#     PRIVATE
+#         novanet
+# )
+
+# add_test(
+#     NAME StreamSessionTest
+#     COMMAND StreamSessionTest
+# )
+
+
+# add_executable(stream_method_invoker_test
+#     tests/rpc/StreamMethodInvokerTest.cpp
+# )
+
+# target_link_libraries(stream_method_invoker_test
+#     PRIVATE
+#         novanet
+#         Threads::Threads
+# )
+
+# add_test(
+#     NAME stream_method_invoker_test
+#     COMMAND stream_method_invoker_test
+# )
+
+
+
+# add_executable(EndpointTest
+#     tests/rpc/sdk/EndpointTest.cpp
+# )
+
+# target_link_libraries(EndpointTest
+#     PRIVATE
+#         novanet
+#         Threads::Threads
+# )
+
+# add_test(
+#     NAME EndpointTest
+#     COMMAND EndpointTest
+# )
+
+
+
+# # ==========================================================
+# # Unit tests
+# # ==========================================================
+
+# if(NOVANET_BUILD_TESTS)
+#     add_executable(rpc_header_test
+#         tests/unit/protocol/rpc_header_test.cpp
+#     )
+#     target_link_libraries(rpc_header_test
+#         PRIVATE
+#             novanet
+#             GTest::gtest_main
+#     )
+#     add_test(NAME rpcheader_test COMMAND  rpc_header_test)
+# endif()

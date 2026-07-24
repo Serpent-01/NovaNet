@@ -1,4 +1,5 @@
 #include "novanet/rpc/protocol/RpcHeader.h"
+
 #include "novanet/rpc/protocol/FrameType.h"
 
 namespace novanet::rpc {
@@ -50,7 +51,7 @@ uint64_t readU64BE(const char* data) noexcept {
            (static_cast<uint64_t>(static_cast<unsigned char>(data[7])));
 }
 
-} // namespace
+}  // namespace
 
 bool RpcHeader::isValid() const noexcept {
     if (totalLen < kFixedHeaderLen) {
@@ -85,7 +86,7 @@ bool RpcHeader::isValid() const noexcept {
      *      因此这里不强行要求 requestId 非 0。
      */
     if (isHeartbeatFrameType(frameType)) {
-        return streamId == 0;
+        return streamId == 0 && requestId == 0;
     }
 
     if (isUnaryFrameType(frameType)) {
@@ -121,8 +122,7 @@ void RpcHeader::encodeTo(std::string& out) const {
     appendU64BE(out, requestId);
 }
 
-bool RpcHeader::decodeFrom(const char* data,
-                           std::size_t len,
+bool RpcHeader::decodeFrom(const char* data, std::size_t len,
                            RpcHeader& out) noexcept {
     if (data == nullptr || len < kFixedHeaderLen) {
         return false;
@@ -143,4 +143,4 @@ bool RpcHeader::decodeFrom(const char* data,
     return true;
 }
 
-} // namespace novanet::rpc
+}  // namespace novanet::rpc

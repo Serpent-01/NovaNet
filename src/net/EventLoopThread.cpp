@@ -12,15 +12,35 @@ EventLoopThread::EventLoopThread(ThreadInitCallback cb) :callback_(std::move(cb)
 }
 
 EventLoopThread::~EventLoopThread(){
-    exiting_ = true;
-    if(loop_ != nullptr){
-        LOG_INFO << "EventLoopThread destructor: sending quit signal to EventLoop...";
-        loop_->quit();
-        if(thread_.joinable()){
-            thread_.join();
-            LOG_INFO << "EventLoopThread destructor: underlying thread joined successfully.";
-        }
+    stopAndJoin();
+}
+
+void EventLoopThread::stopAndJoin(){
+    std::lock_guard<std::mutex> joinLock(joinMutex_);
+
+    EventLoop* loop = nullptr;
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        exiting_ = true;
+        loop = loop_;
     }
+
+    if(loop != nullptr){
+        LOG_INFO << "EventLoopThread::stopAndJoin(): sending quit signal to EventLoop...";
+        loop->quit();
+    }
+
+    if(!thread_.joinable()){
+        return;
+    }
+
+    if(thread_.get_id() == std::this_thread::get_id()){
+        LOG_FATAL << "EventLoopThread cannot join itself.";
+        return;
+    }
+
+    thread_.join();
+    LOG_INFO << "EventLoopThread::stopAndJoin(): underlying thread joined successfully.";
 }
 
 EventLoop* EventLoopThread::startLoop(){
