@@ -115,25 +115,6 @@ ERROR_FRAME
 - 可替换日志输出和刷新回调
 - 线程安全日志输出
 
-## 系统架构
-
-```mermaid
-flowchart LR
-    App[Client Application] --> Stub[Service Stub]
-    Stub --> SDK[ClientChannel / ClientContext]
-    SDK --> Client[RpcClient / RpcChannel]
-    Client --> CodecC[RpcCodec]
-    CodecC <--> TCP[TCP Connection]
-    TCP <--> CodecS[RpcCodec]
-    CodecS --> Server[RpcServer]
-    Server --> Dispatcher[RpcDispatcher]
-    Dispatcher --> Registry[ServiceRegistry]
-    Registry --> Invoker[MethodInvoker]
-    Dispatcher --> Executor[AiExecutor]
-    Executor --> Provider[AiProvider]
-    Provider --> Responder[StreamResponder]
-    Responder --> Dispatcher
-```
 
 ### Unary 调用链
 
@@ -329,6 +310,3 @@ NovaNet 当前已经覆盖：
 - 服务端 RSS 稳定在约 14.9 MB
 - 文件描述符由 20 增至 84，并在测试结束后恢复到 20
 - perf 显示主要开销集中在响应发送及 Linux TCP 网络栈
-
-短时测试峰值约为 72.3K QPS。完整测试方法、环境和限制参见
-[Benchmark Report](docs/benchmark.md)。
