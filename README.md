@@ -105,8 +105,6 @@ ERROR_FRAME
 - 客户端 Metadata 透传
 - 请求 ID 和流 ID 跟踪
 
-> 当前 Unary 取消主要覆盖发送前取消；等待响应期间的完整可中断取消不应视为已经实现。
-
 ### 日志系统
 
 - `TRACE`、`DEBUG`、`INFO`、`WARN`
@@ -319,3 +317,18 @@ NovaNet 当前已经覆盖：
 | Phase 4 | Unary、Streaming、SDK、心跳、超时、取消、背压 |
 | Phase 5 | 服务发现、负载均衡与重试，暂未实现 |
 
+
+## Benchmark
+
+在 Intel i5-9300H、本机 TCP loopback 环境下，NovaNet 对
+`Calculator.Add` Unary RPC 进行了 64 并发、约 40 分钟的稳定性测试：
+
+- 累计完成 1.28 亿次 RPC，成功率 100%
+- 持续吞吐约 53.3K QPS
+- 平均延迟 1.19 ms，P99 延迟 1.86 ms
+- 服务端 RSS 稳定在约 14.9 MB
+- 文件描述符由 20 增至 84，并在测试结束后恢复到 20
+- perf 显示主要开销集中在响应发送及 Linux TCP 网络栈
+
+短时测试峰值约为 72.3K QPS。完整测试方法、环境和限制参见
+[Benchmark Report](docs/benchmark.md)。
