@@ -1,26 +1,30 @@
 #include "novanet/net/SocketsOps.h"
-#include "novanet/net/Endian.h"
-#include "novanet/base/Logger.h"
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
+#include <signal.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <signal.h>
-#include <cstring>
+
 #include <cerrno>
 #include <cstdio>
+#include <cstring>
+
+#include "novanet/base/Logger.h"
+#include "novanet/net/Endian.h"
 
 namespace novanet::net::sockets {
 
 /**
  * @brief 创建非阻塞的套接字
  * @details 使用 Linux 特有的 SOCK_NONBLOCK 和 SOCK_CLOEXEC 标志，
- * 一步到位完成非阻塞设置，消除传统 fcntl 的多次系统调用开销，并防止多线程下的 fd 泄露。
+ * 一步到位完成非阻塞设置，消除传统 fcntl 的多次系统调用开销，并防止多线程下的 fd
+ * 泄露。
  */
 int createNonblockingOrDie(sa_family_t family) {
-    int sockfd = ::socket(family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
+    int sockfd =
+        ::socket(family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
     if (sockfd < 0) {
         LOG_FATAL << "sockets::createNonblockingOrDie failed, errno=" << errno;
     }
@@ -57,11 +61,10 @@ void listenOrDie(int sockfd) {
     }
 }
 
-
-int getSocketError(int sockfd){
+int getSocketError(int sockfd) {
     int optval;
     socklen_t optlen = static_cast<socklen_t>(sizeof optval);
-    
+
     // 调用底层 POSIX API 获取 SO_ERROR
     if (::getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &optval, &optlen) < 0) {
         // 如果 getsockopt 函数本身调用失败了，返回当前的系统系统错误码
@@ -72,17 +75,18 @@ int getSocketError(int sockfd){
     }
 }
 
-
 /**
  * @brief 接收新连接
- * @return 成功返回新连接的 fd，失败返回负数（并已按致命/非致命做了精准的 errno 分类）
+ * @return 成功返回新连接的 fd，失败返回负数（并已按致命/非致命做了精准的 errno
+ * 分类）
  */
 int accept(int sockfd, struct sockaddr_storage* addr) {
     socklen_t addrlen = static_cast<socklen_t>(sizeof(struct sockaddr_storage));
-    
-#if VALGRIND || defined (NO_ACCEPT4)
+
+#if VALGRIND || defined(NO_ACCEPT4)
     // 降级使用传统的 accept
-    int connfd = ::accept(sockfd, reinterpret_cast<struct sockaddr*>(addr), &addrlen);
+    int connfd =
+        ::accept(sockfd, reinterpret_cast<struct sockaddr*>(addr), &addrlen);
     sockets::setNonBlockAndCloseOnExec(connfd);
 #else
     // 现代 Linux 高效做法：直接用 accept4 一次性拿 fd 并设置非阻塞标志
@@ -92,17 +96,17 @@ int accept(int sockfd, struct sockaddr_storage* addr) {
 
     if (connfd < 0) {
         int savedErrno = errno;
-        
+
         // 【核心修改】：删掉了原来的 LOG_SYSERR 大喇叭！
         // 让下面的 switch 来做精准的哑巴和报警器
-        
+
         switch (savedErrno) {
             case EAGAIN:
             case ECONNABORTED:
             case EINTR:
-            case EPROTO: 
+            case EPROTO:
             case EPERM:
-            case EMFILE: // 我们之前写的防雷机制就是靠捕获这个
+            case EMFILE:  // 我们之前写的防雷机制就是靠捕获这个
                 // 【消音区】：这些是网络底层的暂态错误，完全正常！
                 // 什么都不用打印，默默恢复 errno 即可
                 errno = savedErrno;
@@ -145,7 +149,7 @@ ssize_t read(int sockfd, void* buf, size_t count) {
     return ::read(sockfd, buf, count);
 }
 
-ssize_t write(int sockfd,const void* buf, size_t count) {
+ssize_t write(int sockfd, const void* buf, size_t count) {
     return ::write(sockfd, buf, count);
 }
 
@@ -165,7 +169,7 @@ void ignoreSigPipe() {
     ::memset(&sa, 0, sizeof(sa));
     sa.sa_handler = SIG_IGN;
     sa.sa_flags = 0;
-    ::sigaction(SIGPIPE, &sa, nullptr); // 使用更严谨的 sigaction 替代 signal
+    ::sigaction(SIGPIPE, &sa, nullptr);  // 使用更严谨的 sigaction 替代 signal
 }
 
 /**
@@ -174,7 +178,8 @@ void ignoreSigPipe() {
  */
 void setReuseAddr(int sockfd, bool on) {
     int optval = on ? 1 : 0;
-    ::setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, static_cast<socklen_t>(sizeof optval));
+    ::setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &optval,
+                 static_cast<socklen_t>(sizeof optval));
 }
 
 /**
@@ -184,7 +189,8 @@ void setReuseAddr(int sockfd, bool on) {
 void setReusePort(int sockfd, bool on) {
 #ifdef SO_REUSEPORT
     int optval = on ? 1 : 0;
-    ::setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &optval, static_cast<socklen_t>(sizeof optval));
+    ::setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &optval,
+                 static_cast<socklen_t>(sizeof optval));
 #endif
 }
 
@@ -194,7 +200,10 @@ void setReusePort(int sockfd, bool on) {
  */
 void setTcpNoDelay(int sockfd, bool on) {
     int optval = on ? 1 : 0;
-    ::setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, &optval, static_cast<socklen_t>(sizeof optval));
+    if (::setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, &optval,
+                     static_cast<socklen_t>(sizeof optval)) < 0) {
+        LOG_SYSERR << "set TCP_NODELAY failed, fd=" << sockfd;
+    }
 }
 
 /**
@@ -244,7 +253,7 @@ void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in* addr) {
 /**
  * @brief 将字符串 IP 和主机字节序端口打包入 IPv6 结构体
  */
-void fromIpPort(const char *ip, uint16_t port, struct sockaddr_in6 *addr) {
+void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in6* addr) {
     addr->sin6_family = AF_INET6;
     addr->sin6_port = hostToNetwork16(port);
     if (::inet_pton(AF_INET6, ip, &addr->sin6_addr) <= 0) {
@@ -256,7 +265,7 @@ struct sockaddr_in6 getLocalAddr(int sockfd) {
     struct sockaddr_in6 localaddr;
     ::memset(&localaddr, 0, sizeof localaddr);
     socklen_t addrlen = static_cast<socklen_t>(sizeof localaddr);
-    
+
     // 使用你定义的 sockaddr_cast 进行转换
     if (::getsockname(sockfd, sockaddr_cast(&localaddr), &addrlen) < 0) {
         LOG_SYSERR << "sockets::getLocalAddr failed";
@@ -268,11 +277,11 @@ struct sockaddr_in6 getPeerAddr(int sockfd) {
     struct sockaddr_in6 peeraddr;
     ::memset(&peeraddr, 0, sizeof peeraddr);
     socklen_t addrlen = static_cast<socklen_t>(sizeof peeraddr);
-    
+
     if (::getpeername(sockfd, sockaddr_cast(&peeraddr), &addrlen) < 0) {
         LOG_SYSERR << "sockets::getPeerAddr failed";
     }
     return peeraddr;
 }
 
-} // namespace novanet::net::sockets
+}  // namespace novanet::net::sockets

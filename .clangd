@@ -5,6 +5,6 @@ CompileFlags:
     - "-Wall"
   # 强制让它去这里找说明书，如果说明书坏了，上面的 -Iinclude 也会作为保底
   CompilationDatabase: "build"
-
+  #CompilationDatabase: "build-debug"
 Index:
   Background: Build

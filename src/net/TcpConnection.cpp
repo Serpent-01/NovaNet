@@ -13,13 +13,15 @@
 using namespace novanet::net;
 
 TcpConnection::TcpConnection(EventLoop* loop, std::string name, int sockfd,
-                             const InetAddress& localAddr, const InetAddress& peerAddr)
+                             const InetAddress& localAddr,
+                             const InetAddress& peerAddr)
     : loop_(loop),
       name_(std::move(name)),
       socket_(std::make_unique<Socket>(sockfd)),
       channel_(std::make_unique<Channel>(loop, sockfd)),
       localAddr_(localAddr),
       peerAddr_(peerAddr) {
+    socket_->setTcpNoDelay(true);
     // 将自身的处理逻辑绑定到底层 Channel
     channel_->setReadCallback([this]() { handleRead(); });
     channel_->setWriteCallback([this]() { handleWrite(); });
@@ -61,9 +63,10 @@ void TcpConnection::send(const void* data, size_t len) {
         } else {
             // 极其危险的裸指针跨线程，必须转为 string 进行深拷贝续命
             std::string message(static_cast<const char*>(data), len);
-            loop_->runInLoop([conn = shared_from_this(), msg = std::move(message)]() {
-                conn->sendInLoop(msg.data(), msg.size());
-            });
+            loop_->runInLoop(
+                [conn = shared_from_this(), msg = std::move(message)]() {
+                    conn->sendInLoop(msg.data(), msg.size());
+                });
         }
     }
 }
@@ -76,9 +79,10 @@ void TcpConnection::send(Buffer* buf) {
         } else {
             std::string message(buf->peek(), buf->readableBytes());
             buf->retrieveAll();
-            loop_->runInLoop([conn = shared_from_this(), msg = std::move(message)]() {
-                conn->sendInLoop(msg.data(), msg.size());
-            });
+            loop_->runInLoop(
+                [conn = shared_from_this(), msg = std::move(message)]() {
+                    conn->sendInLoop(msg.data(), msg.size());
+                });
         }
     }
 }
@@ -134,9 +138,10 @@ void TcpConnection::sendInLoop(const void* data, size_t len) {
         // 高水位回调触发保护机制
         if (oldLen + remaining >= highWaterMark_ && oldLen < highWaterMark_ &&
             highWaterMarkCallback_) {
-            loop_->queueInLoop([conn = shared_from_this(), len = oldLen + remaining]() {
-                conn->highWaterMarkCallback_(conn, len);
-            });
+            loop_->queueInLoop(
+                [conn = shared_from_this(), len = oldLen + remaining]() {
+                    conn->highWaterMarkCallback_(conn, len);
+                });
         }
 
         outputBuffer_.append(static_cast<const char*>(data) + nwrote, remaining);
@@ -148,8 +153,7 @@ void TcpConnection::sendInLoop(const void* data, size_t len) {
 
 void TcpConnection::shutdown() {
     loop_->runInLoop([conn = shared_from_this()]() {
-        if (conn->state_.load(std::memory_order_acquire) ==
-            State::kConnected) {
+        if (conn->state_.load(std::memory_order_acquire) == State::kConnected) {
             conn->setState(State::kDisconnecting);
             conn->shutdownInLoop();
         }
@@ -194,7 +198,8 @@ void TcpConnection::handleRead() {
     } else if (n == 0) {
         handleClose();
     } else {
-        if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK || savedErrno == EINTR) {
+        if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK ||
+            savedErrno == EINTR) {
             return;
         }
         errno = savedErrno;
@@ -218,8 +223,8 @@ void TcpConnection::handleWrite() {
 
             //必测 7：output buffer 正确
             // 【新增探针 2】：记录 EPOLLOUT 的局部消耗
-            LOG_INFO << "[handleWrite] EPOLLOUT 触发，成功消耗 OutputBuffer 里的 " << n
-                     << " 字节。";
+            LOG_INFO << "[handleWrite] EPOLLOUT 触发，成功消耗 OutputBuffer 里的 "
+                     << n << " 字节。";
 
             if (outputBuffer_.readableBytes() == 0) {
                 channel_->disableWriting();
@@ -241,7 +246,8 @@ void TcpConnection::handleWrite() {
             }
         } else if (n < 0) {
             const int savedErrno = errno;
-            if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK || savedErrno == EINTR) {
+            if (savedErrno == EAGAIN || savedErrno == EWOULDBLOCK ||
+                savedErrno == EINTR) {
                 return;
             }
             errno = savedErrno;
@@ -253,14 +259,14 @@ void TcpConnection::handleWrite() {
             handleClose();
         }
     } else {
-        LOG_WARN << "Connection fd = " << channel_->fd() << " is down, no more writing";
+        LOG_WARN << "Connection fd = " << channel_->fd()
+                 << " is down, no more writing";
     }
 }
 
 void TcpConnection::handleClose() {
     loop_->assertInLoopThread();
-    LOG_INFO << "TcpConnection::handleClose fd=" << channel_->fd()
-             << " state="
+    LOG_INFO << "TcpConnection::handleClose fd=" << channel_->fd() << " state="
              << static_cast<int>(state_.load(std::memory_order_acquire));
     const State state = state_.load(std::memory_order_acquire);
     assert(state == State::kConnected || state == State::kDisconnecting);
@@ -312,8 +318,8 @@ void TcpConnection::connectDestroyed() {
     loop_->assertInLoopThread();
 
     // 【就是这句确切的日志代码】： test8
-    LOG_INFO << "TcpConnection::connectDestroyed [" << name_ << "] fd=" << channel_->fd()
-             << " state="
+    LOG_INFO << "TcpConnection::connectDestroyed [" << name_
+             << "] fd=" << channel_->fd() << " state="
              << static_cast<int>(state_.load(std::memory_order_acquire));
 
     if (state_.load(std::memory_order_acquire) == State::kConnected) {

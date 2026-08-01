@@ -220,6 +220,17 @@ target_link_libraries(add_benchmark_client
 )
 
 
+add_executable(chat_benchmark_client
+    examples/tests/chat_benchmark_client.cpp
+)
+
+target_link_libraries(chat_benchmark_client
+    novanet
+    protobuf::libprotobuf
+)
+
+
+
 
 if (NOVANET_BUILD_TESTS)
     add_test(

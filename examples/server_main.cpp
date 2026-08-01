@@ -10,9 +10,9 @@
 #include "novanet/base/Logger.h"
 #include "novanet/net/EventLoop.h"
 #include "novanet/net/InetAddress.h"
+#include "novanet/rpc/core/FakeAiProvider.h"
 #include "novanet/rpc/core/GatewayAiProvider.h"
 #include "novanet/rpc/core/RpcServer.h"
-
 namespace calculator = novanet::example::calculator;
 namespace chat = novanet::ai::chat;
 
@@ -109,7 +109,7 @@ public:
 };
 
 int main(int argc, char* argv[]) {
-    novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Info);
+    novanet::base::Logger::setLogLevel(novanet::base::LogLevel::Warn);
 
     int port = 19090;
     if (argc >= 2) {
@@ -134,8 +134,8 @@ int main(int argc, char* argv[]) {
      * 当前 Phase 4 不改服务端 gRPC 风格封装。
      * Streaming 业务仍由 AiProvider 提供。
      */
-    novanet::rpc::GatewayAiProvider aiProvider;
-
+    // novanet::rpc::GatewayAiProvider aiProvider;
+    novanet::rpc::FakeAiProvider aiProvider;
     novanet::rpc::RpcServer::Options options;
 
     options.aiExecutorOptions.workerCount = 4;
